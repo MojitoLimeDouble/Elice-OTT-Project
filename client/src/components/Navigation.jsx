@@ -23,7 +23,7 @@ const Container = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  height: 4vh;
+  height: 40px;
   border-bottom: 2px solid black;
 `;
 
