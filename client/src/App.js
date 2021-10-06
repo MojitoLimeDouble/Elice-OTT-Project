@@ -10,6 +10,7 @@ import Signin from './components/Signin';
 import Signup from './components/Signup';
 import TV from './components/TV';
 import Navigation from './components/Navigation';
+import Footer from './components/Footer';
 
 
 const App = () => {
@@ -27,6 +28,9 @@ const App = () => {
       <Route path="/tv" component={TV} />
       <Route path="/potato-basket/:id?" component={PotatoBasket} />
       <Route path="/mypage" component={MyPage} />
+      <div>
+        <Footer />
+      </div>
     </div>
   );
 };
