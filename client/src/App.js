@@ -9,15 +9,15 @@ import PotatoBasket from './components/PotatoBasket';
 import Signin from './components/Signin';
 import Signup from './components/Signup';
 import TV from './components/TV';
+import Navigation from './components/Navigation';
+import Footer from './components/Footer';
+
 
 const App = () => {
   return (
     <div>
       <div>
-        <Link to="/">NonSignIn</Link>
-        <Link to="/signin">SignIn</Link>
-        <Link to="/signup">SignUp</Link>
-        <Link to="/main">Main</Link>
+        <Navigation />
       </div>
       <Route exact path="/" component={NonSignIn} />
       <Route path="/signin" component={Signin} />
@@ -28,6 +28,9 @@ const App = () => {
       <Route path="/tv" component={TV} />
       <Route path="/potato-basket/:id?" component={PotatoBasket} />
       <Route path="/mypage" component={MyPage} />
+      <div>
+        <Footer />
+      </div>
     </div>
   );
 };
