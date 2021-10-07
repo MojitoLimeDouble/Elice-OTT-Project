@@ -11,6 +11,7 @@ import Signup from './components/Signup';
 import TV from './components/TV';
 import Navigation from './components/Navigation';
 import Footer from './components/Footer';
+import MainPopularity from './containers/MainContainer';
 
 
 const App = () => {
@@ -22,7 +23,8 @@ const App = () => {
       <Route exact path="/" component={NonSignIn} />
       <Route path="/signin" component={Signin} />
       <Route path="/signup" component={Signup} />
-      <Route path="/main" component={Main} />
+      <Route path="/main" component={MainPopularity} />
+      {/* <Route path="/main" component={Main} /> */}
       <Route path="/contents-detail/:id?" component={Contents} />
       <Route path="/movie" component={Movie} />
       <Route path="/tv" component={TV} />
