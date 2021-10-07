@@ -3,43 +3,26 @@ from models import *
 from flask_jwt_extended import *
 import requests, json
 
-bp = Blueprint('main', __name__)
+bp = Blueprint('detail', __name__)
 
-@bp.route('/movie/top_rated',  methods=['GET'])
-def movie_top_rated():
+@bp.route('/detail/<string:category>/<int:id>',  methods=['GET'])
+@jwt_required()
+def detail(category,id):
 
-    response = requests.get("https://api.themoviedb.org/3/movie/popular?api_key=71ee3d022e284d4675ce65473e39a1b9&language=ko-KR&append_to_response=images&include_image_language=en,null")
+    user_id = get_jwt_identity()
+    potato = Potato_Basket.query.filter(Potato_Basket.user_id==user_id).all()
 
-
-    if response.status_code != 200:
-        abort(response.status_code,"API가 정상 호출되지 않았습니다.")  
-    else:
-        top_data = response.json()['results']
-        dd = []
-
-        for i in top_data:
-            print(i['title'], i['poster_path'],i['release_date'])
-            row = {'title':i['title'], 'poster_path': i ['poster_path'],'release_date': i['release_date']}
-
-            dd.append(row)
-
-        return jsonify(dd)
-
-@bp.route('/tv/top_rated',  methods=['GET'])
-def tv_top_rated():
-
-    response = requests.get("https://api.themoviedb.org/3/tv/popular?api_key=71ee3d022e284d4675ce65473e39a1b9&language=ko-KR&append_to_response=images&include_image_language=en,null")
-
-
-    if response.status_code != 200:
-        abort(response.status_code,"API가 정상 호출되지 않았습니다.")  
-    else:
-        top_data = response.json()['results']
-        dd = []
-        for i in top_data:
-            print(i['name'], i['poster_path'],i['first_air_date'])
-            row = {'name':i['name'], 'poster_path': i ['poster_path'],'first_air_date': i['first_air_date']}
-
-            dd.append(row)
-
-        return jsonify(dd)
+    if category == "movie":
+        movie = Movie.query.filter(Movie.id == id).first()
+        content = Movie.to_dict(movie)
+        like_list = [movie.movie_id for movie in potato if movie.movie_id]
+    if category == "tv":
+        tv = Tv.query.filter(Tv.id == id).first()
+        content = Tv.to_dict(tv)
+        like_list = [tv.tv_id for tv in potato if tv.tv_id]
+    is_like = 0
+    for likes in like_list:
+        if likes == id:
+            is_like = 1
+    print(content)
+    return jsonify(content, {"is_like" : is_like})
