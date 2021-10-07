@@ -7,7 +7,14 @@ import Slider from "react-slick";
 import axios from "axios";
 import Prediction, { Similar } from "./Prediction";
 
-const Main = ({ popularList, predictableList, similarList, onPopular, onPredictable, onSimilar }) => {
+const Main = ({
+  popularList,
+  predictableList,
+  similarList,
+  onPopular,
+  onPredictable,
+  onSimilar,
+}) => {
   // state를 redux로 관리하여 사용자 겸험을 상승
   // 서버와 미연결로 인하여 현재 임시 데이터 api를 불러와서 렌더링 중
   useEffect(() => {
@@ -16,28 +23,41 @@ const Main = ({ popularList, predictableList, similarList, onPopular, onPredicta
         const response = await axios.get(
           "https://yts.mx/api/v2/list_movies.json?limit=10"
         );
-        onPopular(response.data.data.movies)
+        onPopular(response.data.data.movies);
       } catch (e) {
-        console.log(e)
+        console.log(e);
       }
-    }
+    };
     fetchData();
-  }, [])
-
-
-  useEffect(() => {
-    axios
-      .get("https://yts.mx/api/v2/list_movies.json?minimum_rating=9&limit=5")
-      .then((res) => onPredictable(res.data.data.movies));
-  });
+  }, []);
 
   useEffect(() => {
-    axios
-      .get("https://yts.mx/api/v2/list_movies.json?minimum_rating=5&limit=4")
-      .then((res) => onSimilar(res.data.data.movies));
-  });
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "https://yts.mx/api/v2/list_movies.json?minimum_rating=9&limit=5"
+        );
+        onPredictable(response.data.data.movies);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchData();
+  }, []);
 
-
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "https://yts.mx/api/v2/list_movies.json?minimum_rating=5&limit=4"
+        );
+        onSimilar(response.data.data.movies);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchData();
+  }, []);
 
   const settings = {
     dots: true, // 슬라이드 밑에 점 보이게
@@ -273,5 +293,4 @@ const Details = styled.div`
 
 const SimilarDetail = styled.div`
   display: flex;
-`
-  
+`;
