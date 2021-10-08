@@ -20,7 +20,6 @@ def mypage():
     
     return jsonify(User.to_dict(user))
 
-
 # 유저 프로필 사진 변경
 @bp.route("/mypage/photo", methods=["GET", "POST", "PATCH"])
 @jwt_required()
@@ -38,8 +37,6 @@ def mypage_photo():
 
         db.session.commit()
         return jsonify({"result": "success"})
-
-
 
 # 친구의 닉네임을 검색
 @bp.route("/mypage/find/friend", methods=['GET', 'POST'])
@@ -59,7 +56,39 @@ def mypage_search():
             return jsonify({'result': 'fail'})
 
 # 친구 추가
+@bp.route("/mypage/add/friend", methods=['POST'])
+@jwt_required()
+def mypage_add_friend():
+    if request.method == "POST":
+        data = request.json
+        nickname = data['nickname']
 
+        user_id = get_jwt_identity()
+        
+        user = User.query.filter(User.nickname==nickname).first()
+        
+        if user_id != user.id:
+            is_friend = Friend.query.filter(Friend.user_id==user_id, Friend.nickname==nickname).first()
+
+            if not is_friend: 
+                friend = Friend(user_id=user_id, nickname=user.nickname, photolink=user.photolink)
+                db.session.add(friend)
+                db.session.commit()
+                return Friend.to_dict(friend)
+
+        return jsonify({'result': 'fail'})
+        
 # 친구 목록 조회
+@bp.route("/mypage/list/friend", methods=['GET'])
+@jwt_required()
+def mypage_list_friend():
+    user_id = get_jwt_identity()
+    friend_list = Friend.query.filter(Friend.user_id==user_id).all()
+    friends = [Friend.to_dict(i) for i in friend_list]
+    return jsonify(friends)
 
-# 회원 탈퇴
+# 회원 탈퇴 10-08까지
+@bp.route("/mypage/delete/user", methods=['DELETE'])
+@jwt_required()
+def delete_user():
+    return ''
