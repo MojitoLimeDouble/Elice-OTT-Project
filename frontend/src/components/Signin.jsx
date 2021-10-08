@@ -3,22 +3,22 @@ import React, { useState } from "react";
 import { useHistory, Link } from "react-router-dom";
 
 const Signin = () => {
-  const [ Email, setEmail ] = useState("");
-  const [ Password, setPassword ] = useState("");
+  const [ email, setEmail ] = useState("");
+  const [ password, setPassword ] = useState("");
   const history = useHistory()
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (Email === "" || Password === "") {
+    if (email === "" || password === "") {
       alert("아이디 또는 비밀번호를 입력해주세요")
       return;
     };
 
-    if (!Email && !Password) return;
+    if (!email && !password) return;
 
     const data = {
-      email: Email,
-      password: Password,
+      email: email,
+      password: password,
     };
 
     axios
@@ -47,7 +47,7 @@ const Signin = () => {
         <input
             placeholder="Email"
             type="email"
-            value={Email}
+            value={email}
             onChange={(e) => setEmail(e.target.value)}
         />
         </div>
@@ -55,7 +55,7 @@ const Signin = () => {
         <input
             placeholder="Password"
             type="Password"
-            value={Password}
+            value={password}
             onChange={(e) => setPassword(e.target.value)}
         />
         </div>

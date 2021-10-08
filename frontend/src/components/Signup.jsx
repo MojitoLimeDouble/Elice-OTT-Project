@@ -3,27 +3,27 @@ import { useHistory, Link } from "react-router-dom";
 import axios from "axios";
 
 const Signup = () => {
-  const [ Email, setEmail ] = useState("");
-  const [ EmailCheck, setEmailCheck ] = useState(true);
-  const [ EmailValidate, setEmailValidate ] = useState(true);
+  const [ email, setEmail ] = useState("");
+  const [ emailCheck, setEmailCheck ] = useState(true);
 
-  const [ Password, setPassword ] = useState("");
-  const [ PasswordVali, setPasswordVali ] = useState(true);
+  const [ password, setPassword ] = useState("");
+  const [ passwordVali, setPasswordVali ] = useState(true);
 
-  const [ PasswordCheck, setPasswordCheck ] = useState("");
-  const [ PasswordError, setPasswordError ] = useState(false);
+  const [ passwordCheck, setPasswordCheck ] = useState("");
+  const [ passwordError, setPasswordError ] = useState(false);
 
-  const [ Nickname, setNickname ] = useState("");
-  const [ NicknameCheck, setNicknameCheck ] = useState(true);
+  const [ nickname, setNickname ] = useState("");
+  const [ nicknameCheck, setNicknameCheck ] = useState(true);
+  const [ nicknameValidate, setNicknameValidate ] = useState(true);
 
   const history = useHistory();
 
 
   const onChangePasswordCheck = useCallback(
     (e) => {
-      setPasswordError(e.target.value !== Password);
+      setPasswordError(e.target.value !== password);
       setPasswordCheck(e.target.value);
-    }, [PasswordCheck]);
+    }, [passwordCheck]);
 
   const onChangeEmail = (e) => {
     setEmail(e.target.value);
@@ -59,17 +59,17 @@ const Signup = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (!EmailCheck) return;
+    if (!emailCheck) return;
 
-    if (Password !== PasswordCheck) {
+    if (password !== passwordCheck) {
       return setPasswordError(true);
     }
-    if (!NicknameCheck) return;
+    if (!nicknameCheck) return;
 
     const data = {
-      email: Email,
-      password: Password,
-      nickname: Nickname,
+      email: email,
+      password: password,
+      nickname: nickname,
     };
     console.log(data);
 
@@ -78,7 +78,7 @@ const Signup = () => {
       .then((response) => {
         console.log(response);
         if (response.data.result === "fail") {
-          setEmailValidate(false)
+          setNicknameValidate(false)
         } else
           {alert("회원 가입에 성공하셨습니다.");
         history.push('/signin');}
@@ -91,28 +91,25 @@ const Signup = () => {
         <div>
           <input
             name="Email"
-            value={Email}
+            value={email}
             required
             onChange={onChangeEmail}
             placeholder="Email"
           />
-          {!EmailCheck && (
+          {!emailCheck && (
             <div style={{ color: "red", fontSize: 12 }}>이메일 형식이 유효하지 않습니다.</div>
-          )}
-          {!EmailValidate && (
-            <div style={{ color: "red", fontSize: 12 }}>중복된 이메일이 존재합니다.</div>
           )}
         </div>
         <div>
           <input
             name="Password"
             type="Password"
-            value={Password}
+            value={password}
             required
             onChange={onChangePassword}
             placeholder="Password"
           />
-          {!PasswordVali && (
+          {!passwordVali && (
             <div style={{ color: "red", fontSize: 12 }}>
               대·소·특수문자, 숫자 최소 2개 이상 포함, 최소 10자리를 입력해주세요
             </div>
@@ -122,27 +119,30 @@ const Signup = () => {
           <input
             name="Password-check"
             type="Password"
-            value={PasswordCheck}
+            value={passwordCheck}
             required
             onChange={onChangePasswordCheck}
             placeholder="Confirm Password"
           />
-          {PasswordError && (
+          {passwordError && (
             <div style={{ color: "red", fontSize: 12 }}>비밀번호가 일치하지 않습니다.</div>
           )}
         </div>
         <div>
           <input
             name="Nickname"
-            value={Nickname}
+            value={nickname}
             required
             onChange={onChangeNickname}
             placeholder="Nickname"
           />
-          {!NicknameCheck && (
+          {!nicknameCheck && (
             <div style={{ color: "red", fontSize: 12 }}>
               한글, 대·소문자, 숫자만 입력해주세요
             </div>
+          )}
+          {!nicknameValidate && (
+            <div style={{ color: "red", fontSize: 12 }}>중복된 이메일이 존재합니다.</div>
           )}
         </div>
         <div>
