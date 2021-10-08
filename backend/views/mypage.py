@@ -8,7 +8,7 @@ from werkzeug.utils import secure_filename
 import os
 
 bcrypt = Bcrypt()
-bp = Blueprint('mypage', __name__)
+bp = Blueprint('mypage', __name__, url_prefix='/api')
 
 # 회원 프로필 조회
 @bp.route("/mypage", methods=["GET"])
@@ -21,7 +21,7 @@ def mypage():
     return jsonify(User.to_dict(user))
 
 # 유저 프로필 사진 변경
-@bp.route("/mypage/photo", methods=["GET", "POST", "PATCH"])
+@bp.route("/mypage/modify/photo", methods=["PATCH"])
 @jwt_required()
 def mypage_photo():
     user_id = get_jwt_identity
@@ -39,7 +39,7 @@ def mypage_photo():
         return jsonify({"result": "success"})
 
 # 친구의 닉네임을 검색
-@bp.route("/mypage/find/friend", methods=['GET', 'POST'])
+@bp.route("/mypage/find/friend", methods=['POST'])
 @jwt_required()
 def mypage_search():
     if request.method == "POST":

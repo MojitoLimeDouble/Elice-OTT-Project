@@ -3,7 +3,7 @@ from models import *
 from flask_jwt_extended import *
 import requests, json
 
-bp = Blueprint('detail', __name__)
+bp = Blueprint('detail', __name__, url_prefix='/api')
 
 @bp.route('/detail/<string:category>/<int:id>',  methods=['GET'])
 @jwt_required()

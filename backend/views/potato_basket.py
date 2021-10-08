@@ -3,7 +3,7 @@ from models import *
 from flask_jwt_extended import *
 import requests, json
 
-bp = Blueprint('potato_basket', __name__)
+bp = Blueprint('potato_basket', __name__, url_prefix='/api')
 # 완전 끝남 (1차)
 @bp.route('/potato_basket/<string:nickname>',  methods=['GET'])
 def potato_basket(nickname):

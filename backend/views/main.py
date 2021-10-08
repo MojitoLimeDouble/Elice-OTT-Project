@@ -4,7 +4,7 @@ from flask_jwt_extended import *
 from operator import itemgetter
 import requests, json
 
-bp = Blueprint('main', __name__)
+bp = Blueprint('main', __name__, url_prefix='/api')
 
 @bp.route('/movie/top_rated',  methods=['GET'])
 def movie_top_rated():
