@@ -1,26 +1,63 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import styled, { withTheme } from "styled-components";
+import React, { useEffect } from "react";
+// import { Link } from "react-router-dom";
+import styled from "styled-components";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import axios from "axios";
-import Prediction from "./Prediction";
+import Prediction, { Similar } from "./Prediction";
 
-const Main = () => {
-  const [contentsList, setContentsList] = useState("");
-  const [predictionList, setPredictionList] = useState("");
+const Main = ({
+  popularList,
+  predictableList,
+  similarList,
+  onPopular,
+  onPredictable,
+  onSimilar,
+}) => {
+  // state를 redux로 관리하여 사용자 겸험을 상승
+  // 서버와 미연결로 인하여 현재 임시 데이터 api를 불러와서 렌더링 중
   useEffect(() => {
-    axios
-      .get("https://yts.mx/api/v2/list_movies.json?limit=10")
-      .then((res) => setContentsList(res.data.data.movies));
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "https://yts.mx/api/v2/list_movies.json?limit=10"
+        );
+        onPopular(response.data.data.movies);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchData();
   }, []);
 
   useEffect(() => {
-    axios
-      .get("https://yts.mx/api/v2/list_movies.json?minimum_rating=9&limit=5")
-      .then((res) => setPredictionList(res.data.data.movies));
-  });
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "https://yts.mx/api/v2/list_movies.json?minimum_rating=9&limit=5"
+        );
+        onPredictable(response.data.data.movies);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "https://yts.mx/api/v2/list_movies.json?minimum_rating=5&limit=4"
+        );
+        onSimilar(response.data.data.movies);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchData();
+  }, []);
 
   const settings = {
     dots: true, // 슬라이드 밑에 점 보이게
@@ -43,11 +80,11 @@ const Main = () => {
         }}
       >
         <Header>인기 컨텐츠 Top 10</Header>
-        {!contentsList ? (
+        {!popularList ? (
           <h1 style={{ fontSize: "30px", color: "black" }}>Loading ...</h1>
         ) : (
           <StyledSlider {...settings}>
-            {contentsList.map((content) => (
+            {popularList.map((content) => (
               <CardBox key={content.id}>
                 <CardImg alt="인기 컨텐츠" src={content.medium_cover_image} />
                 <CardText>{content.title}</CardText>
@@ -62,27 +99,86 @@ const Main = () => {
           height: "100%",
         }}
       >
-              <h1>영화 흥행 예측작품</h1>
-              <div style={{height: "400px", background: "white"}}>Graph</div>
+        <h1>영화 흥행 예측작품</h1>
+        <div style={{ height: "400px", background: "white" }}>Graph</div>
         <Display>
+          <Order>
+            <h1>1</h1>
+            <h1>2</h1>
+            <h1>3</h1>
+            <h1>4</h1>
+            <h1>5</h1>
+          </Order>
           <Detail>
-            {!predictionList ? (
+            <h1>흥행 예측 작품</h1>
+            {!predictableList ? (
               <h1 style={{ fontSize: "30px", color: "black" }}>Loading ...</h1>
             ) : (
-              predictionList?.map((prediction) => (
+              predictableList.map((prediction) => (
                 <Prediction key={prediction.id} prediction={prediction} />
               ))
             )}
           </Detail>
-          <Detail>
-            {!predictionList ? (
-              <h1 style={{ fontSize: "30px", color: "black" }}>Loading ...</h1>
-            ) : (
-              predictionList?.map((prediction) => (
-                <Prediction key={prediction.id} prediction={prediction} />
-              ))
-            )}
-          </Detail>
+
+          <Details>
+            <h1>흥행 예측 작품의 코로나 이전 유사 작품들 </h1>
+            {/* 데이터 전달받고 나서 for 문을 통해 배열내 배열을 전달하는 방식을 사용하면 될 것으로 예상 */}
+            <SimilarDetail>
+              {!similarList ? (
+                <h1 style={{ fontSize: "30px", color: "black" }}>
+                  Loading ...
+                </h1>
+              ) : (
+                similarList?.map((prediction) => (
+                  <Similar key={prediction.id} prediction={prediction} />
+                ))
+              )}
+            </SimilarDetail>
+            <SimilarDetail>
+              {!similarList ? (
+                <h1 style={{ fontSize: "30px", color: "black" }}>
+                  Loading ...
+                </h1>
+              ) : (
+                similarList?.map((prediction) => (
+                  <Similar key={prediction.id} prediction={prediction} />
+                ))
+              )}
+            </SimilarDetail>
+            <SimilarDetail>
+              {!similarList ? (
+                <h1 style={{ fontSize: "30px", color: "black" }}>
+                  Loading ...
+                </h1>
+              ) : (
+                similarList?.map((prediction) => (
+                  <Similar key={prediction.id} prediction={prediction} />
+                ))
+              )}
+            </SimilarDetail>
+            <SimilarDetail>
+              {!similarList ? (
+                <h1 style={{ fontSize: "30px", color: "black" }}>
+                  Loading ...
+                </h1>
+              ) : (
+                similarList?.map((prediction) => (
+                  <Similar key={prediction.id} prediction={prediction} />
+                ))
+              )}
+            </SimilarDetail>
+            <SimilarDetail>
+              {!similarList ? (
+                <h1 style={{ fontSize: "30px", color: "black" }}>
+                  Loading ...
+                </h1>
+              ) : (
+                similarList?.map((prediction) => (
+                  <Similar key={prediction.id} prediction={prediction} />
+                ))
+              )}
+            </SimilarDetail>
+          </Details>
         </Display>
       </div>
     </div>
@@ -168,10 +264,33 @@ const CardText = styled.p`
 
 const Display = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: center;
 `;
-const Detail = styled.div`
+const Order = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: space-around;
   margin: 30px 0;
+  width: 100px;
+  font-size: 40px;
+`;
+
+const Detail = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin: 30px 0;
+  width: 300px;
+`;
+
+const Details = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin: 30px 0;
+`;
+
+const SimilarDetail = styled.div`
+  display: flex;
 `;
