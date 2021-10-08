@@ -3,7 +3,7 @@ from models import *
 from flask_jwt_extended import *
 import requests, json
 
-bp = Blueprint('like', __name__)
+bp = Blueprint('like', __name__, url_prefix='/api')
 
 @bp.route('/like',  methods=['PATCH'])
 @jwt_required()
@@ -60,8 +60,8 @@ def like():
         db.session.rollback()
         abort(400,{'error': 'str(e)'} )
 
-# 작품 목록 페이지에서 동작 방식 -> 
-@bp.route('/like/watch',  methods=['GET'])
+# 숫자 리스트로 좋아요 누른 리스트 표시
+@bp.route('/like/list',  methods=['GET'])
 @jwt_required()
 def like_watch():
     data = request.json

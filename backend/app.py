@@ -21,12 +21,11 @@ def create_app():
     Migrate().init_app(app, db)
 
 
-    from views import signup, signin, main, tv_list, tv_list_sorted, mypage,detail,like,potato_basket
+    from views import signup, signin, main, tv_list, mypage, detail, like, potato_basket
     app.register_blueprint(signup.bp)
     app.register_blueprint(signin.bp)
     app.register_blueprint(main.bp)
     app.register_blueprint(tv_list.bp)
-    app.register_blueprint(tv_list_sorted.bp)
     app.register_blueprint(mypage.bp)
     app.register_blueprint(detail.bp)
     app.register_blueprint(like.bp)
