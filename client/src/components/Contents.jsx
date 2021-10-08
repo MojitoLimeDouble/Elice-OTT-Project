@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 
 const Contents = () => {
-  const [ YouTubeList, setYouTubeList ] = useState();
+  const [YouTubeList, setYouTubeList] = useState();
   var request = require("request");
   var optionParams = {
     q: "오징어 게임", // 검색 조건
@@ -40,18 +40,22 @@ const Contents = () => {
   });
 
   return (
-  <div>
-    {contentsList.map((content) => (
-<CardBox key={content.id}>
-<CardImg alt="인기 컨텐츠" src={content.medium_cover_image} />
-<CardText>{content.title}</CardText>
-  </div>
-  )
+    <div>
+      {/* {contentsList.map((content) => (
+        <>
+          <CardBox key={content.id} />
+          <CardImg alt="인기 컨텐츠" src={content.medium_cover_image} />
+          <CardText>{content.title}</CardText>{" "}
+        </>
+      ))} */}
+    </div>
+  );
 };
 
 export default Contents;
 
-// const Contents = () => {
+
+  /*</div>// const Contents = () => {
 //     const [ detailPoster, setDetailPoster ] = useState(); // detail main poster picture
 //     const [ detailThumbnail, setDetailThumbnail ] = useState(); // YouTube Thumbnail
 
@@ -148,4 +152,5 @@ export default Contents;
 //    }
 //   }
 //  ]
-// }
+// }*/
+
