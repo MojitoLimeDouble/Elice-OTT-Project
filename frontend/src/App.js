@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Link } from 'react-router-dom';
-import Contents from './components/Contents';
+import ContentsDetail from './components/ContentsDetail';
 import Main from './components/Main';
 import Movie from './components/Movie';
 import MyPage from './components/MyPage';
@@ -26,7 +26,7 @@ const App = () => {
       <Route path="/signup" component={Signup} />
       <Route path="/main" component={MainPopularity} />
       {/* <Route path="/main" component={Main} /> */}
-      <Route path="/contents-detail/:id?" component={Contents} />
+      <Route path="/contents-detail/:id?" component={ContentsDetail} />
       <Route path="/movie" component={Movie} />
       <Route path="/tv" component={TV} />
       {/* <Route path="/potato-basket/:id?" component={PotatoBasket} /> */}
