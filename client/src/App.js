@@ -12,6 +12,7 @@ import TV from './components/TV';
 import Navigation from './components/Navigation';
 import Footer from './components/Footer';
 import MainPopularity from './containers/MainContainer';
+import PotatoBasketPopularity from './containers/PotatoBasketContainer';
 
 
 const App = () => {
@@ -28,7 +29,8 @@ const App = () => {
       <Route path="/contents-detail/:id?" component={Contents} />
       <Route path="/movie" component={Movie} />
       <Route path="/tv" component={TV} />
-      <Route path="/potato-basket/:id?" component={PotatoBasket} />
+      {/* <Route path="/potato-basket/:id?" component={PotatoBasket} /> */}
+      <Route path="/potato-basket/:id?" component={PotatoBasketPopularity} />
       <Route path="/mypage" component={MyPage} />
       <div>
         <Footer />
