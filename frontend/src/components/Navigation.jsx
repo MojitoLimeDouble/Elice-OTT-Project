@@ -7,8 +7,8 @@ const Navigation = ({ userid }) => {
     <Container>
       <Link to="/main">POTCHA</Link>
       <Menu>
-        <Link to={`/movie`}>Movie</Link>
-        <Link to={`/tv`}>TV</Link>
+        <Link to="/movie">Movie</Link>
+        <Link to="/tv">TV</Link>
         <Link to={`/potato-basket/${userid}`}>PotatoBasket</Link>
       </Menu>
       <Link to="/mypage">MyPage</Link>
