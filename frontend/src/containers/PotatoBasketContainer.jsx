@@ -1,19 +1,30 @@
 import React from "react";
 import { connect } from "react-redux";
 import PotatoBasket from "../components/PotatoBasket";
-import { popular } from "../modules/popularity";
+import { moviePotatoes, tvPotatoes } from "../modules/potatoes";
 
-const PotatoBasketPopularity = ({ popularList, popular }) => {
+const PotatoesInBasket = ({
+  moviePotatoList,
+  tvPotatoList,
+  moviePotatoes,
+  tvPotatoes,
+}) => {
   return (
     <div>
-      <PotatoBasket popularList={popularList} onPopular={popular} />
+      <PotatoBasket
+        moviePotatoList={moviePotatoList}
+        tvPotatoList={tvPotatoList}
+        onMoviePotatoes={moviePotatoes}
+        onTvPotatoes={tvPotatoes}
+      />
     </div>
   );
 };
 
 export default connect(
-  ({ catchOn }) => ({
-    popularList: catchOn.popularList,
+  ({ catchPotato }) => ({
+    moviePotatoList: catchPotato.moviePotatoList,
+    tvPotatoList: catchPotato.tvPotatoList,
   }),
-  { popular }
-)(PotatoBasketPopularity);
+  { moviePotatoes, tvPotatoes }
+)(PotatoesInBasket);
