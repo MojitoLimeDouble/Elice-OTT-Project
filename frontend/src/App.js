@@ -3,7 +3,7 @@ import { Route } from 'react-router-dom';
 import ContentsDetail from './components/ContentsDetail';
 // import Main from './components/Main';
 import Movie from './components/Movie';
-import MyPage from './components/MyPage';
+// import MyPage from './components/MyPage';
 import NonSignIn from './components/NonSignIn';
 // import PotatoBasket from './components/PotatoBasket';
 import Signin from './components/Signin';
@@ -11,8 +11,9 @@ import Signup from './components/Signup';
 import TV from './components/TV';
 import Navigation from './components/Navigation';
 import Footer from './components/Footer';
-import MainPopularity from './containers/MainContainer';
 import PotatoesInBasket from './containers/PotatoBasketContainer';
+import MainContainer from './containers/MainContainer';
+import MyPageContainer from "./containers/MyPageContainer";
 
 const App = () => {
   return (
@@ -30,7 +31,7 @@ const App = () => {
         <Signup />
       </Route>
       <Route path="/main">
-        <MainPopularity />
+        <MainContainer />
       </Route>
       {/* <Route path="/main" component={Main} /> */}
       <Route path="/contents-detail/:id?">
@@ -47,7 +48,7 @@ const App = () => {
         <PotatoesInBasket />
       </Route>
       <Route path="/mypage">
-        <MyPage />
+        <MyPageContainer />
       </Route>
       <div>
         <Footer />

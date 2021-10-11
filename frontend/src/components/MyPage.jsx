@@ -9,9 +9,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 
 // TODO: 컴포넌트 세분화 작업 필요
-//FIXME: just for demonstration(임시 default image url)
-const defaultImage =
-  "https://kdt-gitlab.elice.io/002-part3-ottservice/team5/sample-project/-/raw/develop/backend/static/image/default.png";
+// 나의 프로필(프로필 이미지, 닉네임 정보가 담기는) 컴포넌트
 export const Profile = ({
   user,
   onSubmit,
@@ -19,9 +17,11 @@ export const Profile = ({
   setOnToggle,
   onChange,
 }) => {
+  
   return (
     <div>
       <p>
+        {/* 사진과 input을 일치시킴 */}
         <label className="input-file-button" htmlFor="input-file">
           <Img src={user.image.file} alt="#" disabled={onToggle} />
         </label>
@@ -34,13 +34,18 @@ export const Profile = ({
           style={{ display: "none" }}
         />
       </p>
-      {!onToggle ? (
-        <button title="수정" onClick={() => setOnToggle(!onToggle)}>
+      {onToggle ? (
+        <button
+          title="수정"
+          style={{ cursor: "pointer" }}
+          onClick={() => setOnToggle(!onToggle)}
+        >
           <BsPencilFill />
         </button>
       ) : (
         <button
           title="저장"
+          style={{ cursor: "pointer" }}
           onClick={() => {
             setOnToggle(!onToggle);
             onSubmit();
@@ -54,6 +59,7 @@ export const Profile = ({
   );
 };
 
+// 친구 추가 후 친구목록에 나타는 친구의 프로필
 export const FriendProfile = ({ friend }) => {
   return (
     <div>
@@ -66,17 +72,12 @@ export const FriendProfile = ({ friend }) => {
   );
 };
 
-const MyPage = () => {
-  const [onToggle, setOnToggle] = useState(false);
-  const [user, setUser] = useState({
-    image: { file: defaultImage },
-    nickname: "nickname",
-  });
+const MyPage = ({user, friendList, onUserProfile, onRequestFriends}) => {
+  const [onToggle, setOnToggle] = useState(true);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [friendNickname, setFriendNickname] = useState("");
   const [existence, setExistence] = useState(false);
   const [friend, setFriend] = useState("");
-  const [friendList, setFriendList] = useState("");
 
   //TODO: API header에 auth정보 추가
   useEffect(() => {
@@ -85,7 +86,7 @@ const MyPage = () => {
         const response = await axios.get(
           `${process.env.REACT_APP_BASE_URL}/api/mypage`
         );
-        setUser({
+        onUserProfile({
           ...user,
           nickname: response.data.nickname,
           image: {
@@ -102,17 +103,17 @@ const MyPage = () => {
         const response = await axios.get(
           `${process.env.REACT_APP_BASE_URL}/api/mypage/list/friend`
         );
-        setFriendList(response.data);
+        onRequestFriends(response.data);
       } catch (error) {
         console.log(error.response);
       }
     };
     fetchFriend();
-  }, [user]);
+  }, []);
 
-  // 변경할 이미지를 선택할 경우 임시 이미지 URL을 생성하여, 일시적으로 프포필 사진을 변경함
+  // 변경할 이미지를 선택할 경우 임시 이미지 URL을 생성하여, 일시적으로 프로필 사진을 변경함
   const onChange = (event) => {
-    setUser({
+    onUserProfile({
       ...user,
       image: {
         file: URL.createObjectURL(event.target.files[0]),
@@ -121,6 +122,7 @@ const MyPage = () => {
     });
   };
 
+  // 저장버튼을 누를 경우 변경된 이미지를 서버에 전달
   const onSubmit = async () => {
     if (user.image.files) {
       const imageFile = Array.from(user.image.files);
@@ -141,14 +143,42 @@ const MyPage = () => {
   const showModal = () => {
     setIsModalVisible(true);
   };
+  // 닉네임을 입력창에 입력 후 서버에 전달 -> 친구의 프로필을 모달에 띄움
+    const onNicknameSubmit = async (e) => {
+      e.preventDefault();
+      setExistence(true);
+      const body = {
+        nickname: friendNickname,
+      };
+      if (friendNickname) {
+        try {
+          const response = await axios.post(
+            `${process.env.REACT_APP_BASE_URL}/api/mypage/find/friend`,
+            body
+          );
+          if (response.data.result === "fail") {
+            setExistence(true);
+            setTimeout(() => {
+              setExistence(false);
+            }, 2000);
+          } else {
+            setExistence(false);
+            setFriend(response.data);
+          }
+        } catch (error) {
+          console.log(error.response);
+        }
+      }
+    };
 
+  // 친구를 찾고 OK 버튼을 누를 경우 검색한 친구를 친구 목록에 추가하기 위해 서버에 요청 후 변경된 리스트를 받아옴
   const handleOk = async () => {
     const body = {
       nickname: friend.nickname,
     };
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_BASE_URL}/api/mypage/modify/photo`,
+        `${process.env.REACT_APP_BASE_URL}/api/mypage/add/friend`,
         body
       );
       console.log(response.data);
@@ -158,7 +188,7 @@ const MyPage = () => {
       const fetchData = await axios.get(
         `${process.env.REACT_APP_BASE_URL}/api/mypage/list/friend`
       );
-      setFriendList(fetchData.data);
+      onRequestFriends(fetchData.data);
     } catch (error) {
       console.log(error.response);
     }
@@ -170,33 +200,6 @@ const MyPage = () => {
     setExistence(false);
     setFriend("");
     setFriendNickname("");
-  };
-
-  const onNicknameSubmit = async (e) => {
-    e.preventDefault();
-    setExistence(true);
-    const body = {
-      nickname: friendNickname,
-    };
-    if (friendNickname) {
-      try {
-        const response = await axios.post(
-          `${process.env.REACT_APP_BASE_URL}/api/mypage/find/friend`,
-          body
-        );
-        if (response.data.result === "fail") {
-          setExistence(true);
-          setTimeout(() => {
-            setExistence(false);
-          }, 2000);
-        } else {
-          setExistence(false);
-          setFriend(response.data);
-        }
-      } catch (error) {
-        console.log(error.response);
-      }
-    }
   };
 
   return (
