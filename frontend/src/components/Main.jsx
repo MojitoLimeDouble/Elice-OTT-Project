@@ -16,7 +16,7 @@ const Main = ({
   onSimilar,
 }) => {
   // state를 redux로 관리하여 사용자 겸험을 상승
-  // 서버와 미연결로 인하여 현재 임시 데이터 api를 불러와서 렌더링 중
+  //FIXME: just for demonstration(서버와 미연결로 인하여 현재 임시 데이터 api를 불러와서 렌더링 중)
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -58,7 +58,8 @@ const Main = ({
     };
     fetchData();
   }, []);
-
+  
+  // FIXME: 필요없는 부분은 배포전 재확인 후 삭제 예정
   const settings = {
     dots: true, // 슬라이드 밑에 점 보이게
     infinite: true, // 무한으로 반복
@@ -70,7 +71,8 @@ const Main = ({
     centerMode: true,
     // centerPadding: "0px", // 0px 하면 슬라이드 끝쪽 이미지가 안잘림
   };
-
+ 
+  /*<h1 style={{ fontSize: "30px", color: "black" }}>Loading ...</h1>*/
   return (
     <div>
       <div
@@ -81,7 +83,10 @@ const Main = ({
       >
         <Header>인기 컨텐츠 Top 10</Header>
         {!popularList ? (
-          <h1 style={{ fontSize: "30px", color: "black" }}>Loading ...</h1>
+          <img
+            src="https://blog.kakaocdn.net/dn/cmseNl/btrhhTwEA0r/TNAoELO6JmK3rhVeNfGYy0/img.gif"
+            alt=""
+          />
         ) : (
           <StyledSlider {...settings}>
             {popularList.map((content) => (
@@ -112,7 +117,10 @@ const Main = ({
           <Detail>
             <h1>흥행 예측 작품</h1>
             {!predictableList ? (
-              <h1 style={{ fontSize: "30px", color: "black" }}>Loading ...</h1>
+              <img
+                src="https://blog.kakaocdn.net/dn/cmseNl/btrhhTwEA0r/TNAoELO6JmK3rhVeNfGYy0/img.gif"
+                alt=""
+              />
             ) : (
               predictableList.map((prediction) => (
                 <Prediction key={prediction.id} prediction={prediction} />
@@ -122,12 +130,14 @@ const Main = ({
 
           <Details>
             <h1>흥행 예측 작품의 코로나 이전 유사 작품들 </h1>
+            {/*FIXME: just for demonstration */}
             {/* 데이터 전달받고 나서 for 문을 통해 배열내 배열을 전달하는 방식을 사용하면 될 것으로 예상 */}
             <SimilarDetail>
               {!similarList ? (
-                <h1 style={{ fontSize: "30px", color: "black" }}>
-                  Loading ...
-                </h1>
+                <img
+                  src="https://blog.kakaocdn.net/dn/cmseNl/btrhhTwEA0r/TNAoELO6JmK3rhVeNfGYy0/img.gif"
+                  alt=""
+                />
               ) : (
                 similarList?.map((prediction) => (
                   <Similar key={prediction.id} prediction={prediction} />
@@ -136,9 +146,10 @@ const Main = ({
             </SimilarDetail>
             <SimilarDetail>
               {!similarList ? (
-                <h1 style={{ fontSize: "30px", color: "black" }}>
-                  Loading ...
-                </h1>
+                <img
+                  src="https://blog.kakaocdn.net/dn/cmseNl/btrhhTwEA0r/TNAoELO6JmK3rhVeNfGYy0/img.gif"
+                  alt=""
+                />
               ) : (
                 similarList?.map((prediction) => (
                   <Similar key={prediction.id} prediction={prediction} />
@@ -147,9 +158,10 @@ const Main = ({
             </SimilarDetail>
             <SimilarDetail>
               {!similarList ? (
-                <h1 style={{ fontSize: "30px", color: "black" }}>
-                  Loading ...
-                </h1>
+                <img
+                  src="https://blog.kakaocdn.net/dn/cmseNl/btrhhTwEA0r/TNAoELO6JmK3rhVeNfGYy0/img.gif"
+                  alt=""
+                />
               ) : (
                 similarList?.map((prediction) => (
                   <Similar key={prediction.id} prediction={prediction} />
@@ -158,9 +170,10 @@ const Main = ({
             </SimilarDetail>
             <SimilarDetail>
               {!similarList ? (
-                <h1 style={{ fontSize: "30px", color: "black" }}>
-                  Loading ...
-                </h1>
+                <img
+                  src="https://blog.kakaocdn.net/dn/cmseNl/btrhhTwEA0r/TNAoELO6JmK3rhVeNfGYy0/img.gif"
+                  alt=""
+                />
               ) : (
                 similarList?.map((prediction) => (
                   <Similar key={prediction.id} prediction={prediction} />
@@ -169,9 +182,10 @@ const Main = ({
             </SimilarDetail>
             <SimilarDetail>
               {!similarList ? (
-                <h1 style={{ fontSize: "30px", color: "black" }}>
-                  Loading ...
-                </h1>
+                <img
+                  src="https://blog.kakaocdn.net/dn/cmseNl/btrhhTwEA0r/TNAoELO6JmK3rhVeNfGYy0/img.gif"
+                  alt=""
+                />
               ) : (
                 similarList?.map((prediction) => (
                   <Similar key={prediction.id} prediction={prediction} />
@@ -187,6 +201,7 @@ const Main = ({
 
 export default Main;
 
+//TODO: styled-components 파일은 가급적 한 파일에서 관리
 const Header = styled.h1`
   margin-left: 25px;
   position: absolute;
