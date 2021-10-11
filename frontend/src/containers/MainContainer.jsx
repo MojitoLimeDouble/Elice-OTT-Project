@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import Main from "../components/Main";
 import { popular, predictable, similar } from "../modules/popularity";
 
-const MainPopularity = ({
+const MainContainer = ({
   popularList,
   predictableList,
   similarList,
@@ -12,16 +12,14 @@ const MainPopularity = ({
   similar,
 }) => {
   return (
-    <div>
-      <Main
-        popularList={popularList}
-        predictableList={predictableList}
-        similarList={similarList}
-        onPopular={popular}
-        onPredictable={predictable}
-        onSimilar={similar}
-      />
-    </div>
+    <Main
+      popularList={popularList}
+      predictableList={predictableList}
+      similarList={similarList}
+      onPopular={popular}
+      onPredictable={predictable}
+      onSimilar={similar}
+    />
   );
 };
 
@@ -32,4 +30,4 @@ export default connect(
     similarList: catchOn.similarList,
   }),
   { popular, predictable, similar }
-)(MainPopularity);
+)(MainContainer);

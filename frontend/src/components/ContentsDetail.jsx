@@ -4,14 +4,14 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const ContentsDetail = (props) => {
-  const [ youtubeData, setYoutubeData ] = useState([]);
+  const [youtubeData, setYoutubeData] = useState([]);
   // const [ tmdbData, setTmdbData ] = useState()
 
   useEffect(() => {
     let optionParams = {
       q: "오징어 게임 리뷰", // 검색 조건
       part: "snippet", // 정보 출력 조건
-      key: "AIzaSyCDp5_pK7F9waWSkTnaZvCCX_EY-Euq-lI", // API KEY
+      // key: "AIzaSyCDp5_pK7F9waWSkTnaZvCCX_EY-Euq-lI", // API KEY
       type: "video", // youtube의 video 중에서 검색
       maxResults: 3, // 상위 3개 출력
       regionCode: "KR",
@@ -34,10 +34,10 @@ const ContentsDetail = (props) => {
           thumbnail: item.snippet.thumbnails.high.url,
         });
       });
+      setYoutubeData(...youtubeData, youtubeArray);
     });
-    setYoutubeData(...youtubeData, youtubeArray);
   }, []);
-  console.log(youtubeData[1]);
+  console.log(youtubeData);
 
   // ▼ main에서 영화를 누르는지, tv를 누르는지에 따라 요청해야할 api가 달라야하지 않을까
   // useEffect((props) => {
@@ -58,6 +58,7 @@ const ContentsDetail = (props) => {
     <ContainerBlock>
       <div className="container">
         <ContentsBlock>
+          {youtubeData[1] == null ? <h1>fail</h1> : youtubeData[1].title}
           {/* <ContentsItem tmdb={tmdb ? {tmdbMovieData} : {tmdbTvData}} /> */}
           <ContentsItem youtube={youtubeData} />
           <ContentsItem youtube={youtubeData} />
@@ -65,7 +66,7 @@ const ContentsDetail = (props) => {
         </ContentsBlock>
       </div>
     </ContainerBlock>
-  )
+  );
 };
 
 export default ContentsDetail;
@@ -110,4 +111,4 @@ const ContainerBlock = styled.div`
     line-height: 300px;
     position: relative;
   }
-`
+`;
