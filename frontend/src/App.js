@@ -1,18 +1,18 @@
-import React from "react";
-import { Route, Link } from "react-router-dom";
-import ContentsDetail from "./components/ContentsDetail";
-import Main from "./components/Main";
-import Movie from "./components/Movie";
-import MyPage from "./components/MyPage";
-import NonSignIn from "./components/NonSignIn";
-import PotatoBasket from "./components/PotatoBasket";
-import Signin from "./components/Signin";
-import Signup from "./components/Signup";
-import TV from "./components/TV";
-import Navigation from "./components/Navigation";
-import Footer from "./components/Footer";
-import MainPopularity from "./containers/MainContainer";
-import PotatoBasketPopularity from "./containers/PotatoBasketContainer";
+import React from 'react';
+import { Route } from 'react-router-dom';
+import ContentsDetail from './components/ContentsDetail';
+// import Main from './components/Main';
+import Movie from './components/Movie';
+import MyPage from './components/MyPage';
+import NonSignIn from './components/NonSignIn';
+// import PotatoBasket from './components/PotatoBasket';
+import Signin from './components/Signin';
+import Signup from './components/Signup';
+import TV from './components/TV';
+import Navigation from './components/Navigation';
+import Footer from './components/Footer';
+import MainPopularity from './containers/MainContainer';
+import PotatoesInBasket from './containers/PotatoBasketContainer';
 
 const App = () => {
   return (
@@ -44,7 +44,7 @@ const App = () => {
       </Route>
       {/* <Route path="/potato-basket/:id?" component={PotatoBasket} /> */}
       <Route path="/potato-basket/:id?">
-        <PotatoBasketPopularity />
+        <PotatoesInBasket />
       </Route>
       <Route path="/mypage">
         <MyPage />

@@ -1,23 +1,37 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import Prediction, { Similar } from "./PredictionPotato";
+import PosterAndTitle from "./PosterAndTitle";
 
 const PotatoBasket = ({
-  potatoMovieList,
-  potatoTvList,
-  popularList,
-  onPopular,
+  moviePotatoList,
+  tvPotatoList,
+  onMoviePotatoes,
+  onTvPotatoes,
 }) => {
-  // 은열님의 외부 api 받아오는 코드 사용
-  // 추후 potato movie list와 potato tv list로 각각 받아올 예정
+  // 은열님의 외부 api 받아오는 코드 동일하게 적용
+  // 추후 데이터 베이스에서 영화와 tv 프로그램에 대한 각각의 리스트를 받을 예정
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "https://yts.mx/api/v2/list_movies.json?limit=4"
+          "https://yts.mx/api/v2/list_movies.json?limit=3"
         );
-        onPopular(response.data.data.movies);
+        onMoviePotatoes(response.data.data.movies);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "https://yts.mx/api/v2/list_movies.json?limit=10"
+        );
+        onTvPotatoes(response.data.data.movies);
       } catch (e) {
         console.log(e);
       }
@@ -31,17 +45,17 @@ const PotatoBasket = ({
         <Basket>
           <BasketTitle>영화 감자 바구니</BasketTitle>
           <Potatoes>
-            <SimilarDetail>
-              {!popularList ? (
+            <ListDetail>
+              {!moviePotatoList ? (
                 <h1 style={{ fontSize: "30px", color: "black" }}>
                   Loading ...
                 </h1>
               ) : (
-                popularList?.map((prediction) => (
-                  <Similar key={prediction.id} prediction={prediction} />
+                moviePotatoList?.map((prediction) => (
+                  <PosterAndTitle key={prediction.id} prediction={prediction} />
                 ))
               )}
-            </SimilarDetail>
+            </ListDetail>
           </Potatoes>
         </Basket>
         <PotatoAnalysis>영화 찐 감자 분석</PotatoAnalysis>
@@ -50,28 +64,17 @@ const PotatoBasket = ({
         <Basket>
           <BasketTitle>TV 감자 바구니</BasketTitle>
           <Potatoes>
-            <SimilarDetail>
-              {!popularList ? (
+            <ListDetail>
+              {!tvPotatoList ? (
                 <h1 style={{ fontSize: "30px", color: "black" }}>
                   Loading ...
                 </h1>
               ) : (
-                popularList?.map((prediction) => (
-                  <Similar key={prediction.id} prediction={prediction} />
+                tvPotatoList?.map((prediction) => (
+                  <PosterAndTitle key={prediction.id} prediction={prediction} />
                 ))
               )}
-            </SimilarDetail>
-            <SimilarDetail>
-              {!popularList ? (
-                <h1 style={{ fontSize: "30px", color: "black" }}>
-                  Loading ...
-                </h1>
-              ) : (
-                popularList?.map((prediction) => (
-                  <Similar key={prediction.id} prediction={prediction} />
-                ))
-              )}
-            </SimilarDetail>
+            </ListDetail>
           </Potatoes>
         </Basket>
         <PotatoAnalysis>TV 찐 감자 분석</PotatoAnalysis>
@@ -81,8 +84,6 @@ const PotatoBasket = ({
 };
 
 export default PotatoBasket;
-
-// styled components
 
 const Container = styled.div`
   display: flex;
@@ -112,6 +113,7 @@ const PotatoAnalysis = styled.div`
   background-color: gainsboro;
 `;
 
-const SimilarDetail = styled.div`
-  display: flex;
+const ListDetail = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
 `;
