@@ -1,11 +1,12 @@
-import React, { useEffect } from "react";
-// import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import axios from "axios";
 import Prediction, { Similar } from "./Prediction";
+import Tab from "./Tab";
 
 const Main = ({
   popularList,
@@ -15,50 +16,56 @@ const Main = ({
   onPredictable,
   onSimilar,
 }) => {
+  const [currTab, setCurrTab] = useState("MOVIE");
   // state를 redux로 관리하여 사용자 겸험을 상승
   //FIXME: just for demonstration(서버와 미연결로 인하여 현재 임시 데이터 api를 불러와서 렌더링 중)
-  useEffect(() => {
-    const fetchData = async () => {
+  const requestContents = (subject) => {
+    const hitContents = async () => {
       try {
         const response = await axios.get(
-          "https://yts.mx/api/v2/list_movies.json?limit=10"
-        );
-        onPopular(response.data.data.movies);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          "https://yts.mx/api/v2/list_movies.json?minimum_rating=9&limit=5"
+          `${process.env.REACT_APP_BASE_URL}/api/${subject}/hit`
         );
         onPredictable(response.data.data.movies);
-      } catch (e) {
-        console.log(e);
+      } catch (error) {
+        console.log(error.response);
       }
     };
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    const fetchData = async () => {
+    const similarContents = async () => {
       try {
         const response = await axios.get(
-          "https://yts.mx/api/v2/list_movies.json?minimum_rating=5&limit=4"
+          `${process.env.REACT_APP_BASE_URL}/api/${subject}/similar`
         );
         onSimilar(response.data.data.movies);
-      } catch (e) {
-        console.log(e);
+      } catch (error) {
+        console.log(error.response);
       }
     };
-    fetchData();
+    hitContents();
+    similarContents();
+  };
+
+  const topRated = async () => {
+    try {
+      const response = await axios.get(
+        "https://yts.mx/api/v2/list_movies.json?limit=10"
+      );
+      onPopular(response.data.data.movies);
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+  const subject = currTab.toLowerCase();
+  useEffect(() => {
+    topRated();
   }, []);
-  
+  useEffect(() => {
+    requestContents(subject);
+  }, [currTab]);
+
+  const handleClickTab = (tab) => {
+    setCurrTab(tab);
+  };
+  console.log("currTab", currTab);
   // FIXME: 필요없는 부분은 배포전 재확인 후 삭제 예정
   const settings = {
     dots: true, // 슬라이드 밑에 점 보이게
@@ -71,7 +78,7 @@ const Main = ({
     centerMode: true,
     // centerPadding: "0px", // 0px 하면 슬라이드 끝쪽 이미지가 안잘림
   };
- 
+
   /*<h1 style={{ fontSize: "30px", color: "black" }}>Loading ...</h1>*/
   return (
     <div>
@@ -91,8 +98,10 @@ const Main = ({
           <StyledSlider {...settings}>
             {popularList.map((content) => (
               <CardBox key={content.id}>
-                <CardImg alt="인기 컨텐츠" src={content.medium_cover_image} />
-                <CardText>{content.title}</CardText>
+                <Link to={`/detail/${content.category}/${content.id}`}>
+                  <CardImg alt="인기 컨텐츠" src={content.medium_cover_image} />
+                  <CardText>{content.title}</CardText>
+                </Link>
               </CardBox>
             ))}
           </StyledSlider>
@@ -104,96 +113,57 @@ const Main = ({
           height: "100%",
         }}
       >
-        <h1>영화 흥행 예측작품</h1>
-        <div style={{ height: "400px", background: "white" }}>Graph</div>
-        <Display>
-          <Order>
-            <h1>1</h1>
-            <h1>2</h1>
-            <h1>3</h1>
-            <h1>4</h1>
-            <h1>5</h1>
-          </Order>
-          <Detail>
-            <h1>흥행 예측 작품</h1>
-            {!predictableList ? (
-              <img
-                src="https://blog.kakaocdn.net/dn/cmseNl/btrhhTwEA0r/TNAoELO6JmK3rhVeNfGYy0/img.gif"
-                alt=""
-              />
-            ) : (
-              predictableList.map((prediction) => (
-                <Prediction key={prediction.id} prediction={prediction} />
-              ))
-            )}
-          </Detail>
+        <div>
+          <Tab currTab={currTab} onClick={handleClickTab} />
+          <h1>{`${currTab} 흥행 예측작품`}</h1>
+          <div style={{ height: "400px", background: "white" }}>Graph</div>
+          <Display>
+            <Order>
+              <h1>1</h1>
+              <h1>2</h1>
+              <h1>3</h1>
+              <h1>4</h1>
+              <h1>5</h1>
+            </Order>
+            <Detail>
+              <h1>흥행 예측 작품</h1>
+              {!predictableList ? (
+                <img
+                  src="https://blog.kakaocdn.net/dn/cmseNl/btrhhTwEA0r/TNAoELO6JmK3rhVeNfGYy0/img.gif"
+                  alt=""
+                />
+              ) : (
+                predictableList.map((prediction) => (
+                  <Prediction key={prediction.id} prediction={prediction}>
+                    <Link
+                      to={`/detail/${prediction.category}/${prediction.id}`}
+                    ></Link>
+                  </Prediction>
+                ))
+              )}
+            </Detail>
 
-          <Details>
-            <h1>흥행 예측 작품의 코로나 이전 유사 작품들 </h1>
-            {/*FIXME: just for demonstration */}
-            {/* 데이터 전달받고 나서 for 문을 통해 배열내 배열을 전달하는 방식을 사용하면 될 것으로 예상 */}
-            <SimilarDetail>
-              {!similarList ? (
-                <img
-                  src="https://blog.kakaocdn.net/dn/cmseNl/btrhhTwEA0r/TNAoELO6JmK3rhVeNfGYy0/img.gif"
-                  alt=""
-                />
-              ) : (
-                similarList?.map((prediction) => (
-                  <Similar key={prediction.id} prediction={prediction} />
-                ))
-              )}
-            </SimilarDetail>
-            <SimilarDetail>
-              {!similarList ? (
-                <img
-                  src="https://blog.kakaocdn.net/dn/cmseNl/btrhhTwEA0r/TNAoELO6JmK3rhVeNfGYy0/img.gif"
-                  alt=""
-                />
-              ) : (
-                similarList?.map((prediction) => (
-                  <Similar key={prediction.id} prediction={prediction} />
-                ))
-              )}
-            </SimilarDetail>
-            <SimilarDetail>
-              {!similarList ? (
-                <img
-                  src="https://blog.kakaocdn.net/dn/cmseNl/btrhhTwEA0r/TNAoELO6JmK3rhVeNfGYy0/img.gif"
-                  alt=""
-                />
-              ) : (
-                similarList?.map((prediction) => (
-                  <Similar key={prediction.id} prediction={prediction} />
-                ))
-              )}
-            </SimilarDetail>
-            <SimilarDetail>
-              {!similarList ? (
-                <img
-                  src="https://blog.kakaocdn.net/dn/cmseNl/btrhhTwEA0r/TNAoELO6JmK3rhVeNfGYy0/img.gif"
-                  alt=""
-                />
-              ) : (
-                similarList?.map((prediction) => (
-                  <Similar key={prediction.id} prediction={prediction} />
-                ))
-              )}
-            </SimilarDetail>
-            <SimilarDetail>
-              {!similarList ? (
-                <img
-                  src="https://blog.kakaocdn.net/dn/cmseNl/btrhhTwEA0r/TNAoELO6JmK3rhVeNfGYy0/img.gif"
-                  alt=""
-                />
-              ) : (
-                similarList?.map((prediction) => (
-                  <Similar key={prediction.id} prediction={prediction} />
-                ))
-              )}
-            </SimilarDetail>
-          </Details>
-        </Display>
+            <Details>
+              <h1>흥행 예측 작품의 코로나 이전 유사 작품들 </h1>
+              {/*FIXME: just for demonstration */}
+              {[1, 2, 3, 4, 5].map((num) => (
+                <SimilarDetail>
+                  {!similarList ? (
+                    <div></div>
+                  ) : (
+                    similarList.map((prediction) => (
+                      <Similar key={prediction.id} prediction={prediction}>
+                        <Link
+                          to={`/detail/${prediction.category}/${prediction.id}`}
+                        ></Link>
+                      </Similar>
+                    ))
+                  )}
+                </SimilarDetail>
+              ))}
+            </Details>
+          </Display>
+        </div>
       </div>
     </div>
   );
