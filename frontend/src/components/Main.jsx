@@ -7,6 +7,8 @@ import Slider from "react-slick";
 import axios from "axios";
 import Prediction, { Similar } from "./Prediction";
 import Tab from "./Tab";
+import MyResponsivePie from "./GraphComponent";
+import { data1, data2, data3, data4, data5, data6 } from "./GraphData";
 
 const Main = ({
   popularList,
@@ -116,7 +118,35 @@ const Main = ({
         <div>
           <Tab currTab={currTab} onClick={handleClickTab} />
           <h1>{`${currTab} 흥행 예측작품`}</h1>
-          <div style={{ height: "400px", background: "white" }}>Graph</div>
+          <div style={{ height: "400px", background: "white" }}>
+            {currTab === "MOVIE" ? (
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fill, minmax(33%, auto))",
+                }}
+              >
+                {[data1, data2, data3].map((data, idx) => (
+                  <div style={{ height: "300px" }}>
+                    <MyResponsivePie data={data} key={idx} />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(3, 1fr",
+                }}
+              >
+                {[data4, data5, data6].map((data,idx) => (
+                  <div style={{ height: "300px" }}>
+                    <MyResponsivePie data={data} key={idx} />
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
           <Display>
             <Order>
               <h1>1</h1>
