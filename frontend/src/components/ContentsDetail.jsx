@@ -1,74 +1,99 @@
 import styled from "styled-components";
 import ContentsItem from "./ContentsItem";
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 
-const ContentsDetail = (props) => {
-  const [youtubeData, setYoutubeData] = useState([]);
-  // const [ tmdbData, setTmdbData ] = useState()
+// const YoutubeList = ({ youtube }) => {
+//   return (
+//     <div>
+//       <img src={`${youtube.thumbnail}`} alt="youtubeThumbnail" />
+//     </div>
+//   )
+// }
+
+const ContentsDetail = () => {
+  const [ youtubeData, setYoutubeData ] = useState([]);
+  const [ tmdbData, setTmdbData ] = useState([]);
+  const [ tmdbDataId, setTmdbDataId ] = useState(0);
+
   const params = useParams();
   console.log("params:", params)
+  
   useEffect(() => {
-    let optionParams = {
-      q: "오징어 게임 리뷰", // 검색 조건
-      part: "snippet", // 정보 출력 조건
-      // key: "AIzaSyCDp5_pK7F9waWSkTnaZvCCX_EY-Euq-lI", // API KEY
-      type: "video", // youtube의 video 중에서 검색
-      maxResults: 3, // 상위 3개 출력
-      regionCode: "KR",
-    };
-    optionParams.q = encodeURI(optionParams.q);
+    for (let qOption of ["리뷰", "해석", "추천"]) {
+      var optionParams = {
+        q: params.title + qOption, 
+    // let optionParams = {
+    //   q: "오징어 게임 리뷰", // 검색 조건
+        part: "snippet", // 정보 출력 조건
+        key: "AIzaSyCHpkJs6EOWHMdfbfhGpxRt0YQ7G3lfN-M", // API KEY
+        type: "video", // youtube의 video 중에서 검색
+        maxResults: 1, // 상위 1개 출력
+        regionCode: "KR",
+      };
+      optionParams.q = encodeURI(optionParams.q);
 
-    let url = "https://www.googleapis.com/youtube/v3/search?";
-    for (var option in optionParams) {
-      url += option + "=" + optionParams[option] + "&";
-    }
+      let url = "https://www.googleapis.com/youtube/v3/search?";
+      for (var option in optionParams) {
+        url += option + "=" + optionParams[option] + "&";
+      }
 
-    url = url.substr(0, url.length - 1);
+      url = url.substr(0, url.length - 1);
 
-    const youtubeArray = [];
-    axios.get(url).then((response) => {
-      response.data.items.forEach((item) => {
-        youtubeArray.push({
-          title: item.snippet.title,
-          url: "https://www.youtube.com/watch?v=" + item.id.videoId,
-          thumbnail: item.snippet.thumbnails.high.url,
+      const youtubeArray = [];
+      axios.get(url).then((response) => {
+        response.data.items.forEach((item) => {
+          youtubeArray.push({
+            title: item.snippet.title,
+            url: "https://www.youtube.com/watch?v=" + item.id.videoId,
+            thumbnail: item.snippet.thumbnails.high.url,
+          });
         });
+        setYoutubeData(...youtubeData, youtubeArray);
       });
-      setYoutubeData(...youtubeData, youtubeArray);
-    });
-  }, []);
-  console.log(youtubeData);
+    }    
+  }, [youtubeData]);
+    // console.log(youtubeData[1]);
 
-  // ▼ main에서 영화를 누르는지, tv를 누르는지에 따라 요청해야할 api가 달라야하지 않을까
-  // useEffect((props) => {
-  //   if ( props.movie ) {
-  //     axios
-  //       // ▼ detail 뒤에 category(movie, tv) 어떻게 전달할것인지 논의(임시 movie 고정)
-  //       .get(`${process.env.REACT_APP_BASE_URL}/detail/movie/`, `타이틀 정보`)
-  //       .then(response => setTmdbData(response.data.content))
-  //     }
-  //   if ( props.tv ) {
-  //     axios
-  //       .get(`${process.env.REACT_APP_BASE_URL}/detail/tv/`, `타이틀 정보`)
-  //       .then(response => setTmdbData(response.data.content))
-  //   }
-  // }, []);
+  useEffect(() => {
+    const copyTmdb = [];
+    axios
+    .get(`${process.env.REACT_APP_BASE_URL}/detail/${params.category}/${params.id}`, ) // 컨텐츠 카테고리정보랑 해당 컨텐츠 id값(백엔드 API Get : category, id)
+    .then(response => {
+      console.log(response);
+      if (response.data.result === "success") {
+        response.data.items.map(item => {
+          copyTmdb.concat({
+            id: tmdbDataId,
+            title: item.title,
+            poster: item.poster_path,
+            like: item.like_count,
+            overview: item.overview,
+          });
+        });
+      };
+      setTmdbDataId( tmdbDataId + 1 ); // id 값 증가
+      setTmdbData(...tmdbData, copyTmdb);
+    });
+  }, [])
 
   return (
     <ContainerBlock>
       <div className="container">
+        {/* <h1>{youtubeData.title}</h1>
+        {youtubeData.map(youtube => (
+          <YoutubeList youtube={youtube} key={params.id}/>
+        ))} */}
         <ContentsBlock>
-          {youtubeData[1] == null ? <h1>fail</h1> : youtubeData[1].title}
-          {/* <ContentsItem tmdb={tmdb ? {tmdbMovieData} : {tmdbTvData}} /> */}
-          <ContentsItem youtube={youtubeData} />
-          <ContentsItem youtube={youtubeData} />
-          <ContentsItem youtube={youtubeData} />
+          <ContentsItem youtube={youtubeData[0]} />
+          <ContentsItem youtube={youtubeData[1]} />
+          <ContentsItem youtube={youtubeData[2]} />
         </ContentsBlock>
       </div>
     </ContainerBlock>
-  );
+  )
 };
 
 export default ContentsDetail;
@@ -113,4 +138,4 @@ const ContainerBlock = styled.div`
     line-height: 300px;
     position: relative;
   }
-`;
+`

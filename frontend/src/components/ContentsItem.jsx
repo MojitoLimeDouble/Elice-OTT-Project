@@ -2,13 +2,12 @@ import styled from "styled-components";
 
 const ContentsItem = ({ youtube }) => { // tmdb 추가해야함
     // const { }
-    const { title, url, thumbnails } = youtube;
+    const { title, url, thumbnail } = youtube; // 에러
 
     return (
         <div>
-            {/* <MainPosterBlock> */}
-                {/* 백에서 보내주는 포스터 이미지 값이 무엇인지??? */}
-                {/* <div className="mainPoster">
+            {/* <MainPosterBlock>
+                <div className="mainPoster">
                     <img src={tmdb} />
                 </div>
             </MainPosterBlock> */}
@@ -16,7 +15,7 @@ const ContentsItem = ({ youtube }) => { // tmdb 추가해야함
                 {thumbnails && (
                     <div className="thumbnail">
                         <a href={url} target="_blank" rel="noreferrer noopener">
-                            <img src={thumbnails} alt="thumbnail" />
+                            <img src={thumbnail} alt="thumbnail" />
                         </a>
                     </div>
                 )}
