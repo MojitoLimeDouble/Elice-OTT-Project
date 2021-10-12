@@ -87,8 +87,17 @@ def mypage_list_friend():
     friends = [Friend.to_dict(i) for i in friend_list]
     return jsonify(friends)
 
-# 회원 탈퇴 10-08까지
+# 회원 탈퇴(15일 이후 삭제는 미적용)
 @bp.route("/mypage/delete/user", methods=['DELETE'])
 @jwt_required()
 def delete_user():
-    return ''
+    user_id = get_jwt_identity()
+    user_delete = User.query.get(user_id)
+    frined_delete = Friend.query.get(user_id)
+
+    db.session.delete(user_delete)
+    db.session.delete(frined_delete)
+
+    db.session.commit()
+
+    return '회원 탈퇴를 성공했습니다.'

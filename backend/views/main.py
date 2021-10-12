@@ -54,18 +54,23 @@ def top_rated():
     top_data_movie = response_movie.json()['results']
     top_data_tv = response_tv.json()['results']
 
-    top_contents = []
+    top_movie = []
+    top_tv = []
     
     # movie 데이터 넣기
     for i in top_data_movie:
-        row = { 'popularity': i['popularity'], 'title':i['title'], 'poster_path': i['poster_path'],'release_date': i['release_date']}
-        top_contents.append(row)
+        row = { 'id': i['id'], 'popularity': i['popularity'], 'title':i['title'], 'poster_path': i['poster_path'],'release_date': i['release_date'], 'category': 'movie'}
+        top_movie.append(row)
 
     # tv 데이터 넣기
     for i in top_data_tv:
-        row = { 'popularity': i['popularity'], 'name':i['name'], 'poster_path': i['poster_path'],'first_air_date': i['first_air_date']}
-        top_contents.append(row)
+        row = { 'id': i['id'], 'popularity': i['popularity'], 'name':i['name'], 'poster_path': i['poster_path'],'first_air_date': i['first_air_date'], 'category': 'tv'}
+        top_tv.append(row)
         
-    a = sorted(top_contents, key=itemgetter('popularity'))
-    b = sorted(a, key=itemgetter('popularity'), reverse=True)
-    return jsonify(b[0:10])
+    movie_sorted = sorted(top_movie, key=itemgetter('popularity'))
+    movie_sorted = sorted(movie_sorted, key=itemgetter('popularity'), reverse=True)
+
+    tv_sorted = sorted(top_tv, key=itemgetter('popularity'))
+    tv_sorted = sorted(tv_sorted, key=itemgetter('popularity'), reverse=True)
+
+    return jsonify(movie_sorted[0:10], tv_sorted[0:10])
