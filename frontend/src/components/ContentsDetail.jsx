@@ -2,11 +2,13 @@ import styled from "styled-components";
 import ContentsItem from "./ContentsItem";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const ContentsDetail = (props) => {
   const [youtubeData, setYoutubeData] = useState([]);
   // const [ tmdbData, setTmdbData ] = useState()
-
+  const params = useParams();
+  console.log("params:", params)
   useEffect(() => {
     let optionParams = {
       q: "오징어 게임 리뷰", // 검색 조건

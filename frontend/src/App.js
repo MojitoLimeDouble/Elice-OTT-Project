@@ -34,7 +34,7 @@ const App = () => {
         <MainContainer />
       </Route>
       {/* <Route path="/main" component={Main} /> */}
-      <Route path="/contents-detail/:id?">
+      <Route path="/detail/:category/:id?">
         <ContentsDetail />
       </Route>
       <Route path="/movie">
