@@ -1,141 +1,128 @@
-import styled from "styled-components";
-import ContentsItem from "./ContentsItem";
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-
-// const YoutubeList = ({ youtube }) => {
-//   return (
-//     <div>
-//       <img src={`${youtube.thumbnail}`} alt="youtubeThumbnail" />
-//     </div>
-//   )
-// }
+import { imgUrl } from "../apis/api";
 
 const ContentsDetail = () => {
-  const [ youtubeData, setYoutubeData ] = useState([]);
-  const [ tmdbData, setTmdbData ] = useState([]);
-  const [ tmdbDataId, setTmdbDataId ] = useState(0);
+  const [contentsInfo, setContentsInfo] = useState("");
+  const [youtubeList, setYoutubeList] = useState("");
+  const [like, setLike] = useState(false);
 
   const params = useParams();
-  console.log("params:", params)
-  
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_BASE_URL}/api/${params.category}/${params.id}`
+      );
+      setContentsInfo(response.data);
+      setLike(response.data.is_like);
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+
   useEffect(() => {
-    for (let qOption of ["리뷰", "해석", "추천"]) {
-      var optionParams = {
-        q: params.title + qOption, 
-    // let optionParams = {
-    //   q: "오징어 게임 리뷰", // 검색 조건
-        part: "snippet", // 정보 출력 조건
-        key: "AIzaSyCHpkJs6EOWHMdfbfhGpxRt0YQ7G3lfN-M", // API KEY
-        type: "video", // youtube의 video 중에서 검색
-        maxResults: 1, // 상위 1개 출력
-        regionCode: "KR",
-      };
-      optionParams.q = encodeURI(optionParams.q);
+    fetchData();
+  }, [like]);
 
-      let url = "https://www.googleapis.com/youtube/v3/search?";
-      for (var option in optionParams) {
-        url += option + "=" + optionParams[option] + "&";
-      }
+  useEffect(() => {
+    const optionParams = {
+      q: `${contentsInfo.title} 정보`, // 검색 조건 (여기에 백엔드에서 전달해주는 영화 title 정보 + [리뷰, 해석 등]이 붙어서 검색)
+      part: "snippet", // 정보 출력 조건
+      // key: process.env.REACT_APP_YOUTUBE_API_KEY, // API KEY (각자 API KEY로)
+      type: "video", // youtube의 video 중에서 검색
+      maxResults: 3, // 상위 1개 출력
+      regionCode: "KR",
+    };
+    optionParams.q = encodeURI(optionParams.q);
 
-      url = url.substr(0, url.length - 1);
+    let url = "https://www.googleapis.com/youtube/v3/search?";
+    for (let option in optionParams) {
+      url += option + "=" + optionParams[option] + "&";
+    }
 
-      const youtubeArray = [];
-      axios.get(url).then((response) => {
-        response.data.items.forEach((item) => {
-          youtubeArray.push({
-            title: item.snippet.title,
-            url: "https://www.youtube.com/watch?v=" + item.id.videoId,
-            thumbnail: item.snippet.thumbnails.high.url,
-          });
+    url = url.substr(0, url.length - 1);
+
+    const youtubeArray = [];
+    axios.get(url).then((response) => {
+      response.data.items.forEach((item) => {
+        youtubeArray.push({
+          title: item.snippet.title,
+          url: "https://www.youtube.com/watch?v=" + item.id.videoId,
+          thumbnail: item.snippet.thumbnails.high.url,
+          id: item.id.videoId,
         });
-        setYoutubeData(...youtubeData, youtubeArray);
       });
-    }    
-  }, [youtubeData]);
-    // console.log(youtubeData[1]);
-
-  useEffect(() => {
-    const copyTmdb = [];
-    axios
-    .get(`${process.env.REACT_APP_BASE_URL}/detail/${params.category}/${params.id}`, ) // 컨텐츠 카테고리정보랑 해당 컨텐츠 id값(백엔드 API Get : category, id)
-    .then(response => {
-      console.log(response);
-      if (response.data.result === "success") {
-        response.data.items.map(item => {
-          copyTmdb.concat({
-            id: tmdbDataId,
-            title: item.title,
-            poster: item.poster_path,
-            like: item.like_count,
-            overview: item.overview,
-          });
-        });
-      };
-      setTmdbDataId( tmdbDataId + 1 ); // id 값 증가
-      setTmdbData(...tmdbData, copyTmdb);
+      setYoutubeList(...youtubeList, youtubeArray);
+      console.log(response.data);
     });
-  }, [])
+  }, []);
+  console.log(youtubeList);
+
+  const onClick = async () => {
+    setLike(!like);
+    console.log(!like);
+    const body = {
+      id: params.id,
+      category: params.category,
+      likes: !like,
+    };
+    await axios.patch(`${process.env.REACT_APP_BASE_URL}/api/like`, body);
+  };
 
   return (
-    <ContainerBlock>
-      <div className="container">
-        {/* <h1>{youtubeData.title}</h1>
-        {youtubeData.map(youtube => (
-          <YoutubeList youtube={youtube} key={params.id}/>
-        ))} */}
-        <ContentsBlock>
-          <ContentsItem youtube={youtubeData[0]} />
-          <ContentsItem youtube={youtubeData[1]} />
-          <ContentsItem youtube={youtubeData[2]} />
-        </ContentsBlock>
-      </div>
-    </ContainerBlock>
-  )
+    <div style={{ height: "500px", background: "pink" }}>
+      {!contentsInfo ? (
+        <div>Loading ... </div>
+      ) : (
+        contentsInfo.map((contents) => (
+          <Detail
+            key={contents.id}
+            contents={contents}
+            onClick={onClick}
+            like={like}
+          />
+        ))
+      )}
+      {youtubeList == [] ? (
+        <h1>Loading...</h1>
+      ) : (
+        youtubeList.map((youtube) => (
+          <YoutubeContents key={youtube.url} youtube={youtube} />
+        ))
+      )}
+    </div>
+  );
 };
 
 export default ContentsDetail;
 
-const ContentsBlock = styled.div`
-  box-sizing: border-box;
-  padding-right: 1.5rem;
-  width: 360px;
-  margin: 0 auto;
-  margin-top: 2rem;
-  @media screen and (max-width: 768px) {
-    width: 100% auto;
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
-`;
+export const Detail = ({ contents, onClick, like }) => {
+  return (
+    <div>
+      <img src={`${imgUrl}${contents.poster_path}`} alt="poster" />
+      <h1>{contents.title}</h1>
+      <p>{contents.like_count}</p>
+      <button onClick={onClick}>{!like ? "🥔" : "🍟"}</button>
+      <p>{contents.overview}</p>
+      <p>{contents.positive_comment}</p>
+      <p>{contents.negative_comment}</p>
+    </div>
+  );
+};
 
-// ▼ 전체 배경틀
-const ContainerBlock = styled.div`
-  .container {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    background: ""; // 백에서 받아오는 포스터 이미지
-    background-size: cover;
-    /* z-index: 1; */
-  }
-  .container::before {
-    content: "";
-    opacity: 0.6;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
-    background-color: #000;
-  }
-  // ▼ 따로 박스를 만들어서 우측 유튜브 영상 위쪽으로 빼야할듯
-  .container h1 {
-    color: #fff;
-    text-align: center;
-    line-height: 300px;
-    position: relative;
-  }
-`
+export const YoutubeContents = ({ youtube }) => {
+  return (
+    <div>
+      <iframe
+        width="200"
+        height="150"
+        src={`https://www.youtube.com/embed/${youtube.id}`}
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+    </div>
+  );
+};
