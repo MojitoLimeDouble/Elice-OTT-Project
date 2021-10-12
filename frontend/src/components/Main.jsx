@@ -25,7 +25,7 @@ const Main = ({
         const response = await axios.get(
           `${process.env.REACT_APP_BASE_URL}/api/${subject}/hit`
         );
-        onPredictable(response.data.data.movies);
+        onPredictable(response.data);
       } catch (error) {
         console.log(error.response);
       }
@@ -35,7 +35,7 @@ const Main = ({
         const response = await axios.get(
           `${process.env.REACT_APP_BASE_URL}/api/${subject}/similar`
         );
-        onSimilar(response.data.data.movies);
+        onSimilar(response.data);
       } catch (error) {
         console.log(error.response);
       }
