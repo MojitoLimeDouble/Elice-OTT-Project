@@ -6,9 +6,9 @@ from models import *
 from oauth2client.contrib.flask_util import UserOAuth2
 
 bcrypt = Bcrypt()
-bp = Blueprint('signin', __name__)
+bp = Blueprint('signin', __name__, url_prefix='/api')
 
-@bp.route('/login', methods=['POST'], url_prefix='/api')
+@bp.route('/login', methods=['POST'])
 def login():
     if request.method != 'POST':
         abort(400, "알맞은 요청 방식이 아닙니다.")
