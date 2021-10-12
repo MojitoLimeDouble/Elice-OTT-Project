@@ -14,6 +14,7 @@ import Footer from './components/Footer';
 import PotatoesInBasket from './containers/PotatoBasketContainer';
 import MainContainer from './containers/MainContainer';
 import MyPageContainer from "./containers/MyPageContainer";
+import PrivateRoute from './helpers/PrivateRoute';
 
 const App = () => {
   return (
