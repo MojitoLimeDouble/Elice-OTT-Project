@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import PosterAndTitle from "./PosterAndTitle";
+import WordCloudComponent from "./WordCloudComponent";
+import WordCloudDataExample from "./WordCloudDataExample";
 
 const PotatoBasket = ({
   moviePotatoList,
@@ -58,7 +60,13 @@ const PotatoBasket = ({
             </ListDetail>
           </Potatoes>
         </Basket>
-        <PotatoAnalysis>영화 찐 감자 분석</PotatoAnalysis>
+        <PotatoAnalysis>
+          <BasketTitle>영화 찐 감자 분석</BasketTitle>
+          <WordCloudComponent
+            style={{ display: "static" }}
+            words={WordCloudDataExample}
+          />
+        </PotatoAnalysis>
       </Container>
       <Container>
         <Basket>
@@ -77,7 +85,13 @@ const PotatoBasket = ({
             </ListDetail>
           </Potatoes>
         </Basket>
-        <PotatoAnalysis>TV 찐 감자 분석</PotatoAnalysis>
+        <PotatoAnalysis>
+          <BasketTitle>TV 찐 감자 분석</BasketTitle>
+          <WordCloudComponent
+            style={{ display: "static" }}
+            words={WordCloudDataExample}
+          />
+        </PotatoAnalysis>
       </Container>
     </div>
   );
@@ -109,6 +123,7 @@ const Potatoes = styled.div`
 `;
 
 const PotatoAnalysis = styled.div`
+  height: 555px;
   width: 500px;
   background-color: gainsboro;
 `;
