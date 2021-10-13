@@ -8,7 +8,14 @@ import axios from "axios";
 import Prediction, { Similar } from "./Prediction";
 import Tab from "./Tab";
 import MyResponsivePie from "./GraphComponent";
-import { data1, data2, data3, data4, data5, data6 } from "./GraphData";
+import {
+  movieGenres,
+  movieCountry,
+  movieKeyword,
+  tvGenres,
+  tvCountry,
+  tvKeyword,
+} from "./GraphData";
 
 const Main = ({
   popularList,
@@ -78,10 +85,9 @@ const Main = ({
     slidesToShow: 5, // 4장씩 보이게
     // slidesToScroll: 5, // 1장씩 뒤로 넘어가게
     centerMode: true,
-    // centerPadding: "0px", // 0px 하면 슬라이드 끝쪽 이미지가 안잘림
+    centerPadding: "0px", // 0px 하면 슬라이드 끝쪽 이미지가 안잘림
   };
-
-  /*<h1 style={{ fontSize: "30px", color: "black" }}>Loading ...</h1>*/
+  const distribution = ["장르", "국가", "키워드"];
   return (
     <div>
       <div
@@ -126,8 +132,9 @@ const Main = ({
                   gridTemplateColumns: "repeat(auto-fill, minmax(33%, auto))",
                 }}
               >
-                {[data1, data2, data3].map((data, idx) => (
+                {[movieGenres, movieCountry, movieKeyword].map((data, idx) => (
                   <div style={{ height: "300px" }}>
+                    <div>{distribution[idx]}</div>
                     <MyResponsivePie data={data} key={idx} />
                   </div>
                 ))}
@@ -136,11 +143,12 @@ const Main = ({
               <div
                 style={{
                   display: "grid",
-                  gridTemplateColumns: "repeat(3, 1fr",
+                  gridTemplateColumns: "repeat(3, 1fr)",
                 }}
               >
-                {[data4, data5, data6].map((data,idx) => (
+                {[tvGenres, tvCountry, tvKeyword].map((data, idx) => (
                   <div style={{ height: "300px" }}>
+                    <div>{distribution[idx]}</div>
                     <MyResponsivePie data={data} key={idx} />
                   </div>
                 ))}
