@@ -4,16 +4,17 @@ import styled from "styled-components";
 
 const Navigation = ({ userid }) => {
   return (
-      <Container>
-        <Link to="/main">POTCHA</Link>
-        <Menu>
-          <Link to="/movie">Movie</Link>
-          <Link to="/tv">TV</Link>
-          <Link to={`/potato-basket/${userid}`}>PotatoBasket</Link>
-        </Menu>
-        <Link to="/mypage">MyPage</Link>
-        <button>Logout</button>
-      </Container>
+    <Container>
+      <Link to="/main">POTCHA</Link>
+      <Menu>
+        <Link to="/list/movie">Movie</Link>
+        <Link to="/list/tv">TV</Link>
+        <Link to={`/potato-basket/${userid}`}>PotatoBasket</Link>
+      </Menu>
+      <Link to="/mypage">MyPage</Link>
+      <button>Logout</button>
+    </Container>
+
   );
 };
 

@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { imgUrl } from "../apis/api";
 
 const Prediction = ({ prediction }) => {
   return (
@@ -17,11 +18,23 @@ export const Similar = ({ prediction }) => {
   return (
     <SimilarContainer>
       <h1 style={{ height: "25px" }}>{prediction.genres[0]}</h1>
-      <Poster bg={prediction.medium_cover_image} />
+      <Poster bg={`${imgUrl}${prediction.poster_path}`} />
       <h1>{prediction.title}</h1>
     </SimilarContainer>
   );
 };
+
+export const ContentsCard = ({ contents}) => {
+  return (
+    <SimilarContainer>
+      <Poster bg={`${imgUrl}${contents.poster_path}`} />
+      <h1>{contents.title}</h1>
+      <h1>{contents.release_data}</h1>
+      <h1>{contents.genres}</h1>
+      <h1>{contents.like_count}</h1>
+    </SimilarContainer>
+  );
+}
 
 const Container = styled.div`
   height: 300px;
