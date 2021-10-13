@@ -6,6 +6,12 @@ import ReactFullpage from "@fullpage/react-fullpage";
 import styled from "styled-components";
 import { SectionsContainer, Header } from "react-fullpage";
 import NonSigninNavigation from "./NonSigninNavigation";
+import OttServiceRateChart from "./OttServiceRateChart";
+import OttServiceRateData from "./OttServiceRateData";
+import MovieCustomerRateChart from "./MovieCustomerRateChart";
+import MovieCustomerRateData from "./MovieCustomerRateData";
+import NetflixOriginalMovieChart from "./NetfilxOriginalMovieChart";
+import NetflixOriginalMovieData from "./NetfilxOriginalMovieData";
 
 const NonSignIn = () => {
   return (
@@ -18,6 +24,7 @@ const NonSignIn = () => {
       <SectionsContainer>
         <ReactFullpage
           scrollOverflow={true}
+          loopBottom={true}
           sectionsColor={["orange", "purple", "green", "black"]}
           render={({ state, fullpageApi }) => {
             return (
@@ -31,27 +38,62 @@ const NonSignIn = () => {
                 <div className="section">
                   <div className="slide">
                     <div>
-                      <Title>POTCHA 소개 1</Title>
+                      <Title>
+                        코로나 확진자 증가에 따라 전국 영화관 관람객 감소
+                      </Title>
+                      <div>
+                        <MovieCustomerRateChart data={MovieCustomerRateData} />
+                      </div>
                     </div>
                   </div>
                   <div className="slide">
-                    <Title>POTCHA 소개 2</Title>
+                    <Title>점점 늘어나는 OTT 서비스 이용자!&#128526;</Title>
+                    <div
+                      style={{
+                        height: "400px",
+                        width: "1000px",
+                        backgroundColor: "white",
+                      }}
+                    >
+                      <OttServiceRateChart data={OttServiceRateData} />
+                    </div>
                   </div>
                   <div className="slide">
-                    <Title>POTCHA 소개 3</Title>
+                    <Title>
+                      코로나 이전과 이후 영화 상영 방식에 있어, OTT 서비스인
+                      넷플릭스로 상영하는 영화의 수 변화&#128200;
+                    </Title>
+                    <div
+                      style={{
+                        height: "800px",
+                        width: "800px",
+                        backgroundColor: "white",
+                      }}
+                    >
+                      <NetflixOriginalMovieChart
+                        data={NetflixOriginalMovieData}
+                      />
+                    </div>
                   </div>
                 </div>
                 <div className="section">
                   <div className="slide">
                     <div>
-                      <Title>POTCHA 소개 1</Title>
+                      <Title>
+                        따라서 우리는 이런 서비스를 제공합니다!&#127839;
+                      </Title>
                     </div>
                   </div>
                   <div className="slide">
-                    <Title>POTCHA 소개 2</Title>
+                    <Title>
+                      하나! OTT 서비스의 콘텐츠의 흥행 예측!&#128521;
+                    </Title>
                   </div>
                   <div className="slide">
-                    <Title>POTCHA 소개 3</Title>
+                    <Title>
+                      둘! 당신의 취향을 분석해 추천작을 알려주는 찐감자
+                      콘텐츠&#129364;
+                    </Title>
                   </div>
                 </div>
                 <div className="section">
