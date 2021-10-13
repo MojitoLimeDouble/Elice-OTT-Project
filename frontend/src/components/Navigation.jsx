@@ -14,6 +14,7 @@ const Navigation = ({ userid }) => {
       <Link to="/mypage">MyPage</Link>
       <button>Logout</button>
     </Container>
+
   );
 };
 
