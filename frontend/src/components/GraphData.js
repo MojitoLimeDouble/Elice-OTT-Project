@@ -1,257 +1,227 @@
-export const data1 = [
+export const movieGenres = [
   {
-    id: "javascript",
-    label: "javascript",
-    value: 551,
+    id: "모험",
+    label: "모험",
+    value: 91,
     color: "hsl(121, 70%, 50%)",
   },
   {
-    id: "python",
-    label: "python",
-    value: 587,
+    id: "액션",
+    label: "액션",
+    value: 81,
     color: "hsl(27, 70%, 50%)",
   },
   {
-    id: "lisp",
-    label: "lisp",
-    value: 382,
+    id: "SF",
+    label: "SF",
+    value: 63,
     color: "hsl(42, 70%, 50%)",
   },
   {
-    id: "ruby",
-    label: "ruby",
-    value: 263,
+    id: "코미디",
+    label: "코미디",
+    value: 47,
     color: "hsl(82, 70%, 50%)",
   },
   {
-    id: "go",
-    label: "go",
-    value: 580,
+    id: "판타지",
+    label: "판타지",
+    value: 44,
     color: "hsl(152, 70%, 50%)",
   },
   {
-    id: "chu",
-    label: "chu",
-    value: 155,
-    color: "hsl(236, 49%, 50%)",
-  },
-  {
-    id: "jang",
-    label: "jang",
-    value: 233,
-    color: "hsl(296, 100%, 50%)",
-  },
-];
-
-export const data2 = [
-  {
-    id: "1",
-    label: "1",
-    value: 551,
-    color: "hsl(121, 70%, 50%)",
-  },
-  {
-    id: "2",
-    label: "2",
-    value: 587,
-    color: "hsl(27, 70%, 50%)",
-  },
-  {
-    id: "3",
-    label: "3",
-    value: 382,
-    color: "hsl(42, 70%, 50%)",
-  },
-  {
-    id: "4",
-    label: "4",
-    value: 263,
-    color: "hsl(82, 70%, 50%)",
-  },
-  {
-    id: "5",
-    label: "5",
-    value: 580,
-    color: "hsl(152, 70%, 50%)",
-  },
-  {
-    id: "6",
-    label: "6",
-    value: 155,
+    id: "기타",
+    label: "기타",
+    value: 162,
     color: "hsl(236, 49%, 50%)",
   },
 ];
 
-export const data3 = [
+export const movieCountry = [
   {
-    id: "a",
-    label: "a",
-    value: 551,
+    id: "US",
+    label: "US",
+    value: 86,
     color: "hsl(121, 70%, 50%)",
   },
   {
-    id: "b",
-    label: "b",
-    value: 587,
+    id: "GB",
+    label: "GB",
+    value: 28,
     color: "hsl(27, 70%, 50%)",
   },
   {
-    id: "c",
-    label: "c",
-    value: 382,
+    id: "FR",
+    label: "FR",
+    value: 16,
     color: "hsl(42, 70%, 50%)",
   },
   {
-    id: "d",
-    label: "d",
-    value: 263,
+    id: "JP",
+    label: "JP",
+    value: 15,
     color: "hsl(82, 70%, 50%)",
   },
   {
-    id: "e",
-    label: "e",
-    value: 580,
+    id: "CA",
+    label: "CA",
+    value: 12,
     color: "hsl(152, 70%, 50%)",
   },
   {
-    id: "f",
-    label: "f",
-    value: 155,
-    color: "hsl(236, 49%, 50%)",
-  },
-  {
-    id: "g",
-    label: "g",
-    value: 233,
-    color: "hsl(296, 100%, 50%)",
-  },
-];
-
-export const data5 = [
-  {
-    id: "aa",
-    label: "aa",
-    value: 551,
-    color: "hsl(121, 70%, 50%)",
-  },
-  {
-    id: "bb",
-    label: "bb",
-    value: 587,
-    color: "hsl(27, 70%, 50%)",
-  },
-  {
-    id: "cc",
-    label: "cc",
-    value: 382,
-    color: "hsl(42, 70%, 50%)",
-  },
-  {
-    id: "dd",
-    label: "dd",
-    value: 263,
-    color: "hsl(82, 70%, 50%)",
-  },
-  {
-    id: "ee",
-    label: "ee",
-    value: 580,
-    color: "hsl(152, 70%, 50%)",
-  },
-  {
-    id: "ff",
-    label: "ff",
-    value: 155,
-    color: "hsl(236, 49%, 50%)",
-  },
-  {
-    id: "gg",
-    label: "gg",
-    value: 233,
-    color: "hsl(296, 100%, 50%)",
-  },
-];
-
-export const data6 = [
-  {
-    id: "1",
-    label: "1",
-    value: 551,
-    color: "hsl(121, 70%, 50%)",
-  },
-  {
-    id: "2",
-    label: "2",
-    value: 587,
-    color: "hsl(27, 70%, 50%)",
-  },
-  {
-    id: "3",
-    label: "3",
-    value: 382,
-    color: "hsl(42, 70%, 50%)",
-  },
-  {
-    id: "4",
-    label: "4",
-    value: 263,
-    color: "hsl(82, 70%, 50%)",
-  },
-  {
-    id: "5",
-    label: "5",
-    value: 580,
-    color: "hsl(152, 70%, 50%)",
-  },
-  {
-    id: "6",
-    label: "6",
-    value: 155,
+    id: "기타",
+    label: "기타",
+    value: 45,
     color: "hsl(236, 49%, 50%)",
   },
 ];
 
-export const data4 = [
+export const movieKeyword = [
   {
-    id: "a",
-    label: "a",
-    value: 551,
-    color: "hsl(121, 70%, 50%)",
-  },
-  {
-    id: "b",
-    label: "b",
-    value: 587,
-    color: "hsl(27, 70%, 50%)",
-  },
-  {
-    id: "c",
-    label: "c",
-    value: 382,
-    color: "hsl(42, 70%, 50%)",
-  },
-  {
-    id: "d",
-    label: "d",
-    value: 263,
-    color: "hsl(82, 70%, 50%)",
-  },
-  {
-    id: "e",
-    label: "e",
-    value: 580,
+    id: "기타",
+    label: "기타",
+    value: 885,
     color: "hsl(152, 70%, 50%)",
   },
   {
-    id: "f",
-    label: "f",
-    value: 155,
-    color: "hsl(236, 49%, 50%)",
+    id: "paris, france",
+    label: "paris, france",
+    value: 17,
+    color: "hsl(121, 70%, 50%)",
   },
   {
-    id: "g",
-    label: "g",
-    value: 233,
-    color: "hsl(296, 100%, 50%)",
+    id: "saving the world",
+    label: "saving the world",
+    value: 15,
+    color: "hsl(27, 70%, 50%)",
+  },
+  {
+    id: "superhero",
+    label: "superhero",
+    value: 15,
+    color: "hsl(42, 70%, 50%)",
+  },
+  {
+    id: "new york city",
+    label: "new york city",
+    value: 13,
+    color: "hsl(82, 70%, 50%)",
+  },
+];
+
+export const tvGenres = [
+  {
+    id: "드라마",
+    label: "드라마",
+    value: 82,
+    color: "hsl(121, 70%, 50%)",
+  },
+  {
+    id: "Sci-Fi & Fantasy",
+    label: "Sci-Fi & Fantasy",
+    value: 58,
+    color: "hsl(27, 70%, 50%)",
+  },
+  {
+    id: "범죄",
+    label: "범죄",
+    value: 57,
+    color: "hsl(42, 70%, 50%)",
+  },
+  {
+    id: "미스터리",
+    label: "미스터리",
+    value: 57,
+    color: "hsl(82, 70%, 50%)",
+  },
+  {
+    id: "Action & Adventure",
+    label: "Action & Adventure",
+    value: 56,
+    color: "hsl(152, 70%, 50%)",
+  },
+  {
+    id: "기타",
+    label: "기타",
+    value: 78,
+    color: "hsl(236, 49%, 50%)",
+  },
+];
+
+export const tvCountry = [
+  {
+    id: "US",
+    label: "US",
+    value: 52,
+    color: "hsl(121, 70%, 50%)",
+  },
+  {
+    id: "JP",
+    label: "JP",
+    value: 30,
+    color: "hsl(27, 70%, 50%)",
+  },
+  {
+    id: "CA",
+    label: "CA",
+    value: 6,
+    color: "hsl(42, 70%, 50%)",
+  },
+  {
+    id: "KR",
+    label: "KR",
+    value: 6,
+    color: "hsl(82, 70%, 50%)",
+  },
+  {
+    id: "GB",
+    label: "GB",
+    value: 5,
+    color: "hsl(152, 70%, 50%)",
+  },
+  {
+    id: "기타",
+    label: "기타",
+    value: 13,
+    color: "hsl(236, 49%, 50%)",
+  },
+];
+
+export const tvKeyword = [
+  {
+    id: "anime",
+    label: "anime",
+    value: 29,
+    color: "hsl(121, 70%, 50%)",
+  },
+  {
+    id: "paris, france",
+    label: "paris, france",
+    value: 24,
+    color: "hsl(27, 70%, 50%)",
+  },
+  {
+    id: "based on manga",
+    label: "based on manga",
+    value: 19,
+    color: "hsl(42, 70%, 50%)",
+  },
+  {
+    id: "assassin",
+    label: "assassin",
+    value: 18,
+    color: "hsl(82, 70%, 50%)",
+  },
+  {
+    id: "shounen",
+    label: "shounen",
+    value: 17,
+    color: "hsl(152, 70%, 50%)",
+  },
+  {
+    id: "기타",
+    label: "기타",
+    value: 756,
+    color: "hsl(236, 49%, 50%)",
   },
 ];
