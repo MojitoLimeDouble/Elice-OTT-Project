@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./NonSignIn.scss";
 import "fullpage.js/vendors/scrolloverflow"; // Optional. When using scrollOverflow:true
 import ReactFullpage from "@fullpage/react-fullpage";
 import styled from "styled-components";

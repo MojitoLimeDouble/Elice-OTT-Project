@@ -105,8 +105,29 @@ export const Detail = ({ contents, onClick, like }) => {
       <p>{contents.like_count}</p>
       <button onClick={onClick}>{!like ? "🥔" : "🍟"}</button>
       <p>{contents.overview}</p>
-      <p>{contents.positive_comment}</p>
-      <p>{contents.negative_comment}</p>
+      <p>{contents.release_date}</p>
+      <p>{contents.runtime}</p>
+      <p>{contents.genres}</p>
+      <p>{contents.director}</p>
+      <p>{contents.crew}</p>
+      <p>
+        {!contents.positive_comment ? (
+          <span></span>
+        ) : (
+          contents.positive_comment.map((comment, idx) => (
+            <span key={idx}>{comment}</span>
+          ))
+        )}
+      </p>
+      <p>
+        {!contents.positive_comment ? (
+          <span></span>
+        ) : (
+          contents.negative_comment.map((comment, idx) => (
+            <span key={idx}>{comment}</span>
+          ))
+        )}
+      </p>
     </div>
   );
 };
