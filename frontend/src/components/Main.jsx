@@ -148,6 +148,7 @@ const Main = ({
               >
                 {[tvGenres, tvCountry, tvKeyword].map((data, idx) => (
                   <div style={{ height: "300px" }}>
+                    <div>{distribution[idx]}</div>
                     <MyResponsivePie data={data} key={idx} />
                   </div>
                 ))}

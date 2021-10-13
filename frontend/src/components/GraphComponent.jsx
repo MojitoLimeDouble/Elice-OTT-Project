@@ -45,7 +45,7 @@ const MyResponsivePie = ({ data }) => (
         translateX: 0,
         translateY: 56,
         itemsSpacing: 0,
-        itemWidth: 46,
+        itemWidth: 55,
         itemHeight: 18,
         itemTextColor: "#999",
         itemDirection: 'top-to-bottom',

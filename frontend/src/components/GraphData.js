@@ -29,12 +29,6 @@ export const movieGenres = [
     value: 44,
     color: "hsl(152, 70%, 50%)",
   },
-  {
-    id: "기타",
-    label: "기타",
-    value: 162,
-    color: "hsl(236, 49%, 50%)",
-  },
 ];
 
 export const movieCountry = [
@@ -68,21 +62,9 @@ export const movieCountry = [
     value: 12,
     color: "hsl(152, 70%, 50%)",
   },
-  {
-    id: "기타",
-    label: "기타",
-    value: 45,
-    color: "hsl(236, 49%, 50%)",
-  },
 ];
 
 export const movieKeyword = [
-  {
-    id: "기타",
-    label: "기타",
-    value: 885,
-    color: "hsl(152, 70%, 50%)",
-  },
   {
     id: "paris, france",
     label: "paris, france",
@@ -102,10 +84,16 @@ export const movieKeyword = [
     color: "hsl(42, 70%, 50%)",
   },
   {
+    id: "based on comic",
+    label: "based on comic",
+    value: 14,
+    color: "hsl(82, 70%, 50%)",
+  },
+  {
     id: "new york city",
     label: "new york city",
     value: 13,
-    color: "hsl(82, 70%, 50%)",
+    color: "hsl(152, 70%, 50%)",
   },
 ];
 
@@ -140,12 +128,6 @@ export const tvGenres = [
     value: 56,
     color: "hsl(152, 70%, 50%)",
   },
-  {
-    id: "기타",
-    label: "기타",
-    value: 78,
-    color: "hsl(236, 49%, 50%)",
-  },
 ];
 
 export const tvCountry = [
@@ -179,12 +161,6 @@ export const tvCountry = [
     value: 5,
     color: "hsl(152, 70%, 50%)",
   },
-  {
-    id: "기타",
-    label: "기타",
-    value: 13,
-    color: "hsl(236, 49%, 50%)",
-  },
 ];
 
 export const tvKeyword = [
@@ -217,11 +193,5 @@ export const tvKeyword = [
     label: "shounen",
     value: 17,
     color: "hsl(152, 70%, 50%)",
-  },
-  {
-    id: "기타",
-    label: "기타",
-    value: 756,
-    color: "hsl(236, 49%, 50%)",
   },
 ];
