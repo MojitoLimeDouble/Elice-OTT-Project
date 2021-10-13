@@ -20,9 +20,9 @@ def detail(category,id):
         tv = Tv.query.filter(Tv.id == id).first()
         content = Tv.to_dict(tv)
         like_list = [tv.tv_id for tv in potato if tv.tv_id]
-    is_like = 0
+    is_like = False
     for likes in like_list:
         if likes == id:
-            is_like = 1
+            is_like = True
     print(content)
     return jsonify(content, {"is_like" : is_like})
