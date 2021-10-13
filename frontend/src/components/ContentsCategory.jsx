@@ -9,7 +9,7 @@ const ContentsCategory = () => {
   const [contentsList, setContentsList] = useState("");
   const [filtering, setFiltering] = useState("선택하기");
   const [categorizing, setCategorizing] = useState("선택하기");
-
+  // url에서 category(movie, tv) 분류 
   const category = window.location.href.split("/")[4];
   console.log(category);
   const MovieCategoriesList = [
@@ -49,6 +49,7 @@ const ContentsCategory = () => {
     "가족",
     "미스터리",
   ];
+  // 최초 렌더링 시 인기도 높은 순서 데이터 요청
   const fetchData = async () => {
     try {
       const response = await axios.get(
@@ -59,6 +60,8 @@ const ContentsCategory = () => {
       console.log(error.response);
     }
   };
+
+  // 정렬 및 장렬 분류에 따른 데이터 요청
   const fetchFilter = async (subject, data) => {
     try {
       const response = await axios.get(
@@ -73,23 +76,33 @@ const ContentsCategory = () => {
       console.log(error.response);
     }
   };
+
   useEffect(() => {
     fetchData();
   }, []);
-
+  
+  // 영화 카테고리와 tv 카테고리에 따른 분류 함수
+  const chooseCategoryData = (array, data) => {
+    if (array.includes(data)) {
+      setFiltering("선택하기");
+      setCategorizing(data);
+      fetchFilter("category", data);
+    } else {
+      setFiltering(data);
+      setCategorizing("선택하기");
+      fetchFilter("sorted", data);
+    }
+  };
   const onClick = (e) => {
     const data = e.target.value;
     setFiltering("선택하기");
     setCategorizing("선택하기");
-    const array = MovieCategoriesList;
-    if (array.includes(e.target.value)) {
-      setFiltering("선택하기");
-      setCategorizing(e.target.value);
-      fetchFilter("category", data)
+    if (category === "movie") {
+      const array = MovieCategoriesList;
+      chooseCategoryData(array, data);
     } else {
-      setFiltering(e.target.value);
-      setCategorizing("선택하기");
-      fetchFilter("sorted", data);
+      const array = TVCategoriesList;
+      chooseCategoryData(array, data);
     }
   };
 
