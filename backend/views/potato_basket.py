@@ -21,7 +21,7 @@ def potato_basket(nickname):
     tv_potato_id = {"tv" : [Tv.to_dict(Tv.query.filter(Tv.id == tv.tv_id).first()) for tv in potato if tv.tv_id]}
 
     
-    return jsonify(moive_potato_id, tv_potato_id)
+    return jsonify(movie_potato_id, tv_potato_id)
 
 @bp.route('/potato_basket/<string:nickname>/movie', methods=['GET'])
 def potato_basket_movie_analysis(nickname):
