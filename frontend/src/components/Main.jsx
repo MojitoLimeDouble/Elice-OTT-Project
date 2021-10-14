@@ -114,7 +114,7 @@ const Main = ({
       <PredictionContainer className="prediction">
         <Tab currTab={currTab} onClick={handleClickTab} />
         <PredictionTitle className="predictionTiTle">{`${currTab} 흥행 예측 분석 top 5`}</PredictionTitle>
-        <PredictChart>
+        <PredictChart className="predictChart">
           {currTab === "MOVIE" ? (
             <div
               style={{
@@ -124,7 +124,9 @@ const Main = ({
             >
               {[movieGenres, movieKeyword, movieCountry].map((data, idx) => (
                 <PredictSeparate key={idx}>
-                  <PredictChartTitle>{distribution[idx]}</PredictChartTitle>
+                  <PredictChartTitle className="predictChartTitle">
+                    {distribution[idx]}
+                  </PredictChartTitle>
                   <MyResponsivePie data={data} key={idx} />
                 </PredictSeparate>
               ))}
@@ -133,20 +135,22 @@ const Main = ({
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "1.3fr 1.5fr 1fr",
+                gridTemplateColumns: "1.2fr 1.5fr 1fr",
               }}
             >
               {[tvGenres, tvKeyword, tvCountry].map((data, idx) => (
                 <PredictSeparate key={idx}>
-                  <PredictChartTitle>{distribution[idx]}</PredictChartTitle>
+                  <PredictChartTitle className="predictChartTitle">
+                    {distribution[idx]}
+                  </PredictChartTitle>
                   <MyResponsivePie data={data} key={idx} />
                 </PredictSeparate>
               ))}
             </div>
           )}
         </PredictChart>
-        <Display>
-          <Order>
+        <Recommendation>
+          {/* <Order>
             <h1>1</h1>
             <h1>2</h1>
             <h1>3</h1>
@@ -170,9 +174,9 @@ const Main = ({
           </Detail>
 
           <Details>
-            <h1>흥행 예측 작품의 코로나 이전 유사 작품들 </h1>
-            {/*FIXME: just for demonstration */}
-            {[1, 2, 3, 4, 5].map((num) => (
+            <h1>흥행 예측 작품의 코로나 이전 유사 작품들 </h1> */}
+          {/*FIXME: just for demonstration */}
+          {/* {[1, 2, 3, 4, 5].map((num) => (
               <SimilarDetail>
                 {!similarList ? (
                   <div></div>
@@ -187,8 +191,28 @@ const Main = ({
                 )}
               </SimilarDetail>
             ))}
-          </Details>
-        </Display>
+          </Details> */}
+          <Subtitles className="subtitles">
+            <Subtitle className="predictSubtitle">흥행 예측 작품</Subtitle>
+            <Subtitle className="recommendSubtitle">
+              코로나 이전 유사 작품 추천
+            </Subtitle>
+          </Subtitles>
+          <RecommendationList>
+            {!predictableList ? (
+              <img
+                src="https://blog.kakaocdn.net/dn/cmseNl/btrhhTwEA0r/TNAoELO6JmK3rhVeNfGYy0/img.gif"
+                alt=""
+              />
+            ) : (
+              predictableList.map((prediction) => (
+                <Link to={`/detail/${prediction.category}/${prediction.id}`}>
+                  <Prediction key={prediction.id} prediction={prediction} />
+                </Link>
+              ))
+            )}
+          </RecommendationList>
+        </Recommendation>
       </PredictionContainer>
     </div>
   );
@@ -202,7 +226,7 @@ const BackgroundSquare = () => {
     position: "absolute",
     zIndex: "1",
     width: "1300px",
-    height: "1000px",
+    height: "2600px",
     backgroundColor: "#ffffff8d",
     borderRadius: "25px",
   };
@@ -324,14 +348,32 @@ const PredictChartTitle = styled.div`
   margin-bottom: 1rem;
 `;
 
-const Display = styled.div`
-  display: flex;
-  flex-direction: row;
+const Recommendation = styled.div`
+  /* display: flex; */
+  /* flex-direction: row; */
   justify-content: center;
   margin-top: 30px;
   background: #ffffff9b;
   border-radius: 15px;
+  height:2080px;
+  margin-bottom: 60px;
 `;
+
+const Subtitles = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+`;
+
+const Subtitle = styled.h1`
+  margin: 2rem auto;
+  font-size: 28px;
+
+  &.predictSubtitle {
+    margin-left: 200px;
+  }
+`;
+
+const RecommendationList = styled.div``;
 
 const Order = styled.div`
   display: flex;

@@ -43,7 +43,7 @@ const MyResponsivePie = ({ data }) => (
         text: {
           fontFamily: "BMDOHYEON",
           fontSize: "13",
-          width: "60px",
+          // TODO: 일정 길이 이상의 글자가 잘려 보이는 것 수정
         },
       },
     }}

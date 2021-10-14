@@ -116,5 +116,5 @@ const totalStyled = {
 const stickyNavigation = {
   position: "sticky",
   top: 0,
-  zIndex: 1,
+  zIndex: 10,
 };

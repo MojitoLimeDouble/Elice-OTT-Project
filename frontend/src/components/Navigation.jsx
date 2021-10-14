@@ -7,6 +7,9 @@ import {
 } from "react-router-dom";
 import styled from "styled-components";
 import { GoSearch } from "react-icons/go";
+import { BiMoviePlay } from "react-icons/bi";
+import { CgScreen } from "react-icons/cg";
+import { GiBasket } from "react-icons/gi";
 import "../styles/FontStyle.css";
 
 const Link = ({ isActive, children, ...props }) => {
@@ -47,6 +50,7 @@ const Navigation = ({ userid, logout }) => {
               isActive={pathname === "/list/movie"}
               className="movie"
             >
+              <BiMoviePlay style={{ transform: "translateY(28%)" }} />
               Movie
             </StyledLink>
             <StyledLink
@@ -54,12 +58,14 @@ const Navigation = ({ userid, logout }) => {
               isActive={pathname === "/list/tv"}
               className="tv"
             >
+              <CgScreen style={{ transform: "translateY(28%)" }} />
               TV
             </StyledLink>
             <StyledLink
               to={`/potato-basket/${userid}`}
               isActive={pathname === `/potato-basket/${userid}`}
             >
+              <GiBasket style={{ transform: "translateY(28%)" }} />
               PotatoBasket
             </StyledLink>
           </Menu>
