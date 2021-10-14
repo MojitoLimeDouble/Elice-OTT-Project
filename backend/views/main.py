@@ -151,7 +151,7 @@ def tv_hit():
 
 
 
-@bp.route('/search', methods=['GET'])
+@bp.route('/search', methods=['POST'])
 def search():
     data = request.json
     search_word = data['search_word']

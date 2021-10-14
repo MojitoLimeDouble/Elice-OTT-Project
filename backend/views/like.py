@@ -90,7 +90,7 @@ def like():
         abort(400,{'error': 'str(e)'} )
 
 # 숫자 리스트로 좋아요 누른 리스트 표시
-@bp.route('/like/list',  methods=['GET'])
+@bp.route('/like/list',  methods=['POST'])
 @jwt_required()
 def like_watch():
     data = request.json

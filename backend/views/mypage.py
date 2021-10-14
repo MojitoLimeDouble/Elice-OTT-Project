@@ -4,7 +4,7 @@ from flask_bcrypt import Bcrypt
 from flask_jwt_extended import *
 from models import *
 from werkzeug.utils import secure_filename
-
+import random
 import os
 
 bcrypt = Bcrypt()
@@ -25,7 +25,7 @@ def mypage():
 @jwt_required()
 def mypage_photo():
     user_id = get_jwt_identity
-    if request.method == 'POST':
+    if request.method == 'PATCH':
         data = request.files['file']
         if not data:
             abort(404, '파일이 존재하지 않습니다.')
