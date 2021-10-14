@@ -28,4 +28,4 @@ def detail(category,id):
             is_like = True
             
     print(content)
-    return jsonify(content, {"is_like" : is_like})
+    return jsonify({"content": content, "is_like" : is_like})

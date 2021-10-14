@@ -13,7 +13,7 @@ def tv_list():
 
     return jsonify(tv)
 
-@bp.route('/tv/list/sorted', methods=['GET'])
+@bp.route('/tv/list/sorted', methods=['POST'])
 def tv_list_sorted():
     data = request.json
     creiteria = data['sort_criteria']
@@ -47,25 +47,24 @@ def tv_list_sorted():
     return jsonify(tv)
 
 
-@bp.route('/tv/list/filter', methods=['GET'])
+@bp.route('/tv/list/filter', methods=['POST'])
 def tv_list_filter():
     data = request.json
-    genre = data['genre']
+    genre = data['sort_criteria']
     filter_id = []
     tvs = []
 
     tv_all = Tv.query.order_by(Tv.id.asc())
-    tv =[[Tv.to_dict(tv).get('genres'), Tv.to_dict(tv).get('id')] for tv in tv_all]
-    print(len(tv))
+    tv_list =[[Tv.to_dict(tv).get('genres'), Tv.to_dict(tv).get('id')] for tv in tv_all]
+ 
 
-    for i in range(len(tv)):
-        for i in genre:
-            if i in tv[i][0]:
-                filter_id.append(tv[i][1])
+    for i in range(len(tv_list)):
+        if genre in tv_list[i][0]:
+            filter_id.append(tv_list[i][1])
+
     for i in filter_id:
         tv = Tv.query.filter(Tv.id == i).first()
         tvs.append(Tv.to_dict(tv))
  
-    print(filter_id)
     
     return jsonify(tvs)
