@@ -1,6 +1,8 @@
 import React, { useState, useCallback } from "react";
 import { useHistory, Link } from "react-router-dom";
 import axios from "axios";
+import NonSigninNavigation from "./NonSigninNavigation";
+import styled from "styled-components";
 
 const Signup = () => {
   const [ email, setEmail ] = useState("");
@@ -87,6 +89,11 @@ const Signup = () => {
 
   return (
     <div>
+    <NonSigninNavigationContainer
+      style={{ position: "absolute", top: "0", zIndex: "15" }}
+    >
+      <NonSigninNavigation />
+    </NonSigninNavigationContainer>
       <form onSubmit={onSubmit}>
         <div>
           <input
@@ -157,3 +164,14 @@ const Signup = () => {
 };
 
 export default Signup;
+
+const NonSigninNavigationContainer = styled.div`
+  /* position: sticky;
+  top: 0;
+  z-index: 30;
+   */
+`;
+
+const FullPage = styled.div`
+  font-family: arial, helvetica;
+`;

@@ -45,59 +45,61 @@ const App = () => {
       <div className="totalStyledDiv" style={totalStyled}>
         <div className="navigation" style={stickyNavigation}>
           <Navigation logout={logout} />
-        </div>
-        <Banner
-          showBanner={loggedOut}
-          css={{
-            backgroundColor: "#0080ff",
-            fontSize: 22,
-            color: "white",
-            margin: "0",
-          }}
-          title="로그아웃 되었습니다."
-        />
-        <Switch>
-          <Route exact path="/">
-            <NonSignIn />
-          </Route>
-          <Route path="/signin">
-            <Signin />
-          </Route>
-          <Route path="/signup">
-            <Signup />
-          </Route>
-          <Route path="/main">
-            <MainContainer />
-          </Route>
-          <Route path="/detail/:category/:id?">
-            <ContentsDetail />
-          </Route>
-          <PrivateRoute path="/list/movie">
-            <ContentsCategory />
-          </PrivateRoute>
-          <Route path="/list/tv">
-            <ContentsCategory />
-          </Route>
-          <Route path="/potato-basket/:id?">
-            <PotatoesInBasket />
-          </Route>
-          <Route path="/mypage">
-            <MyPageContainer />
-          </Route>
-          <Route path="/search/:query">
-            <Search />
-          </Route>
-          <Route
-            render={() => (
-              <div>
-                <h2>이 페이지는 존재하지 않습니다.</h2>
-              </div>
-            )}
+          <Banner
+            showBanner={loggedOut}
+            css={{
+              backgroundColor: "#0080ff",
+              fontSize: 20,
+              fontWeight: "lighter",
+              color: "white",
+              margin: "1rem auto",
+              borderRadius: "25px",
+            }}
+            title="로그아웃 되었습니다."
           />
-        </Switch>
-        <div>
-          <Footer />
         </div>
+        <div style={{ minHeight: "950px" }}>
+          <Switch>
+            <Route exact path="/">
+              <NonSignIn />
+            </Route>
+            <Route path="/signin">
+              <Signin />
+            </Route>
+            <Route path="/signup">
+              <Signup />
+            </Route>
+            <Route path="/main">
+              <MainContainer />
+            </Route>
+            <Route path="/detail/:category/:id?">
+              <ContentsDetail />
+            </Route>
+            <PrivateRoute path="/list/movie">
+              <ContentsCategory />
+            </PrivateRoute>
+            <Route path="/list/tv">
+              <ContentsCategory />
+            </Route>
+            <Route path="/potato-basket/:id?">
+              <PotatoesInBasket />
+            </Route>
+            <Route path="/mypage">
+              <MyPageContainer />
+            </Route>
+            <Route path="/search/:query">
+              <Search />
+            </Route>
+            <Route
+              render={() => (
+                <div>
+                  <h2>이 페이지는 존재하지 않습니다.</h2>
+                </div>
+              )}
+            />
+          </Switch>
+        </div>
+        <Footer />
       </div>
     </div>
   );

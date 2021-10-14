@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useHistory, Link } from "react-router-dom";
+import NonSigninNavigation from "./NonSigninNavigation";
+import styled from "styled-components";
 
 const Signin = () => {
   const [email, setEmail] = useState("");
@@ -47,12 +49,17 @@ const Signin = () => {
 
   return (
     <div>
+      <NonSigninNavigationContainer
+        style={{ position: "absolute", top: "0", zIndex: "15" }}>
+          <NonSigninNavigation />
+      </NonSigninNavigationContainer>
       <form form onSubmit={handleSubmit}>
         <div>
           <input
             placeholder="Email"
             type="email"
             value={email}
+            required
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
@@ -61,6 +68,7 @@ const Signin = () => {
             placeholder="Password"
             type="Password"
             value={password}
+            required
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
@@ -76,3 +84,14 @@ const Signin = () => {
 };
 
 export default Signin;
+
+const NonSigninNavigationContainer = styled.div`
+  /* position: sticky;
+  top: 0;
+  z-index: 30;
+   */
+`;
+
+const FullPage = styled.div`
+  font-family: arial, helvetica;
+`;

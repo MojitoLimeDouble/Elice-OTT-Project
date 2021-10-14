@@ -242,16 +242,17 @@ const TopTen = styled.div`
 `;
 
 const TopTenTitle = styled.h1`
-  margin-left: 40px;
-  position: absolute;
-  top: 155px;
+  text-align: left;
+  margin-left: 70px;
+  position: relative;
+  top: 50px;
   font-size: 35px;
 `;
 
 const StyledSlider = styled(Slider)`
   .slick-list {
     max-width: 1200px;
-    top: 135px;
+    top: 95px;
     margin: 0 auto;
     height: 350px;
   }
@@ -262,11 +263,11 @@ const StyledSlider = styled(Slider)`
   }
 
   .slick-dots {
-    bottom: -150px;
+    bottom: -110px;
   }
 
   .slick-arrow {
-    top: 250px;
+    top: 200px;
     margin-left: 3rem;
     margin-right: 3rem;
     color: black;
@@ -355,7 +356,7 @@ const Recommendation = styled.div`
   margin-top: 30px;
   background: #ffffff9b;
   border-radius: 15px;
-  height:2080px;
+  height: 2080px;
   margin-bottom: 60px;
 `;
 
