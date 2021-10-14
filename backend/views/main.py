@@ -3,8 +3,11 @@ from models import *
 from flask_jwt_extended import *
 from operator import itemgetter
 import requests, json, random, itertools
+import config
+from sqlalchemy import create_engine
 
 bp = Blueprint('main', __name__, url_prefix='/api')
+engine = create_engine(config.SQLALCHEMY_DATABASE_URI)
 
 @bp.route('/top_rated', methods=['GET'])
 def top_rated():
@@ -24,7 +27,7 @@ def top_rated():
 
     # tv 데이터 넣기
     for i in top_data_tv:
-        row = { 'id': i['id'], 'popularity': i['popularity'], 'name':i['name'], 'poster_path': i['poster_path'],'first_air_date': i['first_air_date'], 'category': 'tv'}
+        row = { 'id': i['id'], 'popularity': i['popularity'], 'title':i['name'], 'poster_path': i['poster_path'],'release_date': i['first_air_date'], 'category': 'tv'}
         top_contents.append(row)
 
     a = sorted(top_contents, key=itemgetter('popularity'))
@@ -45,8 +48,6 @@ def movie_hit():
     items = [i for i in range(20)]
     numbers = list(itertools.combinations(items,4))
     number = random.choice(numbers)
-
-    print("야!!!!!!",number,number[0])
 
     movie_list_1 = Movie.query.filter(Movie.rank == 1).all()
     movies_1 = [Movie.to_dict(movie) for movie in movie_list_1]
@@ -105,8 +106,6 @@ def tv_hit():
     numbers = list(itertools.combinations(items,4))
     number = random.choice(numbers)
 
-    print("야!!!!!!",number,number[0])
-
     tv_list_1 = Tv.query.filter(Tv.rank == 1).all()
     tvs_1 = [Tv.to_dict(tv) for tv in tv_list_1]
     tvs1_list.append(tvs_1[0])
@@ -149,3 +148,22 @@ def tv_hit():
     
 
     return jsonify({"top1": tvs1_list},{"top2": tvs2_list},{"top3": tvs3_list},{"top4": tvs4_list},{"top5": tvs5_list})
+
+
+
+@bp.route('/search', methods=['GET'])
+def search():
+    data = request.json
+    search_word = data['search_word']
+    
+    search = "%{}%".format(search_word)
+    print(search)
+
+    movie_list_name = engine.execute("SELECT * FROM Movie WHERE title LIKE %s ORDER BY (CASE WHEN SUBSTRING(title,1,1) RLIKE '[ㄱ-ㅎ가-힣]' THEN 1 WHEN SUBSTRING(title,1,1) RLIKE '[a-zA-Z]' THEN 2 ELSE 3 END),title",[search])
+    movie_list = [Movie.to_dict(movie) for movie in movie_list_name]
+
+    tv_list_name = engine.execute("SELECT * FROM Tv WHERE name LIKE %s ORDER BY (CASE WHEN SUBSTRING(name,1,1) RLIKE '[ㄱ-ㅎ가-힣]' THEN 1 WHEN SUBSTRING(name,1,1) RLIKE '[a-zA-Z]' THEN 2 ELSE 3 END),name",[search])
+    tv_list = [Tv.to_dict(tv) for tv in tv_list_name]
+
+
+    return jsonify({"movie" : movie_list, "tv" : tv_list})

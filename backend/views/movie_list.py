@@ -1,9 +1,12 @@
 import itertools
 from flask import request, Blueprint, jsonify,abort
 from models import *
+import config
+from sqlalchemy import create_engine
 
 
 bp = Blueprint('movie-list', __name__, url_prefix='/api')
+engine = create_engine(config.SQLALCHEMY_DATABASE_URI)
 
 @bp.route('/movie/list', methods=['GET'])
 def movie_list():
@@ -18,32 +21,36 @@ def movie_list():
 
 @bp.route('/movie/list/sorted', methods=['GET'])
 def movie_list_sorted():
+
+    data = request.json
+    creiteria = data['sort_criteria']
+
     # 인기순 내림차순
-    movie_list_popularity_desc = Movie.query.order_by(Movie.popularity.desc())
-    movie = [movie.to_dict(movie) for movie in movie_list_popularity_desc]
+    if creiteria == '인기도 높은 순':
+        movie_list_popularity_desc = Movie.query.order_by(Movie.popularity.desc())
+        movie = [Movie.to_dict(movie) for movie in movie_list_popularity_desc]
 
     # 인기순 오름차순
-    movie_list_popularity_asc = Movie.query.order_by(Movie.popularity.asc())
-    movie = [movie.to_dict(movie) for movie in movie_list_popularity_asc]
+    if creiteria == '인기도 낮은 순':
+        movie_list_popularity_asc = Movie.query.order_by(Movie.popularity.asc())
+        movie = [Movie.to_dict(movie) for movie in movie_list_popularity_asc]
 
     # 방영일순 최신
-    movie_list_air_desc = Movie.query.order_by(Movie.first_air_date.desc())
-    movie = [movie.to_dict(movie) for movie in movie_list_air_desc]
+    if creiteria == '최신 작품 순':
+        movie_list_air_desc = Movie.query.order_by(Movie.first_air_date.desc())
+        movie = [Movie.to_dict(movie) for movie in movie_list_air_desc]
 
     # 방영일순 오래된순
-    movie_list_air_asc = Movie.query.order_by(Movie.first_air_date.asc())
-    movie = [movie.to_dict(movie) for movie in movie_list_air_asc]
+    if creiteria == '오래된 작품 순':
+        movie_list_air_asc = Movie.query.order_by(Movie.first_air_date.asc())
+        movie = [Movie.to_dict(movie) for movie in movie_list_air_asc]
 
-    # 제목순 오름차순
-    movie_list_name = Movie.query.order_by(Movie.name.asc())
-    movie = [movie.to_dict(movie) for movie in movie_list_name]
-
-    # 제목순 내림차순 
-    movie_list_name = Movie.query.order_by(Movie.name.desc())
-    movie = [movie.to_dict(movie) for movie in movie_list_name]
+    # 제목순
+    if creiteria == '제목 순':
+        movie_list_name = engine.execute("SELECT * FROM Movie ORDER BY (CASE WHEN SUBSTRING(title,1,1) RLIKE '[ㄱ-ㅎ가-힣]' THEN 1 WHEN SUBSTRING(title,1,1) RLIKE '[a-zA-Z]' THEN 2 ELSE 3 END),title")
+        movie = [Movie.to_dict(movie) for movie in movie_list_name]
 
     return jsonify(movie)
-
 
 @bp.route('/movie/list/filter', methods=['GET'])
 def movie_list_filter():

@@ -108,7 +108,6 @@ class Movie(db.Model):
         line_nega = self.negative_comment.replace(" ",'')
         negative_list = line_nega.split(',')
       
-        print("호호호호")
         return {
             'id': self.id,
             'title': self.title,
