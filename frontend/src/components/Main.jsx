@@ -243,7 +243,7 @@ const TopTen = styled.div`
 
 const TopTenTitle = styled.h1`
   text-align: left;
-  margin-left: 70px;
+  margin-left: 80px;
   position: relative;
   top: 50px;
   font-size: 35px;

@@ -98,6 +98,7 @@ const BackgroundSquare = () => {
 
 const ContainerBox = styled.div`
   margin-top: 1.5rem;
+  margin-bottom: 30px;
   text-align: center;
 `;
 

@@ -1,5 +1,5 @@
 import { Menu, MenuButton, MenuList, MenuItem, Button } from "@chakra-ui/core";
-
+import styled from "styled-components";
 import React from "react";
 
 const Filtering = ({ onClick, filtering }) => {
@@ -12,7 +12,7 @@ const Filtering = ({ onClick, filtering }) => {
   ];
   return (
     <div>
-      <div>정렬</div>
+      <Subtitle>정렬 조건</Subtitle>
       <Menu>
         <MenuButton
           as={Button}
@@ -38,3 +38,10 @@ const Filtering = ({ onClick, filtering }) => {
 };
 
 export default Filtering;
+
+const Subtitle = styled.h2`
+  font-size: 25px;
+  margin-top: 30px;
+  margin-left: 30px;
+  left: 0px;
+`;

@@ -5,11 +5,13 @@ import Categorizing from "./Categorizing";
 import axios from "axios";
 import { ContentsCard } from "./Prediction";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
+
 const ContentsCategory = () => {
   const [contentsList, setContentsList] = useState("");
   const [filtering, setFiltering] = useState("선택하기");
   const [categorizing, setCategorizing] = useState("선택하기");
-  // url에서 category(movie, tv) 분류 
+  // url에서 category(movie, tv) 분류
   const category = window.location.href.split("/")[4];
   console.log(category);
 
@@ -70,9 +72,7 @@ const ContentsCategory = () => {
         data
       );
       setContentsList(response.data);
-      console.log(
-        `/api/${category}/list/${subject}`
-      );
+      console.log(`/api/${category}/list/${subject}`);
     } catch (error) {
       console.log(error.response);
     }
@@ -81,7 +81,7 @@ const ContentsCategory = () => {
   useEffect(() => {
     fetchData();
   }, [category]);
-  
+
   // 영화 카테고리와 tv 카테고리에 따른 분류 함수
   const chooseCategoryData = (array, data) => {
     if (array.includes(data)) {
@@ -108,9 +108,9 @@ const ContentsCategory = () => {
   };
 
   return (
-    <div>
-      <div style={{ height: "100vh", background: "pink" }}>
-        <div>{category.toUpperCase()}</div>
+    <CategoryContainer className="CategoryContainer">
+      <BackgroundSquare />
+      <Filter>
         <ThemeProvider>
           {/* <CSSReset /> */}
           <Filtering
@@ -126,20 +126,56 @@ const ContentsCategory = () => {
             category={category}
           />
         </ThemeProvider>
-        <div>
-          {!contentsList ? (
-            <div>Loading ...</div>
-          ) : (
-            contentsList.map((contents) => (
-              <Link to={`/${category}/${contents.id}`}>
-                <ContentsCard contents={contents} key={contents.id} />
-              </Link>
-            ))
-          )}
-        </div>
-      </div>
-    </div>
+      </Filter>
+      <FilteredList>
+        {!contentsList ? (
+          <div>Loading ...</div>
+        ) : (
+          contentsList.map((contents) => (
+            <Link to={`/${category}/${contents.id}`}>
+              <ContentsCard contents={contents} key={contents.id} />
+            </Link>
+          ))
+        )}
+      </FilteredList>
+    </CategoryContainer>
   );
 };
 
 export default ContentsCategory;
+
+const BackgroundSquare = () => {
+  const style = {
+    position: "absolute",
+    zIndex: "1",
+    width: "200px",
+    height: "150px",
+    backgroundColor: "#ffffff8d",
+    borderRadius: "25px",
+  };
+  return <div style={style}></div>;
+};
+
+const CategoryContainer = styled.div`
+  height: 100vh;
+  background: #ffffff8d;
+  border-radius: 25px;
+  padding: 40px;
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+`;
+
+const Filter = styled.div`
+  position: relative;
+  z-index: 2;
+`;
+
+const FilteredList = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+`;
+
+const FilterCondition = styled.h2`
+  font-size: 35px;
+  margin-bottom: 30px;
+`;

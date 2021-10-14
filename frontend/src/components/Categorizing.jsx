@@ -11,7 +11,7 @@ const Categorizing = ({
 }) => {
   return (
     <div>
-      <div>정렬</div>
+      <div>카테고리 종류</div>
       <Menu>
         <MenuButton
           as={Button}
