@@ -69,7 +69,7 @@ const Navigation = ({ userid, logout }) => {
           <StyledLink to="/mypage" isActive={pathname === "/mypage"}>
             MyPage
           </StyledLink>
-          <CustomButton>Logout</CustomButton>
+          <CustomButton onClick={logout}>Logout</CustomButton>
         </Container>
       </div>
     </ContainerBox>
