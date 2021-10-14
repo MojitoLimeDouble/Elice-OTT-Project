@@ -33,3 +33,26 @@ def tv_list_sorted():
     tv = [Tv.to_dict(tv) for tv in tv_list_name]
 
     return jsonify(tv)
+
+
+@bp.route('/tv/list/filter', methods=['GET'])
+def tv_list_filter():
+    data = request.json
+    genre = data['genre']
+    filter_id = []
+    tvs = []
+
+    tv_all = Tv.query.order_by(Tv.id.asc())
+    tv =[[Tv.to_dict(tv).get('genres'), Tv.to_dict(tv).get('id')] for tv in tv_all]
+    print(len(tv))
+
+    for i in range(len(tv)):
+        if genre in tv[i][0]:
+            filter_id.append(tv[i][1])
+    for i in filter_id:
+        tv = Tv.query.filter(Tv.id == i).first()
+        tvs.append(Tv.to_dict(tv))
+ 
+    print(filter_id)
+    
+    return jsonify(tvs)

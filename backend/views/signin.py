@@ -3,7 +3,6 @@ from flask import request, Blueprint, jsonify
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import *
 from models import *
-from oauth2client.contrib.flask_util import UserOAuth2
 
 bcrypt = Bcrypt()
 bp = Blueprint('signin', __name__, url_prefix='/api')
@@ -29,7 +28,7 @@ def login():
         
     try:
         access_token = create_access_token(identity = user_id, fresh=True)
-        refresh_token = create_access_token(identity = user_id)
+        refresh_token = create_refresh_token(identity = user_id)
         return jsonify(
             result = 'success',
             access_token = access_token,
@@ -38,8 +37,3 @@ def login():
     except Exception as e:
         abort(400,"토큰이 발급되지 않았습니다.")        
 
-
-@bp.route('/test')
-# @oauth2.required
-def test():
-    return "구글 로그인 성공임"

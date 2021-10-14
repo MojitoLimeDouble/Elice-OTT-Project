@@ -5,16 +5,18 @@ import requests, json
 
 bp = Blueprint('like', __name__, url_prefix='/api')
 
+# like 버튼 누르면 업데이트
 @bp.route('/like',  methods=['PATCH'])
 @jwt_required()
 def like():
     data = request.json
     content_id = data['id']
-    like = data['likes'] #  그 영화, tv에서 likes 칼럼이 필요가 없을 듯 여기서는 말고
+    like = data['likes'] 
     category = data['category']
 
     user_id = get_jwt_identity()
-    if like == 1:
+
+    if like == True:
         if category == "movie":
             potato = Potato_Basket(user_id=user_id, movie_id=content_id)
             movie = Movie.query.filter(Movie.id==content_id).first()
@@ -33,7 +35,7 @@ def like():
             
         db.session.add(potato)
     
-    if like == 0:
+    if like == False:
         if category == "movie":
             potato = Potato_Basket.query.filter(Potato_Basket.user_id==user_id, Potato_Basket.movie_id==content_id).first()
             movie = Movie.query.filter(Movie.id==content_id).first()
@@ -52,8 +54,7 @@ def like():
 
         db.session.delete(potato)
     db.session.commit()
-    try:
-        
+    try:       
         return jsonify({'result': 'success'})
 
     except Exception as e:

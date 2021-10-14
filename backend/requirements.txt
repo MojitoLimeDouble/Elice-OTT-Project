@@ -7,6 +7,7 @@ charset-normalizer==2.0.6
 click==8.0.1
 colorama==0.4.4
 DateTime==4.3
+easydict==1.9
 Flask==2.0.1
 Flask-Bcrypt==0.7.1
 Flask-Cors==3.0.10
