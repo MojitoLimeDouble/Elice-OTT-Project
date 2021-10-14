@@ -2,8 +2,6 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import { BsPencilFill, BsSaveFill } from "react-icons/bs";
-import { Button, Modal, Tooltip } from "antd";
-// import "antd/dist/antd.css";
 import { FaSearchPlus } from "react-icons/fa";
 import { SearchOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
@@ -62,19 +60,20 @@ export const Profile = ({
 // 친구 추가 후 친구목록에 나타는 친구의 프로필
 export const FriendProfile = ({ friend }) => {
   return (
-    <div>
-      <img
-        src={`${process.env.REACT_APP_BASE_URL}${friend.photolink}`}
-        alt=""
-      />
-      <h1>{friend.nickname}</h1>
-    </div>
+    <ProfileContainer>
+      <div>
+        <Img
+          src={`${process.env.REACT_APP_BASE_URL}/${friend.photolink}`}
+          alt=""
+        />
+        <h1>{friend.nickname}</h1>
+      </div>
+    </ProfileContainer>
   );
 };
 
 const MyPage = ({ user, friendList, onUserProfile, onRequestFriends }) => {
   const [onToggle, setOnToggle] = useState(true);
-  const [isModalVisible, setIsModalVisible] = useState(false);
   const [friendNickname, setFriendNickname] = useState("");
   const [existence, setExistence] = useState(false);
   const [friend, setFriend] = useState("");
@@ -93,6 +92,7 @@ const MyPage = ({ user, friendList, onUserProfile, onRequestFriends }) => {
             file: `${process.env.REACT_APP_BASE_URL}/${response.data.photolink}`,
           },
         });
+        console.log("user", user);
       } catch (error) {
         console.log(error.response);
       }
@@ -130,20 +130,18 @@ const MyPage = ({ user, friendList, onUserProfile, onRequestFriends }) => {
       formData.append("file", imageFile[0]);
       try {
         const response = await axios.patch(
-          `${process.env.REACT_APP_BASE_URL}/api/mypage/modify/photo`,
-          formData
-          // { headers: authHeader() }
+          `/api/mypage/modify/photo`,
+          formData,
+          { headers: tokenHeader() }
         );
+        console.log(response.data);
       } catch (error) {
         console.log(error.response);
       }
     }
   };
 
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
-  // 닉네임을 입력창에 입력 후 서버에 전달 -> 친구의 프로필을 모달에 띄움
+  // 닉네임을 입력창에 입력 후 서버에 전달 -> 친구의 프로필을 띄움
   const onNicknameSubmit = async (e) => {
     e.preventDefault();
     setExistence(true);
@@ -152,21 +150,26 @@ const MyPage = ({ user, friendList, onUserProfile, onRequestFriends }) => {
     };
     if (friendNickname) {
       try {
-        const response = await axios.post(
-          `${process.env.REACT_APP_BASE_URL}/api/mypage/find/friend`,
-          body
-        );
-        if (response.data.result === "fail") {
+        const response = await axios.post(`/api/mypage/find/friend`, body);
+        console.log("response", response);
+        if (response.status === 200) {
+          setExistence(false);
+          setFriend(response.data);
+          console.log(friend);
+        } else {
           setExistence(true);
+          setFriend("");
           setTimeout(() => {
             setExistence(false);
           }, 2000);
-        } else {
-          setExistence(false);
-          setFriend(response.data);
         }
       } catch (error) {
         console.log(error.response);
+        setExistence(true);
+        setFriend("");
+        setTimeout(() => {
+          setExistence(false);
+        }, 2000);
       }
     }
   };
@@ -177,29 +180,16 @@ const MyPage = ({ user, friendList, onUserProfile, onRequestFriends }) => {
       nickname: friend.nickname,
     };
     try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_BASE_URL}/api/mypage/add/friend`,
-        body
-      );
+      const response = await axios.post(`/api/mypage/add/friend`, body);
       console.log(response.data);
       if (response.data.result === "fail") {
-        alert("다시 시도해주세요.");
+        alert("본인 또는 이미 추가된 친구입니다.");
       }
-      const fetchData = await axios.get(
-        `${process.env.REACT_APP_BASE_URL}/api/mypage/list/friend`
-      );
+      const fetchData = await axios.get(`/api/mypage/list/friend`);
       onRequestFriends(fetchData.data);
     } catch (error) {
       console.log(error.response);
     }
-    setIsModalVisible(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalVisible(false);
-    setExistence(false);
-    setFriend("");
-    setFriendNickname("");
   };
 
   return (
@@ -221,42 +211,31 @@ const MyPage = ({ user, friendList, onUserProfile, onRequestFriends }) => {
       ></div>
       <div style={{ background: "red", maxWidth: "800px" }}>
         <div>
-          친구 추가
-          <button type="primary" onClick={showModal}>
-            <FaSearchPlus />
-          </button>
-          <Modal
-            title="친구 추가"
-            visible={isModalVisible}
-            onOk={handleOk}
-            onCancel={handleCancel}
-          >
-            <form onSubmit={onNicknameSubmit}>
-              <input
-                type="text"
-                value={friendNickname}
-                onChange={(e) => setFriendNickname(e.target.value)}
-                placeholder="친구의 닉네임을 입력해주세요."
-              />
-              <Tooltip title="search">
-                <Button
-                  htmlType="submit"
-                  shape="circle"
-                  icon={<SearchOutlined />}
-                ></Button>
-              </Tooltip>
-            </form>
-            {existence && <h1>친구의 닉네임을 확인해주세요.</h1>}
-            {friend && (
+          <form onSubmit={onNicknameSubmit}>
+            <span>친구 추가</span>
+            <input
+              type="text"
+              value={friendNickname}
+              onChange={(e) => setFriendNickname(e.target.value)}
+              placeholder="친구의 닉네임을 입력해주세요."
+            />
+            <button htmlType="submit" shape="circle">
+              <SearchOutlined />
+            </button>
+          </form>
+          {existence && <h1>친구의 닉네임을 확인해주세요.</h1>}
+          {friend && (
+            <ProfileContainer>
               <div>
-                <img
-                  src={`${process.env.REACT_APP_BASE_URL}${friend.photolink}`}
+                <Img
+                  src={`${process.env.REACT_APP_BASE_URL}/${friend.photolink}`}
                   alt=""
                 />
                 <h1>{friend.nickname}</h1>
+                <button onClick={handleOk}>추가하기</button>
               </div>
-            )}
-          </Modal>
+            </ProfileContainer>
+          )}
         </div>
         <div>친구 목록</div>
         <div style={{ background: "green", height: "250px" }}>
