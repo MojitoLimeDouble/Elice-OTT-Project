@@ -90,7 +90,7 @@ def movie_hit():
     #print(movies5_list)
     
 
-    return jsonify({"top1": movies1_list},{"top2": movies2_list},{"top3": movies3_list},{"top4": movies4_list},{"top5": movies5_list})
+    return jsonify([movies1_list, movies2_list, movies3_list, movies4_list, movies5_list])
 
 
 @bp.route('/tv/hit', methods=['GET'])
@@ -147,7 +147,7 @@ def tv_hit():
     #print(tvs5_list)
     
 
-    return jsonify({"top1": tvs1_list},{"top2": tvs2_list},{"top3": tvs3_list},{"top4": tvs4_list},{"top5": tvs5_list})
+    return jsonify([tvs1_list, tvs2_list, tvs3_list, tvs4_list, tvs5_list])
 
 
 
