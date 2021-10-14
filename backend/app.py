@@ -18,9 +18,8 @@ def create_app():
     Migrate().init_app(app, db)
 
 
-    from views import signup, signin, main, tv_list, movie_list, mypage, detail, like, potato_basket
-    app.register_blueprint(signup.bp)
-    app.register_blueprint(signin.bp)
+    from views import user, main, tv_list, movie_list, mypage, detail, like, potato_basket
+    app.register_blueprint(user.bp)
     app.register_blueprint(main.bp)
     app.register_blueprint(tv_list.bp)
     app.register_blueprint(movie_list.bp)
