@@ -7,7 +7,7 @@ const MyResponsivePie = ({ data }) => (
     innerRadius={0.5}
     cornerRadius={5}
     activeOuterRadiusOffset={8}
-    colors={{ scheme: "paired" }}
+    colors={["#ebc8f6", "#edc3d8", "#d1c9e9", "#dce4f2", "#feddc8"]}
     borderWidth={1}
     borderColor={{ from: "color", modifiers: [["darker", "0.2"]] }}
     arcLinkLabelsTextColor="#333333"
@@ -15,6 +15,7 @@ const MyResponsivePie = ({ data }) => (
     arcLinkLabelsDiagonalLength={17}
     arcLinkLabelsThickness={2}
     arcLinkLabelsColor={{ from: "color" }}
+    enableArcLabels={false}
     arcLabelsSkipAngle={10}
     arcLabelsTextColor={{ from: "color", modifiers: [["darker", "2"]] }}
     defs={[
@@ -37,31 +38,40 @@ const MyResponsivePie = ({ data }) => (
         spacing: 10,
       },
     ]}
-    legends={[
-      {
-        anchor: "bottom",
-        direction: "row",
-        justify: false,
-        translateX: 0,
-        translateY: 56,
-        itemsSpacing: 0,
-        itemWidth: 55,
-        itemHeight: 18,
-        itemTextColor: "#999",
-        itemDirection: 'top-to-bottom',
-        itemOpacity: 1,
-        symbolSize: 18,
-        symbolShape: "circle",
-        effects: [
-          {
-            on: "hover",
-            style: {
-              itemTextColor: "#000",
-            },
-          },
-        ],
+    theme={{
+      labels: {
+        text: {
+          fontFamily: "BMDOHYEON",
+          fontSize: "13",
+          // TODO: 일정 길이 이상의 글자가 잘려 보이는 것 수정
+        },
       },
-    ]}
+    }}
+    // legends={[
+    //   {
+    //     anchor: "bottom",
+    //     direction: "row",
+    //     justify: false,
+    //     translateX: 0,
+    //     translateY: 56,
+    //     itemsSpacing: 0,
+    //     itemWidth: 55,
+    //     itemHeight: 18,
+    //     itemTextColor: "#999",
+    //     itemDirection: 'top-to-bottom',
+    //     itemOpacity: 1,
+    //     symbolSize: 18,
+    //     symbolShape: "circle",
+    //     effects: [
+    //       {
+    //         on: "hover",
+    //         style: {
+    //           itemTextColor: "#000",
+    //         },
+    //       },
+    //     ],
+    //   },
+    // ]}
   />
 );
 

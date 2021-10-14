@@ -83,20 +83,19 @@ const Main = ({
     centerMode: true,
     centerPadding: "0px", // 0px 하면 슬라이드 끝쪽 이미지가 안잘림
   };
-  const distribution = ["장르", "국가", "키워드"];
+  const distribution = ["장르", "키워드", "국가"];
   return (
-    <div>
-      <div
-        style={{
-          backgroundImage: "linear-gradient(-45deg, #d754ab, #fd723a)",
-          height: "650px",
-        }}
-      >
-        <Header>인기 컨텐츠 Top 10</Header>
+    <div className="main">
+      <TopTen className="topTen">
+        <TopTenTitle className="topTenTitle">인기 컨텐츠 Top 10</TopTenTitle>
         {!popularList ? (
           <img
             src="https://blog.kakaocdn.net/dn/cmseNl/btrhhTwEA0r/TNAoELO6JmK3rhVeNfGYy0/img.gif"
             alt=""
+            style={{
+              width: "20%",
+              marginTop: "130px",
+            }}
           />
         ) : (
           <StyledSlider {...settings}>
@@ -110,124 +109,152 @@ const Main = ({
             ))}
           </StyledSlider>
         )}
-      </div>
-      <div
-        style={{
-          backgroundImage: "linear-gradient(45deg,#fd723a, #d754ab )",
-          height: "100%",
-        }}
-      >
-        <div>
-          <Tab currTab={currTab} onClick={handleClickTab} />
-          <h1>{`${currTab} 흥행 예측작품`}</h1>
-          <div style={{ height: "400px", background: "white" }}>
-            {currTab === "MOVIE" ? (
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(auto-fill, minmax(33%, auto))",
-                }}
-              >
-                {[movieGenres, movieCountry, movieKeyword].map((data, idx) => (
-                  <div style={{ height: "300px" }} key={idx}>
-                    <div>{distribution[idx]}</div>
-                    <MyResponsivePie data={data} key={idx} />
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(3, 1fr)",
-                }}
-              >
-                {[tvGenres, tvCountry, tvKeyword].map((data, idx) => (
-                  <div style={{ height: "300px" }} key={idx}>
-                    <div>{distribution[idx]}</div>
-                    <MyResponsivePie data={data} key={idx} />
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-          <Display>
-            <Order>
-              <h1>1</h1>
-              <h1>2</h1>
-              <h1>3</h1>
-              <h1>4</h1>
-              <h1>5</h1>
-            </Order>
-            <Detail>
-              <h1>흥행 예측 작품</h1>
-              {!predictableList ? (
-                <img
-                  src="https://blog.kakaocdn.net/dn/cmseNl/btrhhTwEA0r/TNAoELO6JmK3rhVeNfGYy0/img.gif"
-                  alt=""
-                />
-              ) : (
-                predictableList.map((prediction) => (
-                  <Link to={`/detail/${prediction.category}/${prediction.id}`}>
-                    <Prediction key={prediction.id} prediction={prediction} />
-                  </Link>
-                ))
-              )}
-            </Detail>
-
-            <Details>
-              <h1>흥행 예측 작품의 코로나 이전 유사 작품들 </h1>
-              {/*FIXME: just for demonstration */}
-              {[1, 2, 3, 4, 5].map((num) => (
-                <SimilarDetail>
-                  {!similarList ? (
-                    <div></div>
-                  ) : (
-                    similarList.map((prediction) => (
-                      <Link
-                        to={`/detail/${prediction.category}/${prediction.id}`}
-                      >
-                        <Similar key={prediction.id} prediction={prediction} />
-                      </Link>
-                    ))
-                  )}
-                </SimilarDetail>
+      </TopTen>
+      <BackgroundSquare />
+      <PredictionContainer className="prediction">
+        <Tab currTab={currTab} onClick={handleClickTab} />
+        <PredictionTitle className="predictionTiTle">{`${currTab} 흥행 예측 분석 top 5`}</PredictionTitle>
+        <PredictChart className="predictChart">
+          {currTab === "MOVIE" ? (
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1.2fr 1.5fr 1fr",
+              }}
+            >
+              {[movieGenres, movieKeyword, movieCountry].map((data, idx) => (
+                <PredictSeparate key={idx}>
+                  <PredictChartTitle className="predictChartTitle">
+                    {distribution[idx]}
+                  </PredictChartTitle>
+                  <MyResponsivePie data={data} key={idx} />
+                </PredictSeparate>
               ))}
-            </Details>
-          </Display>
-        </div>
-      </div>
+            </div>
+          ) : (
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "1.2fr 1.5fr 1fr",
+              }}
+            >
+              {[tvGenres, tvKeyword, tvCountry].map((data, idx) => (
+                <PredictSeparate key={idx}>
+                  <PredictChartTitle className="predictChartTitle">
+                    {distribution[idx]}
+                  </PredictChartTitle>
+                  <MyResponsivePie data={data} key={idx} />
+                </PredictSeparate>
+              ))}
+            </div>
+          )}
+        </PredictChart>
+        <Recommendation>
+          {/* <Order>
+            <h1>1</h1>
+            <h1>2</h1>
+            <h1>3</h1>
+            <h1>4</h1>
+            <h1>5</h1>
+          </Order>
+          <Detail>
+            <h1>흥행 예측 작품</h1>
+            {!predictableList ? (
+              <img
+                src="https://blog.kakaocdn.net/dn/cmseNl/btrhhTwEA0r/TNAoELO6JmK3rhVeNfGYy0/img.gif"
+                alt=""
+              />
+            ) : (
+              predictableList.map((prediction) => (
+                <Link to={`/detail/${prediction.category}/${prediction.id}`}>
+                  <Prediction key={prediction.id} prediction={prediction} />
+                </Link>
+              ))
+            )}
+          </Detail>
+
+          <Details>
+            <h1>흥행 예측 작품의 코로나 이전 유사 작품들 </h1> */}
+          {/*FIXME: just for demonstration */}
+          {/* {[1, 2, 3, 4, 5].map((num) => (
+              <SimilarDetail>
+                {!similarList ? (
+                  <div></div>
+                ) : (
+                  similarList.map((prediction) => (
+                    <Link
+                      to={`/detail/${prediction.category}/${prediction.id}`}
+                    >
+                      <Similar key={prediction.id} prediction={prediction} />
+                    </Link>
+                  ))
+                )}
+              </SimilarDetail>
+            ))}
+          </Details> */}
+          <Subtitles className="subtitles">
+            <Subtitle className="predictSubtitle">흥행 예측 작품</Subtitle>
+            <Subtitle className="recommendSubtitle">
+              코로나 이전 유사 작품 추천
+            </Subtitle>
+          </Subtitles>
+          <RecommendationList>
+            {!predictableList ? (
+              <img
+                src="https://blog.kakaocdn.net/dn/cmseNl/btrhhTwEA0r/TNAoELO6JmK3rhVeNfGYy0/img.gif"
+                alt=""
+              />
+            ) : (
+              predictableList.map((prediction) => (
+                <Link to={`/detail/${prediction.category}/${prediction.id}`}>
+                  <Prediction key={prediction.id} prediction={prediction} />
+                </Link>
+              ))
+            )}
+          </RecommendationList>
+        </Recommendation>
+      </PredictionContainer>
     </div>
   );
 };
 
 export default Main;
 
+const BackgroundSquare = () => {
+  const style = {
+    marginTop: "30px",
+    position: "absolute",
+    zIndex: "1",
+    width: "1300px",
+    height: "2600px",
+    backgroundColor: "#ffffff8d",
+    borderRadius: "25px",
+  };
+  return <div style={style}></div>;
+};
+
 //TODO: styled-components 파일은 가급적 한 파일에서 관리
-const Header = styled.h1`
-  margin-left: 25px;
+const TopTen = styled.div`
+  margin-top: 30px;
+  height: 540px;
+  background-color: #ffffff8d;
+  border-radius: 25px;
+`;
+
+const TopTenTitle = styled.h1`
+  margin-left: 40px;
   position: absolute;
-  top: 200px;
-  font-size: 20px;
+  top: 155px;
+  font-size: 35px;
 `;
 
 const StyledSlider = styled(Slider)`
   .slick-list {
-    max-width: 1600px;
-    top: 200px;
+    max-width: 1200px;
+    top: 135px;
     margin: 0 auto;
     height: 350px;
   }
-  // 일단 아무런 효과 없는 것을 추정됨
-  /* .slick-slide {
-    height: auto; // ← that must not be ignored
-  }
-  .slick-track {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: stretch;
-  } */
 
   .slick-slide div {
     display: flex;
@@ -235,7 +262,22 @@ const StyledSlider = styled(Slider)`
   }
 
   .slick-dots {
-    bottom: -220px;
+    bottom: -150px;
+  }
+
+  .slick-arrow {
+    top: 250px;
+    margin-left: 3rem;
+    margin-right: 3rem;
+    color: black;
+  }
+
+  .slick-prev::before {
+    color: black;
+  }
+
+  .slick-next::before {
+    color: black;
   }
 `;
 
@@ -245,13 +287,12 @@ const CardBox = styled.div`
 `;
 
 const CardImg = styled.img`
-  width: 150px;
-  height: 220px;
+  width: 180px;
+  height: 250px;
   text-align: center;
   margin: 0 auto;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-  border-top-left-radius: 7px;
-  border-top-right-radius: 7px;
+  border-radius: 10px;
 
   @media (max-width: 850px) {
     width: 100px;
@@ -262,15 +303,13 @@ const CardImg = styled.img`
 const CardText = styled.p`
   margin: 0 auto;
   padding: 10px;
-  font-size: 12px;
-  font-weight: bolder;
+  font-family: "BMDOHYEON";
+  font-size: 15px;
   align-items: center;
-  height: 70px;
+  text-align: center;
+  height: 80px;
   width: 150px;
-  background: white;
-  border-bottom-left-radius: 7px;
-  border-bottom-right-radius: 7px;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  color: black;
 
   @media (max-width: 850px) {
     font-size: 10px;
@@ -279,11 +318,63 @@ const CardText = styled.p`
   }
 `;
 
-const Display = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
+const PredictionContainer = styled.div`
+  height: 100%;
+  margin-top: 50px;
+  margin-left: 40px;
+  margin-right: 40px;
+  z-index: 2;
+  position: relative;
 `;
+
+const PredictionTitle = styled.h1`
+  margin-top: 2.5rem;
+  margin-bottom: 2rem;
+  font-size: 35px;
+`;
+
+const PredictChart = styled.div`
+  background: #ffffff9b;
+  border-radius: 15px;
+`;
+
+const PredictSeparate = styled.div`
+  height: 230px;
+  margin: 2rem;
+`;
+
+const PredictChartTitle = styled.div`
+  font-size: 28px;
+  margin-bottom: 1rem;
+`;
+
+const Recommendation = styled.div`
+  /* display: flex; */
+  /* flex-direction: row; */
+  justify-content: center;
+  margin-top: 30px;
+  background: #ffffff9b;
+  border-radius: 15px;
+  height:2080px;
+  margin-bottom: 60px;
+`;
+
+const Subtitles = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+`;
+
+const Subtitle = styled.h1`
+  margin: 2rem auto;
+  font-size: 28px;
+
+  &.predictSubtitle {
+    margin-left: 200px;
+  }
+`;
+
+const RecommendationList = styled.div``;
+
 const Order = styled.div`
   display: flex;
   flex-direction: column;
