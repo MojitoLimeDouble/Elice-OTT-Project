@@ -9,10 +9,11 @@ import Footer from "./components/Footer";
 import PotatoesInBasket from "./containers/PotatoBasketContainer";
 import MainContainer from "./containers/MainContainer";
 import MyPageContainer from "./containers/MyPageContainer";
-import PrivateRoute from './helpers/PrivateRoute';
+import PrivateRoute from "./helpers/PrivateRoute";
 import ContentsCategory from "./components/ContentsCategory";
 import Banner from "react-js-banner";
 import { useHistory } from "react-router-dom";
+import Search from "./components/Search";
 
 const App = () => {
   const [loggedOut, setLoggedOut] = useState(false);
@@ -46,7 +47,12 @@ const App = () => {
       </div>
       <Banner
         showBanner={loggedOut}
-        css={{ backgroundColor: "#0080ff", fontSize: 22, color: "white", margin: "0" }}
+        css={{
+          backgroundColor: "#0080ff",
+          fontSize: 22,
+          color: "white",
+          margin: "0",
+        }}
         title="로그아웃 되었습니다."
       />
       <Switch>
@@ -76,6 +82,9 @@ const App = () => {
         </Route>
         <Route path="/mypage">
           <MyPageContainer />
+        </Route>
+        <Route path="/search/:query">
+          <Search />
         </Route>
         <Route
           render={() => (

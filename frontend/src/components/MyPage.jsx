@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import { BsPencilFill, BsSaveFill } from "react-icons/bs";
 import { Button, Modal, Tooltip } from "antd";
-import "antd/dist/antd.css";
+// import "antd/dist/antd.css";
 import { FaSearchPlus } from "react-icons/fa";
 import { SearchOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";

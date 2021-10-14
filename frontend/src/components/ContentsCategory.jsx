@@ -108,33 +108,35 @@ const ContentsCategory = () => {
   };
 
   return (
-    <div style={{ height: "100vh", background: "pink" }}>
-      <div>{category.toUpperCase()}</div>
-      <ThemeProvider>
-        <CSSReset />
-        <Filtering
-          onClick={onClick}
-          filtering={filtering}
-          category={category}
-        />
-        <Categorizing
-          onClick={onClick}
-          categorizing={categorizing}
-          MovieCategoriesList={MovieCategoriesList}
-          TVCategoriesList={TVCategoriesList}
-          category={category}
-        />
-      </ThemeProvider>
-      <div>
-        {!contentsList ? (
-          <div>Loading ...</div>
-        ) : (
-          contentsList.map((contents) => (
-            <Link to={`/${category}/${contents.id}`}>
-              <ContentsCard contents={contents} key={contents.id} />
-            </Link>
-          ))
-        )}
+    <div>
+      <div style={{ height: "100vh", background: "pink" }}>
+        <div>{category.toUpperCase()}</div>
+        <ThemeProvider>
+          {/* <CSSReset /> */}
+          <Filtering
+            onClick={onClick}
+            filtering={filtering}
+            category={category}
+          />
+          <Categorizing
+            onClick={onClick}
+            categorizing={categorizing}
+            MovieCategoriesList={MovieCategoriesList}
+            TVCategoriesList={TVCategoriesList}
+            category={category}
+          />
+        </ThemeProvider>
+        <div>
+          {!contentsList ? (
+            <div>Loading ...</div>
+          ) : (
+            contentsList.map((contents) => (
+              <Link to={`/${category}/${contents.id}`}>
+                <ContentsCard contents={contents} key={contents.id} />
+              </Link>
+            ))
+          )}
+        </div>
       </div>
     </div>
   );
