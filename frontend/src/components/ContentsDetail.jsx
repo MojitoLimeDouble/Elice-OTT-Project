@@ -12,7 +12,7 @@ const ContentsDetail = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_BASE_URL}/api/${params.category}/${params.id}`
+        `/api/${params.category}/${params.id}`
       );
       setContentsInfo(response.data);
       setLike(response.data.is_like);
@@ -67,7 +67,7 @@ const ContentsDetail = () => {
       category: params.category,
       likes: !like,
     };
-    await axios.patch(`${process.env.REACT_APP_BASE_URL}/api/like`, body);
+    await axios.patch(`/api/like`, body);
   };
 
   return (

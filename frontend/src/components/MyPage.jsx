@@ -84,7 +84,7 @@ const MyPage = ({user, friendList, onUserProfile, onRequestFriends}) => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/api/mypage`
+          `/api/mypage`
         );
         onUserProfile({
           ...user,
@@ -101,7 +101,7 @@ const MyPage = ({user, friendList, onUserProfile, onRequestFriends}) => {
     const fetchFriend = async () => {
       try {
         const response = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/api/mypage/list/friend`
+          `/api/mypage/list/friend`
         );
         onRequestFriends(response.data);
       } catch (error) {

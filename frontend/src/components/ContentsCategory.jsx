@@ -12,6 +12,7 @@ const ContentsCategory = () => {
   // url에서 category(movie, tv) 분류 
   const category = window.location.href.split("/")[4];
   console.log(category);
+
   const MovieCategoriesList = [
     "음악",
     "역사",
@@ -65,12 +66,12 @@ const ContentsCategory = () => {
   const fetchFilter = async (subject, data) => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_BASE_URL}/api/${category}/list/${subject}`,
+        `/api/${category}/list/${subject}`,
         data
       );
       setContentsList(response.data);
       console.log(
-        `${process.env.REACT_APP_BASE_URL}/api/${category}/list/${subject}`
+        `/api/${category}/list/${subject}`
       );
     } catch (error) {
       console.log(error.response);
@@ -79,7 +80,7 @@ const ContentsCategory = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [category]);
   
   // 영화 카테고리와 tv 카테고리에 따른 분류 함수
   const chooseCategoryData = (array, data) => {
