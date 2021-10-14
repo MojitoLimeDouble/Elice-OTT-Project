@@ -7,6 +7,7 @@ import { Button, Modal, Tooltip } from "antd";
 import { FaSearchPlus } from "react-icons/fa";
 import { SearchOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
+import tokenHeader from "../authorization/tokenHeader";
 
 // TODO: 컴포넌트 세분화 작업 필요
 // 나의 프로필(프로필 이미지, 닉네임 정보가 담기는) 컴포넌트
@@ -17,7 +18,6 @@ export const Profile = ({
   setOnToggle,
   onChange,
 }) => {
-  
   return (
     <div>
       <p>
@@ -72,7 +72,7 @@ export const FriendProfile = ({ friend }) => {
   );
 };
 
-const MyPage = ({user, friendList, onUserProfile, onRequestFriends}) => {
+const MyPage = ({ user, friendList, onUserProfile, onRequestFriends }) => {
   const [onToggle, setOnToggle] = useState(true);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [friendNickname, setFriendNickname] = useState("");
@@ -83,9 +83,9 @@ const MyPage = ({user, friendList, onUserProfile, onRequestFriends}) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          `/api/mypage`
-        );
+        const response = await axios.get(`/api/mypage`, {
+          header: tokenHeader(),
+        });
         onUserProfile({
           ...user,
           nickname: response.data.nickname,
@@ -100,9 +100,9 @@ const MyPage = ({user, friendList, onUserProfile, onRequestFriends}) => {
     fetchData();
     const fetchFriend = async () => {
       try {
-        const response = await axios.get(
-          `/api/mypage/list/friend`
-        );
+        const response = await axios.get(`/api/mypage/list/friend`, {
+          header: tokenHeader(),
+        });
         onRequestFriends(response.data);
       } catch (error) {
         console.log(error.response);
@@ -144,32 +144,32 @@ const MyPage = ({user, friendList, onUserProfile, onRequestFriends}) => {
     setIsModalVisible(true);
   };
   // 닉네임을 입력창에 입력 후 서버에 전달 -> 친구의 프로필을 모달에 띄움
-    const onNicknameSubmit = async (e) => {
-      e.preventDefault();
-      setExistence(true);
-      const body = {
-        nickname: friendNickname,
-      };
-      if (friendNickname) {
-        try {
-          const response = await axios.post(
-            `${process.env.REACT_APP_BASE_URL}/api/mypage/find/friend`,
-            body
-          );
-          if (response.data.result === "fail") {
-            setExistence(true);
-            setTimeout(() => {
-              setExistence(false);
-            }, 2000);
-          } else {
-            setExistence(false);
-            setFriend(response.data);
-          }
-        } catch (error) {
-          console.log(error.response);
-        }
-      }
+  const onNicknameSubmit = async (e) => {
+    e.preventDefault();
+    setExistence(true);
+    const body = {
+      nickname: friendNickname,
     };
+    if (friendNickname) {
+      try {
+        const response = await axios.post(
+          `${process.env.REACT_APP_BASE_URL}/api/mypage/find/friend`,
+          body
+        );
+        if (response.data.result === "fail") {
+          setExistence(true);
+          setTimeout(() => {
+            setExistence(false);
+          }, 2000);
+        } else {
+          setExistence(false);
+          setFriend(response.data);
+        }
+      } catch (error) {
+        console.log(error.response);
+      }
+    }
+  };
 
   // 친구를 찾고 OK 버튼을 누를 경우 검색한 친구를 친구 목록에 추가하기 위해 서버에 요청 후 변경된 리스트를 받아옴
   const handleOk = async () => {

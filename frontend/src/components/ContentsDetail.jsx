@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { imgUrl } from "../apis/api";
+import tokenHeader from "../authorization/tokenHeader";
 
 const ContentsDetail = () => {
   const [contentsInfo, setContentsInfo] = useState("");
@@ -12,9 +13,11 @@ const ContentsDetail = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `/api/${params.category}/${params.id}`
+        `/api/detail/${params.category}/${params.id}`,
+        { headers: tokenHeader() }
       );
-      setContentsInfo(response.data);
+      console.log(response.data.content);
+      setContentsInfo(response.data.content);
       setLike(response.data.is_like);
     } catch (error) {
       console.log(error.response);
@@ -27,7 +30,7 @@ const ContentsDetail = () => {
 
   useEffect(() => {
     const optionParams = {
-      q: `${contentsInfo.title} 정보`, // 검색 조건 (여기에 백엔드에서 전달해주는 영화 title 정보 + [리뷰, 해석 등]이 붙어서 검색)
+      q: `${contentsInfo?.title} 정보`, // 검색 조건 (여기에 백엔드에서 전달해주는 영화 title 정보 + [리뷰, 해석 등]이 붙어서 검색)
       part: "snippet", // 정보 출력 조건
       // key: process.env.REACT_APP_YOUTUBE_API_KEY, // API KEY (각자 API KEY로)
       type: "video", // youtube의 video 중에서 검색
@@ -75,14 +78,12 @@ const ContentsDetail = () => {
       {!contentsInfo ? (
         <div>Loading ... </div>
       ) : (
-        contentsInfo.map((contents) => (
-          <Detail
-            key={contents.id}
-            contents={contents}
-            onClick={onClick}
-            like={like}
-          />
-        ))
+        <Detail
+          key={contentsInfo.id}
+          contents={contentsInfo}
+          onClick={onClick}
+          like={like}
+        />
       )}
       {youtubeList == [] ? (
         <h1>Loading...</h1>
@@ -100,7 +101,7 @@ export default ContentsDetail;
 export const Detail = ({ contents, onClick, like }) => {
   return (
     <div>
-      <img src={`${imgUrl}${contents.poster_path}`} alt="poster" />
+      <img src={`${contents.poster_path}`} alt="poster" />
       <h1>{contents.title}</h1>
       <p>{contents.like_count}</p>
       <button onClick={onClick}>{!like ? "🥔" : "🍟"}</button>
@@ -109,7 +110,7 @@ export const Detail = ({ contents, onClick, like }) => {
       <p>{contents.runtime}</p>
       <p>{contents.genres}</p>
       <p>{contents.director}</p>
-      <p>{contents.crew}</p>
+      <p>{contents.cast}</p>
       <p>
         {!contents.positive_comment ? (
           <span></span>

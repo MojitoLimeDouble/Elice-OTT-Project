@@ -54,7 +54,7 @@ const ContentsCategory = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_BASE_URL}/api/${category}/list`
+        `/api/${category}/list`
       );
       setContentsList(response.data);
     } catch (error) {
@@ -87,7 +87,7 @@ const ContentsCategory = () => {
     if (array.includes(data)) {
       setFiltering("선택하기");
       setCategorizing(data);
-      fetchFilter("category", data);
+      fetchFilter("filter", data);
     } else {
       setFiltering(data);
       setCategorizing("선택하기");
@@ -131,7 +131,7 @@ const ContentsCategory = () => {
             <div>Loading ...</div>
           ) : (
             contentsList.map((contents) => (
-              <Link to={`/${category}/${contents.id}`}>
+              <Link to={`/detail/${category}/${contents.id}`}>
                 <ContentsCard contents={contents} key={contents.id} />
               </Link>
             ))
