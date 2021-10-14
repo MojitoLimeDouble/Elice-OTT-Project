@@ -24,7 +24,7 @@ const NonSignIn = () => {
         <ReactFullpage
           scrollOverflow={true}
           loopBottom={true}
-          sectionsColor={["orange", "purple", "green", "black"]}
+          // sectionsColor={["orange", "purple", "green", "black"]}
           render={({ state, fullpageApi }) => {
             return (
               <FullPage>
@@ -94,12 +94,6 @@ const NonSignIn = () => {
                       콘텐츠&#129364;
                     </Title>
                   </div>
-                </div>
-                <div className="section">
-                  <Title>회원 가입 다시 권유</Title>
-                  <Link to="/signup">
-                    <Button>회원가입</Button>
-                  </Link>
                 </div>
               </FullPage>
             );

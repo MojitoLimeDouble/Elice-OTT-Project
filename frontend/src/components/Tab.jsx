@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 
 const Container = styled.div`
   display: flex;
-  border-bottom: 1px solid #e1e2e4;
+  border-bottom: 1px solid #c5c4f8;
   width: 100%;
   margin-bottom: 16px;
 `;
@@ -20,10 +20,10 @@ const EactTab = styled.p`
   ${(props) =>
     props.active &&
     css`
-      color: #ffffff;
+      color: #aba8f5;
       font-weight: bold;
       background: rgba(230, 230, 230, 0.0001);
-      box-shadow: inset 0px -4px 0px #ffffff;
+      box-shadow: inset 0px -4px 0px #aba8f5;
     `}
 `;
 

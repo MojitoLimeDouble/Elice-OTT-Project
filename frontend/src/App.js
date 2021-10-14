@@ -9,7 +9,7 @@ import Footer from "./components/Footer";
 import PotatoesInBasket from "./containers/PotatoBasketContainer";
 import MainContainer from "./containers/MainContainer";
 import MyPageContainer from "./containers/MyPageContainer";
-import PrivateRoute from './helpers/PrivateRoute';
+import PrivateRoute from "./helpers/PrivateRoute";
 import ContentsCategory from "./components/ContentsCategory";
 import Banner from "react-js-banner";
 import { useHistory } from "react-router-dom";
@@ -33,63 +33,85 @@ const App = () => {
   };
 
   return (
-    <div>
-      <div
-        style={{
-          position: "sticky",
-          top: 0,
-          backgroundColor: "white",
-          zIndex: 1,
-        }}
-      >
-        <Navigation logout={logout} />
-      </div>
-      <Banner
-        showBanner={loggedOut}
-        css={{ backgroundColor: "#0080ff", fontSize: 22, color: "white", margin: "0" }}
-        title="로그아웃 되었습니다."
-      />
-      <Switch>
-        <Route exact path="/">
-          <NonSignIn />
-        </Route>
-        <Route path="/signin">
-          <Signin />
-        </Route>
-        <Route path="/signup">
-          <Signup />
-        </Route>
-        <Route path="/main">
-          <MainContainer />
-        </Route>
-        <Route path="/detail/:category/:id?">
-          <ContentsDetail />
-        </Route>
-        <PrivateRoute path="/list/movie">
-          <ContentsCategory />
-        </PrivateRoute>
-        <Route path="/list/tv">
-          <ContentsCategory />
-        </Route>
-        <Route path="/potato-basket/:id?">
-          <PotatoesInBasket />
-        </Route>
-        <Route path="/mypage">
-          <MyPageContainer />
-        </Route>
-        <Route
-          render={() => (
-            <div>
-              <h2>이 페이지는 존재하지 않습니다.</h2>
-            </div>
-          )}
+    <div
+      className="centerPosition"
+      style={{
+        textAlign: "center",
+        backgroundImage:
+          "linear-gradient(-30deg, #ebbfe0, #c1d3ff, #d9ddff, #efd6ff)",
+      }}
+    >
+      <div className="totalStyledDiv" style={totalStyled}>
+        <div className="navigation" style={stickyNavigation}>
+          <Navigation logout={logout} />
+        </div>
+        <Banner
+          showBanner={loggedOut}
+          css={{
+            backgroundColor: "#0080ff",
+            fontSize: 22,
+            color: "white",
+            margin: "0",
+          }}
+          title="로그아웃 되었습니다."
         />
-      </Switch>
-      <div>
-        <Footer />
+        <Switch>
+          <Route exact path="/">
+            <NonSignIn />
+          </Route>
+          <Route path="/signin">
+            <Signin />
+          </Route>
+          <Route path="/signup">
+            <Signup />
+          </Route>
+          <Route path="/main">
+            <MainContainer />
+          </Route>
+          <Route path="/detail/:category/:id?">
+            <ContentsDetail />
+          </Route>
+          <PrivateRoute path="/list/movie">
+            <ContentsCategory />
+          </PrivateRoute>
+
+          <Route path="/list/tv">
+            <ContentsCategory />
+          </Route>
+          <Route path="/potato-basket/:id?">
+            <PotatoesInBasket />
+          </Route>
+          <Route path="/mypage">
+            <MyPageContainer />
+          </Route>
+          <Route
+            render={() => (
+              <div>
+                <h2>이 페이지는 존재하지 않습니다.</h2>
+              </div>
+            )}
+          />
+        </Switch>
+        <div>
+          <Footer />
+        </div>
       </div>
     </div>
   );
 };
 
 export default App;
+
+const totalStyled = {
+  fontFamily: "BMJUA",
+  fontStyle: "normal",
+  textDecoration: "none",
+  width: "1300px",
+  display: "inline-block",
+};
+
+const stickyNavigation = {
+  position: "sticky",
+  top: 0,
+  zIndex: 1,
+};

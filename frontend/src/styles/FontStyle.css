@@ -1,0 +1,92 @@
+@font-face {
+  font-family: "BMDOHYEON";
+  font-style: normal;
+  src: url("./fonts/BMDOHYEON.woff2") format("woff2"),
+    url("./fonts/BMDOHYEON.woff") format("woff"),
+    url("./fonts/BMDOHYEON.otf") format("truetype");
+}
+
+@font-face {
+  font-family: "BMHANNA_11yrs";
+  font-style: normal;
+  src: url("./fonts/BMHANNA_11yrs.woff2") format("woff2"),
+    url("./fonts/BMHANNA_11yrs.woff") format("woff"),
+    url("./fonts/BMHANNA_11yrs.otf") format("truetype");
+}
+
+@font-face {
+  font-family: "BMJUA";
+  font-style: normal;
+  src: url("./fonts/BMJUA.woff2") format("woff2"),
+    url("./fonts/BMJUA.woff") format("woff"),
+    url("./fonts/BMJUA.otf") format("truetype");
+}
+
+@font-face {
+  font-family: "NanumBarunGothic";
+  font-style: normal;
+  src: url("./fonts/NanumBarunGothic.woff2") format("woff2"),
+    url("./fonts/NanumBarunGothic.woff") format("woff"),
+    url("./fonts/NanumBarunGothic.otf") format("truetype");
+}
+
+@font-face {
+  font-family: "NanumBarunGothic";
+  font-style: normal;
+  font-weight: bold;
+  src: url("./fonts/NanumBarunGothicBold.woff2") format("woff2"),
+    url("./fonts/NanumBarunGothicBold.woff") format("woff"),
+    url("./fonts/NanumBarunGothicBold.otf") format("truetype");
+}
+
+@font-face {
+  font-family: "NanumGothic";
+  font-style: normal;
+  src: url("./fonts/NanumGothic.woff2") format("woff2"),
+    url("./fonts/NanumGothic.woff") format("woff"),
+    url("./fonts/NanumGothic.otf") format("truetype");
+}
+
+@font-face {
+  font-family: "NanumGothic";
+  font-style: normal;
+  font-weight: bold;
+  src: url("./fonts/NanumGothicBold.woff2") format("woff2"),
+    url("./fonts/NanumGothicBold.woff") format("woff"),
+    url("./fonts/NanumGothicBold.otf") format("truetype");
+}
+
+@font-face {
+  font-family: "NanumGothic";
+  font-style: normal;
+  font-weight: 500;
+  src: url("./fonts/NanumGothicExtraBold.woff2") format("woff2"),
+    url("./fonts/NanumGothicExtraBold.woff") format("woff"),
+    url("./fonts/NanumGothicExtraBold.otf") format("truetype");
+}
+
+@font-face {
+  font-family: "NotoSansKR";
+  font-style: normal;
+  src: url("./fonts/NotoSansKR-Regular.woff2") format("woff2"),
+    url("./fonts/NotoSansKR-Regular.woff") format("woff"),
+    url("./fonts/NotoSansKR-Regular.otf") format("truetype");
+}
+
+@font-face {
+  font-family: "NotoSansKR";
+  font-style: normal;
+  font-weight: bold;
+  src: url("./fonts/NotoSansKR-Bold.woff2") format("woff2"),
+    url("./fonts/NotoSansKR-Bold.woff") format("woff"),
+    url("./fonts/NotoSansKR-Bold.otf") format("truetype");
+}
+
+@font-face {
+  font-family: "NotoSansKR";
+  font-style: normal;
+  font-weight: 500;
+  src: url("./fonts/NotoSansKR-Black.woff2") format("woff2"),
+    url("./fonts/NotoSansKR-Black.woff") format("woff"),
+    url("./fonts/NotoSansKR-Black.otf") format("truetype");
+}
