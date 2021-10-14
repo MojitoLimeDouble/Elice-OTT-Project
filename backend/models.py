@@ -9,7 +9,7 @@ class User(db.Model):
     email = db.Column(db.String(50),  nullable=False,unique=True)
     nickname = db.Column(db.String(30), nullable=False, unique=True)
     password = db.Column(db.String(64), nullable=False)
-    photolink = db.Column(db.Text,nullable=False, default="./static/default.png")
+    photolink = db.Column(db.Text,nullable=False, default="./static/image/default.png")
     
 
     def __init__(self, email, nickname, password):
