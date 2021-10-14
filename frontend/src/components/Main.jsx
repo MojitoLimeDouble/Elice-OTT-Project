@@ -34,20 +34,18 @@ const Main = ({
       try {
         const response = await axios.get(`/api/${subject}/hit`);
         onPredictable(response.data);
-        console.log("predictableList", predictableList);
       } catch (error) {
         console.log(error.response);
       }
     };
     hitContents();
   };
-  
+
   const subject = currTab.toLowerCase();
 
   const topRated = async () => {
     try {
       const response = await axios.get("/api/top_rated");
-      console.log(response.data)
       onPopular(response.data);
     } catch (error) {
       console.log(error.response);
@@ -79,7 +77,7 @@ const Main = ({
     centerPadding: "0px", // 0px 하면 슬라이드 끝쪽 이미지가 안잘림
   };
   const distribution = ["장르", "키워드", "국가"];
-  const order = ["1위", "2위", "3위", "4위", "5위"]
+  const order = ["1위", "2위", "3위", "4위", "5위"];
   return (
     <div className="main">
       <TopTen className="topTen">
@@ -97,13 +95,11 @@ const Main = ({
           <StyledSlider {...settings}>
             {popularList.map((content) => (
               <CardBox key={content.id}>
-                <Link to={`/detail/${content.category}/${content.id}`}>
-                  <CardImg
-                    alt="인기 컨텐츠"
-                    src={`${imgUrl}${content.poster_path}`}
-                  />
-                  <CardText>{content.title}</CardText>
-                </Link>
+                <CardImg
+                  alt="인기 컨텐츠"
+                  src={`${imgUrl}${content.poster_path}`}
+                />
+                <CardText>{content.title}</CardText>
               </CardBox>
             ))}
           </StyledSlider>
@@ -160,7 +156,7 @@ const Main = ({
             />
           ) : (
             predictableList.map((List, idx) => (
-              <div key={idx} style={{display: "flex"}}>
+              <div key={idx} style={{ display: "flex" }}>
                 <h1>{order[idx]}</h1>
                 <PredictionOrder List={List} currTab={currTab.toLowerCase()} />
               </div>

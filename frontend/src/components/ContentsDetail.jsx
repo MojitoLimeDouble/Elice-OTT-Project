@@ -1,8 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { imgUrl } from "../apis/api";
-import tokenHeader from "../authorization/tokenHeader";
 
 const ContentsDetail = () => {
   const [contentsInfo, setContentsInfo] = useState("");
@@ -13,10 +11,8 @@ const ContentsDetail = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `/api/detail/${params.category}/${params.id}`,
-        { headers: tokenHeader() }
+        `/api/detail/${params.category}/${params.id}`
       );
-      console.log(response.data.content);
       setContentsInfo(response.data.content);
       setLike(response.data.is_like);
     } catch (error) {
@@ -30,7 +26,7 @@ const ContentsDetail = () => {
 
   useEffect(() => {
     const optionParams = {
-      q: `${contentsInfo?.title} 정보`, // 검색 조건 (여기에 백엔드에서 전달해주는 영화 title 정보 + [리뷰, 해석 등]이 붙어서 검색)
+      q: "오징어 게임 정보", // 검색 조건 (여기에 백엔드에서 전달해주는 영화 title 정보 + [리뷰, 해석 등]이 붙어서 검색)
       part: "snippet", // 정보 출력 조건
       // key: process.env.REACT_APP_YOUTUBE_API_KEY, // API KEY (각자 API KEY로)
       type: "video", // youtube의 video 중에서 검색
@@ -102,30 +98,46 @@ export const Detail = ({ contents, onClick, like }) => {
   return (
     <div>
       <img src={`${contents.poster_path}`} alt="poster" />
-      <h1>{contents.title}</h1>
-      <p>{contents.like_count}</p>
-      <button onClick={onClick}>{!like ? "🥔" : "🍟"}</button>
-      <p>{contents.overview}</p>
-      <p>{contents.release_date}</p>
-      <p>{contents.runtime}</p>
-      <p>{contents.genres}</p>
-      <p>{contents.director}</p>
-      <p>{contents.cast}</p>
+      <h1>제목: {contents.title}</h1>
+      <p>찐 감자: {contents.like_count}</p>
+      <button onClick={onClick} style={{ cursor: "pointer" }}>
+        {!like ? "🥔" : "🍟"}
+      </button>
+      <p>줄거리: {contents.overview}</p>
+      <p>개봉일: {contents.release_date}</p>
+      <p>상영 시간: {contents.runtime} 분</p>
       <p>
-        {!contents.positive_comment ? (
+        장르:
+        {contents.genres?.map((genres, idx) => (
+          <span key={idx}>{genres} </span>
+        ))}
+      </p>
+      <p>감독: {contents.director}</p>
+      <p>
+        주연:
+        {contents.cast?.slice(0, 4).map((cast, idx) => (
+          <span key={idx}>#{cast} </span>
+        ))}
+      </p>
+      <p>
+        {contents.positive_comment[0] === "NaN" ? (
           <span></span>
         ) : (
-          contents.positive_comment.map((comment, idx) => (
-            <span key={idx}>{comment}</span>
+          contents.positive_comment?.map((comment, idx) => (
+            <span key={idx} style={{ color: "blue" }}>
+              #{comment}{" "}
+            </span>
           ))
         )}
       </p>
       <p>
-        {!contents.positive_comment ? (
+        {contents.negative_comment[0] === "NaN" ? (
           <span></span>
         ) : (
-          contents.negative_comment.map((comment, idx) => (
-            <span key={idx}>{comment}</span>
+          contents.negative_comment?.map((comment, idx) => (
+            <span key={idx} style={{ color: "red" }}>
+              #{comment}{" "}
+            </span>
           ))
         )}
       </p>
