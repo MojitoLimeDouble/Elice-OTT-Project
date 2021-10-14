@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "fullpage.js/vendors/scrolloverflow"; // Optional. When using scrollOverflow:true
 import ReactFullpage from "@fullpage/react-fullpage";
 import styled from "styled-components";
-import { SectionsContainer, Header } from "react-fullpage";
+import { SectionsContainer } from "react-fullpage";
 import NonSigninNavigation from "./NonSigninNavigation";
 import OttServiceRateChart from "./OttServiceRateChart";
 import OttServiceRateData from "./OttServiceRateData";
@@ -15,11 +15,11 @@ import NetflixOriginalMovieData from "./NetfilxOriginalMovieData";
 const NonSignIn = () => {
   return (
     <div>
-      <Header>
-        <NonSigninNavigationContainer>
-          <NonSigninNavigation />
-        </NonSigninNavigationContainer>
-      </Header>
+      <NonSigninNavigationContainer
+        style={{ position: "absolute", top: "0", zIndex: "15" }}
+      >
+        <NonSigninNavigation />
+      </NonSigninNavigationContainer>
       <SectionsContainer>
         <ReactFullpage
           scrollOverflow={true}
@@ -107,7 +107,10 @@ const NonSignIn = () => {
 export default NonSignIn;
 
 const NonSigninNavigationContainer = styled.div`
-  background-color: white;
+  /* position: sticky;
+  top: 0;
+  z-index: 30;
+   */
 `;
 
 const FullPage = styled.div`
