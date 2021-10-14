@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { ContentsCard } from "./Prediction";
 
-const Search = () => {
+const Search = ({ windowHeight }) => {
   const [searchList, setSearchList] = useState("");
 
   const params = useParams();
@@ -25,7 +25,11 @@ const Search = () => {
   }, [params]);
 
   return (
-    <div>
+    <div
+      style={{
+        minHeight: `${windowHeight - 320}px`,
+      }}
+    >
       {!searchList ? (
         <div>일치하는 작품이 없습니다.</div>
       ) : (

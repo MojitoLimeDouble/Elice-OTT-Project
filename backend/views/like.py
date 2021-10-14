@@ -1,4 +1,5 @@
 from flask import request, Blueprint, jsonify,abort
+from sqlalchemy.sql.functions import user
 from models import *
 from flask_jwt_extended import *
 import requests, json
@@ -16,30 +17,51 @@ def like():
 
     user_id = get_jwt_identity()
 
-    if like == True:
+    if like == True: # 리스트에 있으면 추가 불가 중복 코드 작성
         if category == "movie":
+            is_potato = Potato_Basket.query.filter(Potato_Basket.user_id==user_id, Potato_Basket.movie_id==content_id).first()
             potato = Potato_Basket(user_id=user_id, movie_id=content_id)
+
             movie = Movie.query.filter(Movie.id==content_id).first()
-            movie.like_count += 1
+
+            if movie and not is_potato:
+                movie.like_count += 1
+            if not movie:
+                abort(400,"해당하는 영화가 없습니다.")  
+            if is_potato:
+                abort(400,"좋아요는 중복이 불가합니다.")  
 
             Movie.query.filter_by(id=content_id).update(
                 {'like_count': movie.like_count})
 
         if category == "tv":
+            is_potato = Potato_Basket.query.filter(Potato_Basket.user_id==user_id, Potato_Basket.tv_id==content_id).first()
             potato = Potato_Basket(user_id=user_id, tv_id=content_id)
             tv = Tv.query.filter(Tv.id==content_id).first()
-            tv.like_count += 1
+
+            if tv and not is_potato:
+                tv.like_count += 1
+            if not tv:
+                abort(400,"해당하는 Tv 프로그램이 없습니다.")  
+            if is_potato:
+                abort(400,"좋아요는 중복이 불가합니다.")  
 
             Tv.query.filter_by(id=content_id).update(
                 {'like_count': tv.like_count})
             
         db.session.add(potato)
     
-    if like == False:
+    if like == False: # 리스트에 없으면 삭제 불가 코드 작성
         if category == "movie":
             potato = Potato_Basket.query.filter(Potato_Basket.user_id==user_id, Potato_Basket.movie_id==content_id).first()
             movie = Movie.query.filter(Movie.id==content_id).first()
-            movie.like_count -= 1
+
+            if movie and potato:
+                movie.like_count -= 1
+            if not movie:
+                abort(400,"해당하는 영화가 없습니다.")  
+            if not potato:
+                abort(400,"취소할 좋아요가 없습니다.")  
 
             Movie.query.filter_by(id=content_id).update(
                 {'like_count': movie.like_count})
@@ -47,7 +69,13 @@ def like():
         if category == "tv":
             potato = Potato_Basket.query.filter(Potato_Basket.user_id==user_id, Potato_Basket.tv_id==content_id).first()
             tv = Tv.query.filter(Tv.id==content_id).first()
-            tv.like_count -= 1
+
+            if tv and potato:
+                tv.like_count -= 1
+            if not movie:
+                abort(400,"해당하는 Tv 프로그램이 없습니다.")  
+            if not potato:
+                abort(400,"취소할 좋아요가 없습니다.")
 
             Tv.query.filter_by(id=content_id).update(
                 {'like_count': tv.like_count})
