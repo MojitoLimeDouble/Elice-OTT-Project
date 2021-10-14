@@ -9,7 +9,7 @@ const ContentsCategory = () => {
   const [contentsList, setContentsList] = useState("");
   const [filtering, setFiltering] = useState("선택하기");
   const [categorizing, setCategorizing] = useState("선택하기");
-  // url에서 category(movie, tv) 분류 
+  // url에서 category(movie, tv) 분류
   const category = window.location.href.split("/")[4];
   console.log(category);
 
@@ -53,9 +53,7 @@ const ContentsCategory = () => {
   // 최초 렌더링 시 인기도 높은 순서 데이터 요청
   const fetchData = async () => {
     try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_BASE_URL}/api/${category}/list`
-      );
+      const response = await axios.get(`/api/${category}/list`);
       setContentsList(response.data);
     } catch (error) {
       console.log(error.response);
@@ -64,15 +62,13 @@ const ContentsCategory = () => {
 
   // 정렬 및 장렬 분류에 따른 데이터 요청
   const fetchFilter = async (subject, data) => {
+    const body = { sort_criteria: data };
     try {
-      const response = await axios.get(
+      const response = await axios.post(
         `/api/${category}/list/${subject}`,
-        data
+        body
       );
       setContentsList(response.data);
-      console.log(
-        `/api/${category}/list/${subject}`
-      );
     } catch (error) {
       console.log(error.response);
     }
@@ -81,13 +77,13 @@ const ContentsCategory = () => {
   useEffect(() => {
     fetchData();
   }, [category]);
-  
+
   // 영화 카테고리와 tv 카테고리에 따른 분류 함수
   const chooseCategoryData = (array, data) => {
     if (array.includes(data)) {
       setFiltering("선택하기");
       setCategorizing(data);
-      fetchFilter("category", data);
+      fetchFilter("filter", data);
     } else {
       setFiltering(data);
       setCategorizing("선택하기");
@@ -131,7 +127,7 @@ const ContentsCategory = () => {
             <div>Loading ...</div>
           ) : (
             contentsList.map((contents) => (
-              <Link to={`/${category}/${contents.id}`}>
+              <Link to={`/detail/${category}/${contents.id}`}>
                 <ContentsCard contents={contents} key={contents.id} />
               </Link>
             ))
