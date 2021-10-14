@@ -31,9 +31,7 @@ const Main = ({
   const requestContents = (subject) => {
     const hitContents = async () => {
       try {
-        const response = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/api/${subject}/hit`
-        );
+        const response = await axios.get(`/api/${subject}/hit`);
         onPredictable(response.data);
       } catch (error) {
         console.log(error.response);
@@ -41,9 +39,7 @@ const Main = ({
     };
     const similarContents = async () => {
       try {
-        const response = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}/api/${subject}/similar`
-        );
+        const response = await axios.get(`/api/${subject}/similar`);
         onSimilar(response.data);
       } catch (error) {
         console.log(error.response);
@@ -74,7 +70,7 @@ const Main = ({
   const handleClickTab = (tab) => {
     setCurrTab(tab);
   };
-  console.log("currTab", currTab);
+
   // FIXME: 필요없는 부분은 배포전 재확인 후 삭제 예정
   const settings = {
     dots: true, // 슬라이드 밑에 점 보이게
@@ -133,7 +129,7 @@ const Main = ({
                 }}
               >
                 {[movieGenres, movieCountry, movieKeyword].map((data, idx) => (
-                  <div style={{ height: "300px" }}>
+                  <div style={{ height: "300px" }} key={idx}>
                     <div>{distribution[idx]}</div>
                     <MyResponsivePie data={data} key={idx} />
                   </div>
@@ -147,7 +143,7 @@ const Main = ({
                 }}
               >
                 {[tvGenres, tvCountry, tvKeyword].map((data, idx) => (
-                  <div style={{ height: "300px" }}>
+                  <div style={{ height: "300px" }} key={idx}>
                     <div>{distribution[idx]}</div>
                     <MyResponsivePie data={data} key={idx} />
                   </div>
@@ -172,11 +168,9 @@ const Main = ({
                 />
               ) : (
                 predictableList.map((prediction) => (
-                  <Prediction key={prediction.id} prediction={prediction}>
-                    <Link
-                      to={`/detail/${prediction.category}/${prediction.id}`}
-                    ></Link>
-                  </Prediction>
+                  <Link to={`/detail/${prediction.category}/${prediction.id}`}>
+                    <Prediction key={prediction.id} prediction={prediction} />
+                  </Link>
                 ))
               )}
             </Detail>
@@ -190,11 +184,11 @@ const Main = ({
                     <div></div>
                   ) : (
                     similarList.map((prediction) => (
-                      <Similar key={prediction.id} prediction={prediction}>
-                        <Link
-                          to={`/detail/${prediction.category}/${prediction.id}`}
-                        ></Link>
-                      </Similar>
+                      <Link
+                        to={`/detail/${prediction.category}/${prediction.id}`}
+                      >
+                        <Similar key={prediction.id} prediction={prediction} />
+                      </Link>
                     ))
                   )}
                 </SimilarDetail>

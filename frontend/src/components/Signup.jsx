@@ -74,7 +74,7 @@ const Signup = () => {
     console.log(data);
 
     axios
-      .post(`http://localhost:5000/signup`, data)
+      .post('/api/signup', data)
       .then((response) => {
         console.log(response);
         if (response.data.result === "fail") {

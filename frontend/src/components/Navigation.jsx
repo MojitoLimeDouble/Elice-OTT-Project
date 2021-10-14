@@ -2,7 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-const Navigation = ({ userid }) => {
+const Navigation = ({ userid, logout }) => {
+  
   return (
     <Container>
       <Link to="/main">POTCHA</Link>
@@ -12,9 +13,8 @@ const Navigation = ({ userid }) => {
         <Link to={`/potato-basket/${userid}`}>PotatoBasket</Link>
       </Menu>
       <Link to="/mypage">MyPage</Link>
-      <button>Logout</button>
+      <button onClick={logout}>Logout</button>
     </Container>
-
   );
 };
 
