@@ -16,7 +16,11 @@ const NonSignIn = () => {
   return (
     <div>
       <NonSigninNavigationContainer
-        style={{ position: "absolute", top: "0", zIndex: "15" }}
+        style={{
+          position: "absolute",
+          top: "0",
+          zIndex: "15",
+        }}
       >
         <NonSigninNavigation />
       </NonSigninNavigationContainer>

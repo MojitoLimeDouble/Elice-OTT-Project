@@ -4,28 +4,29 @@ import axios from "axios";
 import NonSigninNavigation from "./NonSigninNavigation";
 import styled from "styled-components";
 
-const Signup = () => {
-  const [ email, setEmail ] = useState("");
-  const [ emailCheck, setEmailCheck ] = useState(true);
+const Signup = ({ windowHeight }) => {
+  const [email, setEmail] = useState("");
+  const [emailCheck, setEmailCheck] = useState(true);
 
-  const [ password, setPassword ] = useState("");
-  const [ passwordVali, setPasswordVali ] = useState(true);
+  const [password, setPassword] = useState("");
+  const [passwordVali, setPasswordVali] = useState(true);
 
-  const [ passwordCheck, setPasswordCheck ] = useState("");
-  const [ passwordError, setPasswordError ] = useState(false);
+  const [passwordCheck, setPasswordCheck] = useState("");
+  const [passwordError, setPasswordError] = useState(false);
 
-  const [ nickname, setNickname ] = useState("");
-  const [ nicknameCheck, setNicknameCheck ] = useState(true);
-  const [ nicknameValidate, setNicknameValidate ] = useState(true);
+  const [nickname, setNickname] = useState("");
+  const [nicknameCheck, setNicknameCheck] = useState(true);
+  const [nicknameValidate, setNicknameValidate] = useState(true);
 
   const history = useHistory();
-
 
   const onChangePasswordCheck = useCallback(
     (e) => {
       setPasswordError(e.target.value !== password);
       setPasswordCheck(e.target.value);
-    }, [passwordCheck]);
+    },
+    [passwordCheck]
+  );
 
   const onChangeEmail = (e) => {
     setEmail(e.target.value);
@@ -75,90 +76,102 @@ const Signup = () => {
     };
     console.log(data);
 
-    axios
-      .post('/api/signup', data)
-      .then((response) => {
-        console.log(response);
-        if (response.data.result === "fail") {
-          setNicknameValidate(false)
-        } else
-          {alert("회원 가입에 성공하셨습니다.");
-        history.push('/signin');}
-      })
-  }
+    axios.post("/api/signup", data).then((response) => {
+      console.log(response);
+      if (response.data.result === "fail") {
+        setNicknameValidate(false);
+      } else {
+        alert("회원 가입에 성공하셨습니다.");
+        history.push("/signin");
+      }
+    });
+  };
 
   return (
     <div>
-    <NonSigninNavigationContainer
-      style={{ position: "absolute", top: "0", zIndex: "15" }}
-    >
-      <NonSigninNavigation />
-    </NonSigninNavigationContainer>
-      <form onSubmit={onSubmit}>
-        <div>
-          <input
-            name="Email"
-            value={email}
-            required
-            onChange={onChangeEmail}
-            placeholder="Email"
-          />
-          {!emailCheck && (
-            <div style={{ color: "red", fontSize: 12 }}>이메일 형식이 유효하지 않습니다.</div>
-          )}
-        </div>
-        <div>
-          <input
-            name="Password"
-            type="Password"
-            value={password}
-            required
-            onChange={onChangePassword}
-            placeholder="Password"
-          />
-          {!passwordVali && (
-            <div style={{ color: "red", fontSize: 12 }}>
-              대·소·특수문자, 숫자 최소 2개 이상 포함, 최소 10자리를 입력해주세요
-            </div>
-          )}
-        </div>
-        <div>
-          <input
-            name="Password-check"
-            type="Password"
-            value={passwordCheck}
-            required
-            onChange={onChangePasswordCheck}
-            placeholder="Confirm Password"
-          />
-          {passwordError && (
-            <div style={{ color: "red", fontSize: 12 }}>비밀번호가 일치하지 않습니다.</div>
-          )}
-        </div>
-        <div>
-          <input
-            name="Nickname"
-            value={nickname}
-            required
-            onChange={onChangeNickname}
-            placeholder="Nickname"
-          />
-          {!nicknameCheck && (
-            <div style={{ color: "red", fontSize: 12 }}>
-              한글, 대·소문자, 숫자만 입력해주세요
-            </div>
-          )}
-          {!nicknameValidate && (
-            <div style={{ color: "red", fontSize: 12 }}>중복된 이메일이 존재합니다.</div>
-          )}
-        </div>
-        <div>
-            <button type="submit"> 확인 </button>      
+      <NonSigninNavigationContainer
+        style={{ position: "absolute", top: "0", zIndex: "15" }}
+      >
+        <NonSigninNavigation />
+      </NonSigninNavigationContainer>
+      <div
+        style={{
+          minHeight: `${windowHeight - 320}px`,
+        }}
+      >
+        <form onSubmit={onSubmit}>
+          <div>
+            <input
+              name="Email"
+              value={email}
+              required
+              onChange={onChangeEmail}
+              placeholder="Email"
+            />
+            {!emailCheck && (
+              <div style={{ color: "red", fontSize: 12 }}>
+                이메일 형식이 유효하지 않습니다.
+              </div>
+            )}
+          </div>
+          <div>
+            <input
+              name="Password"
+              type="Password"
+              value={password}
+              required
+              onChange={onChangePassword}
+              placeholder="Password"
+            />
+            {!passwordVali && (
+              <div style={{ color: "red", fontSize: 12 }}>
+                대·소·특수문자, 숫자 최소 2개 이상 포함, 최소 10자리를
+                입력해주세요
+              </div>
+            )}
+          </div>
+          <div>
+            <input
+              name="Password-check"
+              type="Password"
+              value={passwordCheck}
+              required
+              onChange={onChangePasswordCheck}
+              placeholder="Confirm Password"
+            />
+            {passwordError && (
+              <div style={{ color: "red", fontSize: 12 }}>
+                비밀번호가 일치하지 않습니다.
+              </div>
+            )}
+          </div>
+          <div>
+            <input
+              name="Nickname"
+              value={nickname}
+              required
+              onChange={onChangeNickname}
+              placeholder="Nickname"
+            />
+            {!nicknameCheck && (
+              <div style={{ color: "red", fontSize: 12 }}>
+                한글, 대·소문자, 숫자만 입력해주세요
+              </div>
+            )}
+            {!nicknameValidate && (
+              <div style={{ color: "red", fontSize: 12 }}>
+                중복된 이메일이 존재합니다.
+              </div>
+            )}
+          </div>
+          <div>
+            <button type="submit"> 확인 </button>
             <Link to="/signin">
-                <p>이미 가입하신 회원이시라면 로그인을 진행해보세요</p>
+              <p>이미 가입하신 회원이시라면 로그인을 진행해보세요</p>
             </Link>
-        </div>
-      </form>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

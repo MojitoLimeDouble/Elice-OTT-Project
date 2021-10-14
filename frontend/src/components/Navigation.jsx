@@ -63,15 +63,16 @@ const Navigation = ({ userid, logout }) => {
             <StyledLink
               to={`/potato-basket/${userid}`}
               isActive={pathname === `/potato-basket/${userid}`}
+              className="potatoBasket"
             >
               <GiBasket style={{ transform: "translateY(28%)" }} />
               PotatoBasket
             </StyledLink>
           </Menu>
-          <div style={{ width: "200px" }}>
+          <StyledSearch className="search">
             <SearchTextField setSearch={setSearch} search={search} />
-          </div>
-          <StyledLink to="/mypage" isActive={pathname === "/mypage"}>
+          </StyledSearch>
+          <StyledLink to="/mypage" isActive={pathname === "/mypage"} className="mypage">
             MyPage
           </StyledLink>
           <CustomButton onClick={logout}>Logout</CustomButton>
@@ -114,14 +115,48 @@ const Container = styled.div`
 `;
 
 const Menu = styled.div`
-  display: flex;
+  /* display: flex;
   justify-content: space-around;
-  width: 25%;
+  width: 25%; */
 `;
 
 const StyledLink = styled(Link)`
   border-bottom: ${(props) => (props.isActive ? "2px solid black" : "")};
   font-size: ${(props) => (props.isActive ? "22px" : "20px")};
+
+  &.potcha {
+    position: absolute;
+    left: 60px;
+  }
+
+  &.movie {
+    position: absolute;
+    transform: translateY(-60%);
+    left: 250px;
+  }
+
+  &.tv {
+    position: absolute;
+    transform: translateY(-60%);
+    left: 370px;
+  }
+
+  &.potatoBasket {
+    position: absolute;
+    transform: translateY(-60%);
+    left: 470px;
+  }
+
+  &.mypage {
+    position: absolute;
+    right: 180px;
+  }
+`;
+
+const StyledSearch = styled.div`
+  width: 200px;
+  position: absolute;
+  right: 350px;
 `;
 
 const CustomButton = styled.button`
@@ -132,6 +167,9 @@ const CustomButton = styled.button`
   font: inherit;
   cursor: pointer;
   outline: inherit;
+  font-size: 20px;
+  position: absolute;
+  right: 50px;
 `;
 
 export function SearchTextField({ setSearch }) {
@@ -140,7 +178,7 @@ export function SearchTextField({ setSearch }) {
     <InputContainer>
       <Prac>
         <Icon />
-        <label style={{ cursor: "pointer" }} for="search">
+        <label style={{ cursor: "pointer" }} for="search" style={{fontSize: "20px"}}>
           제목
         </label>
       </Prac>
@@ -178,9 +216,9 @@ const InputContainer = styled.div`
 
 const InputField = styled.input`
   float: right;
-  width: 70px;
+  width: 50px;
   height: 30px;
-  color: white;
+  background-color: transparent;
   transition: width 0.2s ease-in-out;
   cursor: pointer;
   border: none;

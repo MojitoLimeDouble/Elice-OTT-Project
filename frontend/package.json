@@ -28,6 +28,7 @@
     "react-fullpage": "^0.1.19",
     "react-icons": "^4.3.1",
     "react-js-banner": "^0.6.0-beta3",
+    "react-native": "^0.66.0",
     "react-redux": "^7.2.5",
     "react-router-dom": "^5.3.0",
     "react-scripts": "4.0.3",

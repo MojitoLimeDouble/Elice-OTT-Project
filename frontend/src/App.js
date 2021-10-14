@@ -17,6 +17,7 @@ import Search from "./components/Search";
 
 const App = () => {
   const [loggedOut, setLoggedOut] = useState(false);
+  const windowSize = useWindowSize();
 
   const history = useHistory();
 
@@ -42,70 +43,93 @@ const App = () => {
           "linear-gradient(-30deg, #ebbfe0, #c1d3ff, #d9ddff, #efd6ff)",
       }}
     >
-      <div className="totalStyledDiv" style={totalStyled}>
-        <div className="navigation" style={stickyNavigation}>
-          <Navigation logout={logout} />
-          <Banner
-            showBanner={loggedOut}
-            css={{
-              backgroundColor: "#0080ff",
-              fontSize: 20,
-              fontWeight: "lighter",
-              color: "white",
-              margin: "1rem auto",
-              borderRadius: "25px",
-            }}
-            title="로그아웃 되었습니다."
-          />
-        </div>
-        <div style={{ minHeight: "950px" }}>
-          <Switch>
-            <Route exact path="/">
-              <NonSignIn />
-            </Route>
-            <Route path="/signin">
-              <Signin />
-            </Route>
-            <Route path="/signup">
-              <Signup />
-            </Route>
-            <Route path="/main">
-              <MainContainer />
-            </Route>
-            <Route path="/detail/:category/:id?">
-              <ContentsDetail />
-            </Route>
-            <PrivateRoute path="/list/movie">
-              <ContentsCategory />
-            </PrivateRoute>
-            <Route path="/list/tv">
-              <ContentsCategory />
-            </Route>
-            <Route path="/potato-basket/:id?">
-              <PotatoesInBasket />
-            </Route>
-            <Route path="/mypage">
-              <MyPageContainer />
-            </Route>
-            <Route path="/search/:query">
-              <Search />
-            </Route>
-            <Route
-              render={() => (
-                <div>
-                  <h2>이 페이지는 존재하지 않습니다.</h2>
-                </div>
-              )}
+      <div style={{ minHeight: `${windowSize.height}px` }}>
+        <div className="totalStyledDiv" style={totalStyled}>
+          <div className="navigation" style={stickyNavigation}>
+            <Navigation logout={logout} />
+            <Banner
+              showBanner={loggedOut}
+              css={{
+                backgroundColor: "#0080ff",
+                fontSize: 20,
+                fontWeight: "lighter",
+                color: "white",
+                margin: "1rem auto",
+                borderRadius: "25px",
+              }}
+              title="로그아웃 되었습니다."
             />
-          </Switch>
+          </div>
+          <div>
+            <Switch>
+              <Route exact path="/">
+                <NonSignIn />
+              </Route>
+              <Route path="/signin">
+                <Signin windowHeight={windowSize.height} />
+              </Route>
+              <Route path="/signup">
+                <Signup windowHeight={windowSize.height} />
+              </Route>
+              <Route path="/main">
+                <MainContainer />
+              </Route>
+              <Route path="/detail/:category/:id?">
+                <ContentsDetail />
+              </Route>
+              <PrivateRoute path="/list/movie">
+                <ContentsCategory />
+              </PrivateRoute>
+              <Route path="/list/tv">
+                <ContentsCategory />
+              </Route>
+              <Route path="/potato-basket/:id?">
+                <PotatoesInBasket />
+              </Route>
+              <Route path="/mypage">
+                <div style={{ minHeight: `${windowSize.height - 350}px` }}>
+                  <MyPageContainer />
+                </div>
+              </Route>
+              <Route path="/search/:query">
+                <Search windowHeight={windowSize.height} />
+              </Route>
+              <Route
+                render={() => (
+                  <div>
+                    <h2>이 페이지는 존재하지 않습니다.</h2>
+                  </div>
+                )}
+              />
+            </Switch>
+          </div>
+          <Footer />
         </div>
-        <Footer />
       </div>
     </div>
   );
 };
 
 export default App;
+
+function useWindowSize() {
+  const [windowSize, setWindowSize] = useState({
+    width: undefined,
+    height: undefined,
+  });
+  useEffect(() => {
+    function handleResize() {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    }
+    window.addEventListener("resize", handleResize);
+    handleResize();
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+  return windowSize;
+}
 
 const totalStyled = {
   fontFamily: "BMJUA",
