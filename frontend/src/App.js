@@ -13,6 +13,7 @@ import PrivateRoute from "./helpers/PrivateRoute";
 import ContentsCategory from "./components/ContentsCategory";
 import Banner from "react-js-banner";
 import { useHistory } from "react-router-dom";
+import Search from "./components/Search";
 
 const App = () => {
   const [loggedOut, setLoggedOut] = useState(false);
@@ -74,7 +75,6 @@ const App = () => {
           <PrivateRoute path="/list/movie">
             <ContentsCategory />
           </PrivateRoute>
-
           <Route path="/list/tv">
             <ContentsCategory />
           </Route>
@@ -83,6 +83,9 @@ const App = () => {
           </Route>
           <Route path="/mypage">
             <MyPageContainer />
+          </Route>
+          <Route path="/search/:query">
+            <Search />
           </Route>
           <Route
             render={() => (
