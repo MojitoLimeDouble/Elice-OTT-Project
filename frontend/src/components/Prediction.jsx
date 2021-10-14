@@ -1,12 +1,11 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { imgUrl } from "../apis/api";
 
 const Prediction = ({ prediction }) => {
   return (
     <Container>
-      <h1 style={{ height: "25px" }}>{prediction.genres[0]}</h1>
-      <Poster bg={prediction.medium_cover_image} />
+      <Poster bg={prediction.poster_path} />
       <h1>{prediction.title}</h1>
     </Container>
   );
@@ -14,27 +13,32 @@ const Prediction = ({ prediction }) => {
 
 export default Prediction;
 
-export const Similar = ({ prediction }) => {
+export const PredictionOrder = ({ List, currTab }) => {
   return (
-    <SimilarContainer>
-      <h1 style={{ height: "25px" }}>{prediction.genres[0]}</h1>
-      <Poster bg={`${imgUrl}${prediction.poster_path}`} />
-      <h1>{prediction.title}</h1>
-    </SimilarContainer>
+    <OrderContainer>
+      <Link to={`/detail/${currTab}/${List[0].id}`}>
+        <Prediction prediction={List[0]} />
+      </Link>
+      {List.slice(1).map((list) => (
+        <Link to={`/detail/${currTab}/${list.id}`}>
+          <Prediction prediction={list} key={list.id} />
+        </Link>
+      ))}
+    </OrderContainer>
   );
 };
 
-export const ContentsCard = ({ contents}) => {
+export const ContentsCard = ({ contents }) => {
   return (
     <SimilarContainer>
-      <Poster bg={`${imgUrl}${contents.poster_path}`} />
+      <Poster bg={contents.poster_path} />
       <h1>{contents.title}</h1>
       <h1>{contents.release_data}</h1>
       <h1>{contents.genres}</h1>
       <h1>{contents.like_count}</h1>
     </SimilarContainer>
   );
-}
+};
 
 const Container = styled.div`
   height: 300px;
@@ -66,4 +70,8 @@ const SimilarContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+
+const OrderContainer = styled.div`
+  display: flex;
 `;

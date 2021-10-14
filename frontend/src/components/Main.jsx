@@ -5,7 +5,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import axios from "axios";
-import Prediction, { Similar } from "./Prediction";
+import Prediction, { PredictionOrder } from "./Prediction";
 import Tab from "./Tab";
 import MyResponsivePie from "./GraphComponent";
 import {
@@ -16,6 +16,7 @@ import {
   tvCountry,
   tvKeyword,
 } from "./GraphData";
+import { imgUrl } from "../apis/api";
 
 const Main = ({
   popularList,
@@ -37,32 +38,24 @@ const Main = ({
         console.log(error.response);
       }
     };
-    const similarContents = async () => {
-      try {
-        const response = await axios.get(`/api/${subject}/similar`);
-        onSimilar(response.data);
-      } catch (error) {
-        console.log(error.response);
-      }
-    };
     hitContents();
-    similarContents();
   };
+
+  const subject = currTab.toLowerCase();
 
   const topRated = async () => {
     try {
-      const response = await axios.get(
-        "https://yts.mx/api/v2/list_movies.json?limit=10"
-      );
-      onPopular(response.data.data.movies);
+      const response = await axios.get("/api/top_rated");
+      onPopular(response.data);
     } catch (error) {
       console.log(error.response);
     }
   };
-  const subject = currTab.toLowerCase();
+
   useEffect(() => {
     topRated();
   }, []);
+
   useEffect(() => {
     requestContents(subject);
   }, [currTab]);
@@ -84,6 +77,7 @@ const Main = ({
     centerPadding: "0px", // 0px 하면 슬라이드 끝쪽 이미지가 안잘림
   };
   const distribution = ["장르", "키워드", "국가"];
+  const order = ["1위", "2위", "3위", "4위", "5위"];
   return (
     <div className="main">
       <TopTen className="topTen">
@@ -101,10 +95,11 @@ const Main = ({
           <StyledSlider {...settings}>
             {popularList.map((content) => (
               <CardBox key={content.id}>
-                <Link to={`/detail/${content.category}/${content.id}`}>
-                  <CardImg alt="인기 컨텐츠" src={content.medium_cover_image} />
-                  <CardText>{content.title}</CardText>
-                </Link>
+                <CardImg
+                  alt="인기 컨텐츠"
+                  src={`${imgUrl}${content.poster_path}`}
+                />
+                <CardText>{content.title}</CardText>
               </CardBox>
             ))}
           </StyledSlider>
@@ -150,68 +145,23 @@ const Main = ({
           )}
         </PredictChart>
         <Recommendation>
-          {/* <Order>
-            <h1>1</h1>
-            <h1>2</h1>
-            <h1>3</h1>
-            <h1>4</h1>
-            <h1>5</h1>
-          </Order>
-          <Detail>
-            <h1>흥행 예측 작품</h1>
-            {!predictableList ? (
-              <img
-                src="https://blog.kakaocdn.net/dn/cmseNl/btrhhTwEA0r/TNAoELO6JmK3rhVeNfGYy0/img.gif"
-                alt=""
-              />
-            ) : (
-              predictableList.map((prediction) => (
-                <Link to={`/detail/${prediction.category}/${prediction.id}`}>
-                  <Prediction key={prediction.id} prediction={prediction} />
-                </Link>
-              ))
-            )}
-          </Detail>
-
-          <Details>
-            <h1>흥행 예측 작품의 코로나 이전 유사 작품들 </h1> */}
-          {/*FIXME: just for demonstration */}
-          {/* {[1, 2, 3, 4, 5].map((num) => (
-              <SimilarDetail>
-                {!similarList ? (
-                  <div></div>
-                ) : (
-                  similarList.map((prediction) => (
-                    <Link
-                      to={`/detail/${prediction.category}/${prediction.id}`}
-                    >
-                      <Similar key={prediction.id} prediction={prediction} />
-                    </Link>
-                  ))
-                )}
-              </SimilarDetail>
-            ))}
-          </Details> */}
-          <Subtitles className="subtitles">
-            <Subtitle className="predictSubtitle">흥행 예측 작품</Subtitle>
-            <Subtitle className="recommendSubtitle">
-              코로나 이전 유사 작품 추천
-            </Subtitle>
-          </Subtitles>
-          <RecommendationList>
-            {!predictableList ? (
-              <img
-                src="https://blog.kakaocdn.net/dn/cmseNl/btrhhTwEA0r/TNAoELO6JmK3rhVeNfGYy0/img.gif"
-                alt=""
-              />
-            ) : (
-              predictableList.map((prediction) => (
-                <Link to={`/detail/${prediction.category}/${prediction.id}`}>
-                  <Prediction key={prediction.id} prediction={prediction} />
-                </Link>
-              ))
-            )}
-          </RecommendationList>
+          {!predictableList ? (
+            <img
+              src="https://blog.kakaocdn.net/dn/cmseNl/btrhhTwEA0r/TNAoELO6JmK3rhVeNfGYy0/img.gif"
+              alt=""
+              style={{
+                width: "20%",
+                marginTop: "130px",
+              }}
+            />
+          ) : (
+            predictableList.map((List, idx) => (
+              <div key={idx} style={{ display: "flex" }}>
+                <h1>{order[idx]}</h1>
+                <PredictionOrder List={List} currTab={currTab.toLowerCase()} />
+              </div>
+            ))
+          )}
         </Recommendation>
       </PredictionContainer>
     </div>

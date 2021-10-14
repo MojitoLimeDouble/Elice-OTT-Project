@@ -19,7 +19,7 @@ def movie_list():
         print(Movie.to_dict(movie).get('cast'))
     return jsonify(movies)
 
-@bp.route('/movie/list/sorted', methods=['GET'])
+@bp.route('/movie/list/sorted', methods=['POST'])
 def movie_list_sorted():
 
     data = request.json
@@ -37,12 +37,12 @@ def movie_list_sorted():
 
     # 방영일순 최신
     if creiteria == '최신 작품 순':
-        movie_list_air_desc = Movie.query.order_by(Movie.first_air_date.desc())
+        movie_list_air_desc = Movie.query.order_by(Movie.release_date.desc())
         movie = [Movie.to_dict(movie) for movie in movie_list_air_desc]
 
     # 방영일순 오래된순
     if creiteria == '오래된 작품 순':
-        movie_list_air_asc = Movie.query.order_by(Movie.first_air_date.asc())
+        movie_list_air_asc = Movie.query.order_by(Movie.release_date.asc())
         movie = [Movie.to_dict(movie) for movie in movie_list_air_asc]
 
     # 제목순
@@ -52,20 +52,21 @@ def movie_list_sorted():
 
     return jsonify(movie)
 
-@bp.route('/movie/list/filter', methods=['GET'])
+@bp.route('/movie/list/filter', methods=['POST'])
 def movie_list_filter():
+
     data = request.json
-    genre = data['genre']
+    genre = data['sort_criteria']
     filter_id = []
     movies = []
 
     movie_all = Movie.query.order_by(Movie.id.asc())
-    movie =[[Movie.to_dict(movie).get('genres'), Movie.to_dict(movie).get('id')] for movie in movie_all]
-    print(len(movie))
+    movie_list =[[Movie.to_dict(movie).get('genres'), Movie.to_dict(movie).get('id')] for movie in movie_all]
 
-    for i in range(len(movie)):
-        if genre in movie[i][0]:
-            filter_id.append(movie[i][1])
+    for i in range(len(movie_list)):
+        if genre in movie_list[i][0]:
+            filter_id.append(movie_list[i][1])
+            
     for i in filter_id:
         movie = Movie.query.filter(Movie.id == i).first()
         movies.append(Movie.to_dict(movie))
