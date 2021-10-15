@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import axios from "axios";
-import Prediction, { PredictionOrder } from "./Prediction";
+import { PredictionOrder } from "./Prediction";
 import Tab from "./Tab";
 import MyResponsivePie from "./GraphComponent";
 import {
@@ -18,15 +17,10 @@ import {
 } from "./GraphData";
 import { imgUrl } from "../apis/api";
 
-const Main = ({
-  popularList,
-  predictableList,
-  similarList,
-  onPopular,
-  onPredictable,
-  onSimilar,
-}) => {
+const Main = ({ popularList, predictableList, onPopular, onPredictable }) => {
   const [currTab, setCurrTab] = useState("MOVIE");
+  const [height, setHeight] = useState(994);
+  const predictRef = useRef(null);
   // state를 redux로 관리하여 사용자 겸험을 상승
   //FIXME: just for demonstration(서버와 미연결로 인하여 현재 임시 데이터 api를 불러와서 렌더링 중)
   const requestContents = (subject) => {
@@ -59,6 +53,13 @@ const Main = ({
   useEffect(() => {
     requestContents(subject);
   }, [currTab]);
+
+  useEffect(() => {
+    if (predictRef.current) {
+      setHeight(predictRef.current.clientHeight);
+      console.log(height)
+    }
+  });
 
   const handleClickTab = (tab) => {
     setCurrTab(tab);
@@ -105,8 +106,8 @@ const Main = ({
           </StyledSlider>
         )}
       </TopTen>
-      <BackgroundSquare />
-      <PredictionContainer className="prediction">
+      <BackgroundSquare height={height} />
+      <PredictionContainer className="prediction" ref={predictRef}>
         <Tab currTab={currTab} onClick={handleClickTab} />
         <PredictionTitle className="predictionTiTle">{`${currTab} 흥행 예측 분석 top 5`}</PredictionTitle>
         <PredictChart className="predictChart">
@@ -201,13 +202,13 @@ const Main = ({
 
 export default Main;
 
-const BackgroundSquare = () => {
+const BackgroundSquare = ({ height }) => {
   const style = {
     marginTop: "30px",
     position: "absolute",
     zIndex: "1",
     width: "1300px",
-    height: "2680px",
+    height: `${height+20}px`,
     backgroundColor: "#ffffff8d",
     borderRadius: "25px",
     boxShadow: "0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)",
