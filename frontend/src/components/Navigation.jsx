@@ -110,7 +110,6 @@ const ContainerBox = styled.div`
   margin-top: 1.5rem;
   margin-bottom: 30px;
   text-align: center;
-  
 `;
 
 const Container = styled.div`
@@ -120,7 +119,8 @@ const Container = styled.div`
   justify-content: space-around;
   align-items: center;
   height: 60px;
-  font-family: "BMJUA";
+  font-family: "NotoSansKR";
+  font-weight: "bold";
   font-style: normal;
   text-decoration: none;
   z-index: 200;
@@ -190,7 +190,11 @@ export function SearchTextField({ setSearch }) {
     <InputContainer>
       <Prac>
         <Icon />
-        <label style={{ cursor: "pointer" }} for="search" style={{fontSize: "20px"}}>
+        <label
+          style={{ cursor: "pointer" }}
+          for="search"
+          style={{ fontSize: "20px" }}
+        >
           제목
         </label>
       </Prac>
@@ -239,7 +243,7 @@ const InputField = styled.input`
   }
   :active,
   :focus {
-    width: 150px;
+    width: 145px;
     background: black;
     color: white;
     z-index: 9999;

@@ -11,20 +11,30 @@ const Prediction = ({ prediction }) => {
   );
 };
 
+const Recommend = ({ prediction }) => {
+  return (
+    <Container>
+      <Poster bg={prediction.poster_path} />
+      <h1>{prediction.title}</h1>
+    </Container>
+  );
+};
+
+
 export default Prediction;
 
 export const PredictionOrder = ({ List, currTab }) => {
   return (
-    <OrderContainer>
+    <PredictContainer>
       <Link to={`/detail/${currTab}/${List[0].id}`}>
         <Prediction prediction={List[0]} />
       </Link>
       {List.slice(1).map((list) => (
         <Link to={`/detail/${currTab}/${list.id}`}>
-          <Prediction prediction={list} key={list.id} />
+          <Recommend prediction={list} key={list.id} />
         </Link>
       ))}
-    </OrderContainer>
+    </PredictContainer>
   );
 };
 
@@ -63,19 +73,21 @@ const Poster = styled.div`
 const Title = styled.h2`
   margin: 0 auto;
   margin-bottom: 10px;
-  padding: 10px;
-  font-family: "BMDOHYEON";
+  padding: 10px 0px;
+  font-family: "NotoSansKR";
+  font-weight: bold;
   font-size: 15px;
   align-items: center;
   text-align: center;
   height: 70px;
-  width: 150px;
+  width: 170px;
   color: black;
 `;
 
 const SimilarContainer = styled.div`
 `;
 
-const OrderContainer = styled.div`
-  display: flex;
+const PredictContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr;
 `;

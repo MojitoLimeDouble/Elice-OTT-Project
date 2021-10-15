@@ -41,7 +41,8 @@ const MyResponsivePie = ({ data }) => (
     theme={{
       labels: {
         text: {
-          fontFamily: "BMDOHYEON",
+          fontFamily: "NotoSansKR",
+          fontWeight: "bold",
           fontSize: "13",
           // TODO: 일정 길이 이상의 글자가 잘려 보이는 것 수정
         },

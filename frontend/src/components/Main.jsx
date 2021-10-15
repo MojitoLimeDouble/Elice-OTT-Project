@@ -144,7 +144,7 @@ const Main = ({
             </div>
           )}
         </PredictChart>
-        <Recommendation>
+        <Recommendation className="recommendation">
           {!predictableList ? (
             <img
               src="https://blog.kakaocdn.net/dn/cmseNl/btrhhTwEA0r/TNAoELO6JmK3rhVeNfGYy0/img.gif"
@@ -156,8 +156,8 @@ const Main = ({
             />
           ) : (
             predictableList.map((List, idx) => (
-              <div key={idx} style={{ display: "flex" }}>
-                <h1>{order[idx]}</h1>
+              <div key={idx} style={{ display: "flex", alignItems: "center", padding: "30px" }}>
+                <h1 style={{fontSize:"25px", }}>{order[idx]}</h1>
                 <PredictionOrder List={List} currTab={currTab.toLowerCase()} />
               </div>
             ))
@@ -256,7 +256,8 @@ const CardImg = styled.img`
 const CardText = styled.p`
   margin: 0 auto;
   padding: 10px;
-  font-family: "BMDOHYEON";
+  font-family: "NotoSansKR";
+  font-weight: bold;
   font-size: 15px;
   align-items: center;
   text-align: center;
@@ -278,7 +279,6 @@ const PredictionContainer = styled.div`
   margin-right: 40px;
   z-index: 2;
   position: relative;
-  
 `;
 
 const PredictionTitle = styled.h1`
@@ -304,8 +304,6 @@ const PredictChartTitle = styled.div`
 `;
 
 const Recommendation = styled.div`
-  /* display: flex; */
-  /* flex-direction: row; */
   justify-content: center;
   margin-top: 30px;
   background: #ffffff9b;
