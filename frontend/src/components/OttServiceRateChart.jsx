@@ -10,7 +10,13 @@ const OttServiceRateChart = ({ data }) => (
     layout="horizontal"
     valueScale={{ type: "linear" }}
     indexScale={{ type: "band", round: true }}
-    colors={{ scheme: "nivo" }}
+    colors={[
+      "rgb(255, 0, 0)",
+      "rgb(228, 30, 27)",
+      "rgb(72, 103, 130)",
+      "rgb(3, 225, 100)",
+      "rgb(14, 68, 152)",
+    ]}
     defs={[
       {
         id: "lines",
@@ -25,24 +31,24 @@ const OttServiceRateChart = ({ data }) => (
     theme={{
       labels: {
         text: {
-          fontFamily: "BMDOHYEON",
+          fontFamily: "NotoSansKR",
           fontSize: "13",
         },
       },
       // 글자 크기 변경
       axis: {
-        ticks:{
+        ticks: {
           text: {
             fontSize: "13",
-            fontFamily: "BMDOHYEON",
-          }
+            fontFamily: "NotoSansKR",
+          },
         },
       },
       legends: {
         text: {
           fontSize: "13",
-          fontFamily: "BMDOHYEON",
-        }
+          fontFamily: "NotoSansKR",
+        },
       },
     }}
     fill={[
