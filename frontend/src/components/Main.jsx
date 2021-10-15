@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import axios from "axios";
-import Prediction, { PredictionOrder } from "./Prediction";
+import { PredictionOrder } from "./Prediction";
 import Tab from "./Tab";
 import MyResponsivePie from "./GraphComponent";
 import {
@@ -18,15 +17,10 @@ import {
 } from "./GraphData";
 import { imgUrl } from "../apis/api";
 
-const Main = ({
-  popularList,
-  predictableList,
-  similarList,
-  onPopular,
-  onPredictable,
-  onSimilar,
-}) => {
+const Main = ({ popularList, predictableList, onPopular, onPredictable }) => {
   const [currTab, setCurrTab] = useState("MOVIE");
+  const [height, setHeight] = useState(994);
+  const predictRef = useRef(null);
   // state를 redux로 관리하여 사용자 겸험을 상승
   //FIXME: just for demonstration(서버와 미연결로 인하여 현재 임시 데이터 api를 불러와서 렌더링 중)
   const requestContents = (subject) => {
@@ -60,6 +54,13 @@ const Main = ({
     requestContents(subject);
   }, [currTab]);
 
+  useEffect(() => {
+    if (predictRef.current) {
+      setHeight(predictRef.current.clientHeight);
+      console.log(height)
+    }
+  });
+
   const handleClickTab = (tab) => {
     setCurrTab(tab);
   };
@@ -77,7 +78,7 @@ const Main = ({
     centerPadding: "0px", // 0px 하면 슬라이드 끝쪽 이미지가 안잘림
   };
   const distribution = ["장르", "키워드", "국가"];
-  const order = ["1위", "2위", "3위", "4위", "5위"];
+  const order = ["1.", "2.", "3.", "4.", "5."];
   return (
     <div className="main">
       <TopTen className="topTen">
@@ -105,8 +106,8 @@ const Main = ({
           </StyledSlider>
         )}
       </TopTen>
-      <BackgroundSquare />
-      <PredictionContainer className="prediction">
+      <BackgroundSquare height={height} />
+      <PredictionContainer className="prediction" ref={predictRef}>
         <Tab currTab={currTab} onClick={handleClickTab} />
         <PredictionTitle className="predictionTiTle">{`${currTab} 흥행 예측 분석 top 5`}</PredictionTitle>
         <PredictChart className="predictChart">
@@ -114,7 +115,7 @@ const Main = ({
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "1.2fr 1.5fr 1fr",
+                gridTemplateColumns: "1.4fr 1.5fr 1fr",
               }}
             >
               {[movieGenres, movieKeyword, movieCountry].map((data, idx) => (
@@ -132,6 +133,7 @@ const Main = ({
                 display: "grid",
                 gridTemplateColumns: "1.2fr 1.5fr 1fr",
               }}
+              className="predictContainer"
             >
               {[tvGenres, tvKeyword, tvCountry].map((data, idx) => (
                 <PredictSeparate key={idx}>
@@ -144,7 +146,20 @@ const Main = ({
             </div>
           )}
         </PredictChart>
-        <Recommendation>
+        <Recommendation className="recommendation">
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1.8fr 4fr",
+              padding: "0px 30px",
+              marginBottom: "30px",
+              fontSize: "25px",
+            }}
+            className="subtitles"
+          >
+            <h1>흥행 예측 top 5</h1>
+            <h1>코로나 이전 유사 컨텐츠</h1>
+          </div>
           {!predictableList ? (
             <img
               src="https://blog.kakaocdn.net/dn/cmseNl/btrhhTwEA0r/TNAoELO6JmK3rhVeNfGYy0/img.gif"
@@ -156,8 +171,25 @@ const Main = ({
             />
           ) : (
             predictableList.map((List, idx) => (
-              <div key={idx} style={{ display: "flex" }}>
-                <h1>{order[idx]}</h1>
+              <div
+                key={idx}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  // padding: "30px",
+                  borderBottom: "solid 2px #a6a3f1",
+                  marginBottom: "60px",
+                }}
+              >
+                <h1
+                  style={{
+                    fontSize: "30px",
+                    color: "#8e8be9",
+                    transform: "translateY(150px) translateX(10px)",
+                  }}
+                >
+                  {order[idx]}
+                </h1>
                 <PredictionOrder List={List} currTab={currTab.toLowerCase()} />
               </div>
             ))
@@ -170,13 +202,13 @@ const Main = ({
 
 export default Main;
 
-const BackgroundSquare = () => {
+const BackgroundSquare = ({ height }) => {
   const style = {
     marginTop: "30px",
     position: "absolute",
     zIndex: "1",
     width: "1300px",
-    height: "2600px",
+    height: `${height+20}px`,
     backgroundColor: "#ffffff8d",
     borderRadius: "25px",
     boxShadow: "0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)",
@@ -256,7 +288,8 @@ const CardImg = styled.img`
 const CardText = styled.p`
   margin: 0 auto;
   padding: 10px;
-  font-family: "BMDOHYEON";
+  font-family: "NotoSansKR";
+  font-weight: bold;
   font-size: 15px;
   align-items: center;
   text-align: center;
@@ -273,12 +306,11 @@ const CardText = styled.p`
 
 const PredictionContainer = styled.div`
   height: 100%;
-  margin-top: 50px;
-  margin-left: 40px;
-  margin-right: 40px;
+  padding-bottom: 30px;
+  margin: 50px 40px;
+  margin-bottom: 0px;
   z-index: 2;
   position: relative;
-  
 `;
 
 const PredictionTitle = styled.h1`
@@ -295,7 +327,7 @@ const PredictChart = styled.div`
 
 const PredictSeparate = styled.div`
   height: 230px;
-  margin: 2rem;
+  margin: 2rem 0;
 `;
 
 const PredictChartTitle = styled.div`
@@ -304,14 +336,15 @@ const PredictChartTitle = styled.div`
 `;
 
 const Recommendation = styled.div`
-  /* display: flex; */
-  /* flex-direction: row; */
   justify-content: center;
   margin-top: 30px;
   background: #ffffff9b;
   border-radius: 15px;
-  height: 2080px;
-  margin-bottom: 60px;
+  /* height: 2080px; */
+  margin-bottom: 40px;
+  padding: 0 30px;
+  padding-top: 35px;
+  padding-bottom: 1px;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 `;
 

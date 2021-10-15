@@ -52,7 +52,8 @@ const menuButtonStyle = {
   height: "25px",
   borderRadius: "5px",
   margin: "10px",
-  fontFamily: "BMJUA",
+  fontFamily: "NotoSansKR",
+  fontWeight: "bold",
   fontSize: "15px",
 };
 
@@ -65,7 +66,8 @@ const menuItemStyle = {
   margin: "5px",
   backgroundColor: "transparent",
   border: "none",
-  fontFamily: "BMJUA",
+  fontFamily: "NotoSansKR",
+  fontWeight: "bold",
   fontSize: "15px",
   display: "table",
   margin: "auto",
