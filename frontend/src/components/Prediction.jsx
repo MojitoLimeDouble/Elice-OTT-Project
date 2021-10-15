@@ -16,11 +16,11 @@ export default Prediction;
 export const PredictionOrder = ({ List, currTab }) => {
   return (
     <OrderContainer>
-      <Link to={`/detail/${currTab}/${List[0].id}`}>
+      <Link to={`/detail/${currTab}/${List[0].id}/${List[0].title}`}>
         <Prediction prediction={List[0]} />
       </Link>
       {List.slice(1).map((list) => (
-        <Link to={`/detail/${currTab}/${list.id}`}>
+        <Link to={`/detail/${currTab}/${list.id}/${list.title}`}>
           <Prediction prediction={list} key={list.id} />
         </Link>
       ))}

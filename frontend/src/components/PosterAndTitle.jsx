@@ -7,7 +7,7 @@ import styled from "styled-components";
 const PosterAndTitle = ({ prediction , category}) => {
   return (
     <Container>
-      <Link to={`/detail/${category}/${prediction.id}`}>
+      <Link to={`/detail/${category}/${prediction.id}/${prediction.title}`}>
         <Poster bg={prediction.poster_path} />
         <h1>{prediction.title}</h1>
       </Link>
