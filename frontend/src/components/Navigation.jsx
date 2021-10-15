@@ -96,7 +96,7 @@ export default Navigation;
 const BackgroundSquare = () => {
   const style = {
     position: "absolute",
-    zIndex: "1",
+    zIndex: "100",
     width: "1300px",
     height: "60px",
     backgroundColor: "#f7f0ff",
@@ -123,7 +123,7 @@ const Container = styled.div`
   font-family: "BMJUA";
   font-style: normal;
   text-decoration: none;
-  z-index: 2;
+  z-index: 200;
 `;
 
 const Menu = styled.div`

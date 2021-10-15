@@ -158,5 +158,5 @@ const NonPage = styled.div`
 `;
 
 const NonPageComment = styled.h2`
-font-size:50px;
+  font-size: 50px;
 `;

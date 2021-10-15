@@ -48,7 +48,7 @@ const Subtitle = styled.h2`
 
 const menuButtonStyle = {
   background: "white",
-  width: "120px",
+  width: "165px",
   height: "25px",
   borderRadius: "5px",
   margin: "10px",
