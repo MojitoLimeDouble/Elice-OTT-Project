@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import { BsPencilFill, BsSaveFill } from "react-icons/bs";
 import { FaSearchPlus } from "react-icons/fa";
-import { SearchOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import tokenHeader from "../authorization/tokenHeader";
 import { ContentsCard } from "./Prediction";
@@ -121,9 +120,7 @@ const MyPage = ({
       const response = await axios.get(`/api/mypage/recommend`, {
         headers: tokenHeader(),
       });
-      console.log("response.data", response.data);
       onRecommend(response.data);
-      console.log("recommendList", recommendList);
     } catch (error) {
       console.log(error.response);
     }
@@ -241,7 +238,7 @@ const MyPage = ({
           <span>분석할 감자 바구니가 없습니다.</span>
         ) : (
           recommendList.map((recommend, idx) => (
-            <Link to={`/detail/${recommend.category}/${recommend.id}`}>
+            <Link to={`/detail/${recommend.category}/${recommend.id}/${recommend.title}`}>
               <ContentsCard contents={recommend} key={idx} />
             </Link>
           ))
@@ -261,7 +258,7 @@ const MyPage = ({
               placeholder="친구의 닉네임을 입력해주세요."
             />
             <button type="submit" shape="circle">
-              <SearchOutlined />
+              <FaSearchPlus />
             </button>
           </form>
           {existence && <h1>친구의 닉네임을 확인해주세요.</h1>}
