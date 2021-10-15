@@ -60,7 +60,6 @@ const ContentsDetail = () => {
 
   const onClick = async () => {
     setLike(!like);
-    console.log(!like);
     const body = {
       id: params.id,
       category: params.category,

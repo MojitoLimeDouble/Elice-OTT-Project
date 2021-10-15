@@ -84,7 +84,7 @@ const App = () => {
               <Route path="/list/tv">
                 <ContentsCategory />
               </Route>
-              <Route path="/potato-basket/:id?">
+              <Route path="/potato-basket/:nickname">
                 <PotatoesInBasket />
               </Route>
               <Route path="/mypage">

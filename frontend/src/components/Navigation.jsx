@@ -61,8 +61,13 @@ const Navigation = ({ userid, logout }) => {
               TV
             </StyledLink>
             <StyledLink
-              to={`/potato-basket/${userid}`}
-              isActive={pathname === `/potato-basket/${userid}`}
+              to={`/potato-basket/${JSON.parse(
+                localStorage.getItem("nickname")
+              )}`}
+              isActive={
+                pathname ===
+                `/potato-basket/${JSON.parse(localStorage.getItem("nickname"))}`
+              }
               className="potatoBasket"
             >
               <GiBasket style={{ transform: "translateY(28%)" }} />
@@ -72,7 +77,11 @@ const Navigation = ({ userid, logout }) => {
           <StyledSearch className="search">
             <SearchTextField setSearch={setSearch} search={search} />
           </StyledSearch>
-          <StyledLink to="/mypage" isActive={pathname === "/mypage"} className="mypage">
+          <StyledLink
+            to="/mypage"
+            isActive={pathname === "/mypage"}
+            className="mypage"
+          >
             MyPage
           </StyledLink>
           <CustomButton onClick={logout}>Logout</CustomButton>
