@@ -1,8 +1,10 @@
 import React, { useState, useCallback } from "react";
 import { useHistory, Link } from "react-router-dom";
 import axios from "axios";
-import NonSigninNavigation from "./NonSigninNavigation";
+import NonSigninNavigation from "../components/NonSigninNavigation";
 import styled from "styled-components";
+import * as Style from '../components/styleComponent'
+import { InputField } from "./Signin";
 
 const Signup = ({ windowHeight }) => {
   const [email, setEmail] = useState("");
@@ -88,12 +90,10 @@ const Signup = ({ windowHeight }) => {
   };
 
   return (
-    <div>
-      <NonSigninNavigationContainer
-        style={{ position: "absolute", top: "0", zIndex: "15" }}
-      >
+    <div style={{ height: "62vh" }}>
+      <Style.NonSigninNavigationContainer>
         <NonSigninNavigation />
-      </NonSigninNavigationContainer>
+      </Style.NonSigninNavigationContainer>
       <div
         style={{
           minHeight: `${windowHeight - 320}px`,
@@ -101,7 +101,7 @@ const Signup = ({ windowHeight }) => {
       >
         <form onSubmit={onSubmit}>
           <div>
-            <input
+            <Style.InputField
               name="Email"
               value={email}
               required
@@ -115,7 +115,7 @@ const Signup = ({ windowHeight }) => {
             )}
           </div>
           <div>
-            <input
+            <Style.InputField
               name="Password"
               type="Password"
               value={password}
@@ -131,7 +131,7 @@ const Signup = ({ windowHeight }) => {
             )}
           </div>
           <div>
-            <input
+            <Style.InputField
               name="Password-check"
               type="Password"
               value={passwordCheck}
@@ -140,13 +140,15 @@ const Signup = ({ windowHeight }) => {
               placeholder="Confirm Password"
             />
             {passwordError && (
-              <div style={{ color: "red", fontSize: 12 }}>
+              <div
+                style={{ color: "red", fontSize: 12, padding: 0, margin: 0 }}
+              >
                 비밀번호가 일치하지 않습니다.
               </div>
             )}
           </div>
           <div>
-            <input
+            <Style.InputField
               name="Nickname"
               value={nickname}
               required
@@ -165,7 +167,7 @@ const Signup = ({ windowHeight }) => {
             )}
           </div>
           <div>
-            <button type="submit"> 확인 </button>
+            <Style.Button type="submit"> 확인 </Style.Button>
             <Link to="/signin">
               <p>이미 가입하신 회원이시라면 로그인을 진행해보세요</p>
             </Link>
@@ -178,13 +180,4 @@ const Signup = ({ windowHeight }) => {
 
 export default Signup;
 
-const NonSigninNavigationContainer = styled.div`
-  /* position: sticky;
-  top: 0;
-  z-index: 30;
-   */
-`;
 
-const FullPage = styled.div`
-  font-family: arial, helvetica;
-`;
