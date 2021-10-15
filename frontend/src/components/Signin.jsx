@@ -28,10 +28,6 @@ const Signin = ({ windowHeight }) => {
       .then((response) => {
         console.log(response);
         if (response.data.result === "success") {
-          console.log("access_token", response.data);
-          axios.defaults.headers.common[
-            "Authorization"
-          ] = `Bearer ${response.data.access_token}`;
           localStorage.setItem(
             "access_token",
             JSON.stringify(response.data.access_token)
@@ -39,6 +35,10 @@ const Signin = ({ windowHeight }) => {
           localStorage.setItem(
             "nickname",
             JSON.stringify(response.data.nickname)
+          );
+          localStorage.setItem(
+            "photolink",
+            JSON.stringify(response.data.photolink)
           );
 
           history.push("/main");

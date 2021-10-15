@@ -18,7 +18,9 @@ const PotatoBasket = ({
     try {
       const response = await axios.get(
         `/api/potato_basket/${params.nickname}`,
-        { header: tokenHeader() }
+        {
+          headers: tokenHeader(),
+        }
       );
       onMoviePotatoes(response.data[0].movie);
       onTvPotatoes(response.data[1].tv);
@@ -31,7 +33,9 @@ const PotatoBasket = ({
     try {
       const response = await axios.get(
         `/api/potato_basket/${params.nickname}/movie`,
-        { header: tokenHeader() }
+        {
+          headers: tokenHeader(),
+        }
       );
       console.log(response.data);
     } catch (error) {
@@ -43,7 +47,9 @@ const PotatoBasket = ({
     try {
       const response = await axios.get(
         `/api/potato_basket/${params.nickname}/tv`,
-        { header: tokenHeader() }
+        {
+          headers: tokenHeader(),
+        }
       );
       console.log(response.data);
     } catch (error) {

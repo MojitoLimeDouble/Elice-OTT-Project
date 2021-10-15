@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import tokenHeader from "../authorization/tokenHeader";
 
 const ContentsDetail = () => {
   const [contentsInfo, setContentsInfo] = useState("");
@@ -11,7 +12,10 @@ const ContentsDetail = () => {
   const fetchData = async () => {
     try {
       const response = await axios.get(
-        `/api/detail/${params.category}/${params.id}`
+        `/api/detail/${params.category}/${params.id}`,
+        {
+          headers: tokenHeader(),
+        }
       );
       setContentsInfo(response.data.content);
       setLike(response.data.is_like);
@@ -65,7 +69,9 @@ const ContentsDetail = () => {
       category: params.category,
       likes: !like,
     };
-    await axios.patch(`/api/like`, body);
+    await axios.patch(`/api/like`, body, {
+      headers: tokenHeader(),
+    });
   };
 
   return (

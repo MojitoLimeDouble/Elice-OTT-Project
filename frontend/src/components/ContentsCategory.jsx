@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Filtering from "./Filtering";
-import { ThemeProvider, CSSReset } from "@chakra-ui/core";
+import { ThemeProvider } from "@chakra-ui/core";
 import Categorizing from "./Categorizing";
 import axios from "axios";
 import { ContentsCard } from "./Prediction";

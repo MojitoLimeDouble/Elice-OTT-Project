@@ -90,7 +90,7 @@ const MyPage = ({
   const fetchData = async () => {
     try {
       const response = await axios.get(`/api/mypage`, {
-        header: tokenHeader(),
+        headers: tokenHeader(),
       });
       onUserProfile({
         ...user,
@@ -108,7 +108,7 @@ const MyPage = ({
   const fetchFriend = async () => {
     try {
       const response = await axios.get(`/api/mypage/list/friend`, {
-        header: tokenHeader(),
+        headers: tokenHeader(),
       });
       onRequestFriends(response.data);
     } catch (error) {
@@ -119,7 +119,7 @@ const MyPage = ({
   const recommend = async () => {
     try {
       const response = await axios.get(`/api/mypage/recommend`, {
-        header: tokenHeader(),
+        headers: tokenHeader(),
       });
       console.log("response.data", response.data);
       onRecommend(response.data);
@@ -155,7 +155,9 @@ const MyPage = ({
         const response = await axios.patch(
           `/api/mypage/modify/photo`,
           formData,
-          { headers: tokenHeader() }
+          {
+            headers: tokenHeader(),
+          }
         );
         console.log(response.data);
       } catch (error) {
@@ -212,7 +214,9 @@ const MyPage = ({
       if (response.data.result === "fail") {
         alert("본인 또는 이미 추가된 친구입니다.");
       }
-      const fetchData = await axios.get(`/api/mypage/list/friend`);
+      const fetchData = await axios.get(`/api/mypage/list/friend`, {
+        headers: tokenHeader(),
+      });
       onRequestFriends(fetchData.data);
       setFriendNickname("");
     } catch (error) {
