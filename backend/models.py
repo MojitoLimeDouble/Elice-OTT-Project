@@ -36,7 +36,7 @@ class Friend(db.Model):
     id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     nickname = db.Column(db.String(30), nullable=False, unique=True)
-    photolink   = db.Column(db.String(255),nullable=False, default="./static/default.png")
+    photolink   = db.Column(db.String(255),nullable=False)
     def to_dict(self):
         return {
             'nickname': self.nickname,
