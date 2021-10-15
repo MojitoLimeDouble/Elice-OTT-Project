@@ -42,7 +42,7 @@ def like():
             if tv and not is_potato:
                 tv.like_count += 1
             if not tv:
-                abort(400,"해당하는 Tv 프로그램이 없습니다.")  
+                abort(400,"해당하는 TV 프로그램이 없습니다.")  
             if is_potato:
                 abort(400,"좋아요는 중복이 불가합니다.")  
 
@@ -73,7 +73,7 @@ def like():
             if tv and potato:
                 tv.like_count -= 1
             if not movie:
-                abort(400,"해당하는 Tv 프로그램이 없습니다.")  
+                abort(400,"해당하는 TV 프로그램이 없습니다.")  
             if not potato:
                 abort(400,"취소할 좋아요가 없습니다.")
 
