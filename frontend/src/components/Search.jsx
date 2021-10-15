@@ -37,14 +37,18 @@ const Search = ({ windowHeight }) => {
       <div>
         <div>MOVIE Contents</div>
         {searchList?.movie?.map((movie) => (
-          <ContentsCard contents={movie} key={movie.id} category="movie" />
+          <Link to={`/detail/movie/${movie.id}`}>
+            <ContentsCard contents={movie} key={movie.id} category="movie" />
+          </Link>
         ))}
       </div>
 
       <div>
         <div>TV Contents</div>
         {searchList?.tv?.map((tv) => (
-          <ContentsCard contents={tv} key={tv.id} category="tv" />
+          <Link to={`/detail/tv/${tv.id}`}>
+            <ContentsCard contents={tv} key={tv.id} category="tv" />
+          </Link>
         ))}
       </div>
     </div>

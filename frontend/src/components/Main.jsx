@@ -179,6 +179,7 @@ const BackgroundSquare = () => {
     height: "2600px",
     backgroundColor: "#ffffff8d",
     borderRadius: "25px",
+    boxShadow: "0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)",
   };
   return <div style={style}></div>;
 };
@@ -189,11 +190,12 @@ const TopTen = styled.div`
   height: 540px;
   background-color: #ffffff8d;
   border-radius: 25px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 `;
 
 const TopTenTitle = styled.h1`
   text-align: left;
-  margin-left: 70px;
+  margin-left: 80px;
   position: relative;
   top: 50px;
   font-size: 35px;
@@ -233,7 +235,7 @@ const StyledSlider = styled(Slider)`
 `;
 
 const CardBox = styled.div`
-  cursor: pointer;
+  /* cursor: pointer; */
   width: 200px;
 `;
 
@@ -276,6 +278,7 @@ const PredictionContainer = styled.div`
   margin-right: 40px;
   z-index: 2;
   position: relative;
+  
 `;
 
 const PredictionTitle = styled.h1`
@@ -287,6 +290,7 @@ const PredictionTitle = styled.h1`
 const PredictChart = styled.div`
   background: #ffffff9b;
   border-radius: 15px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 `;
 
 const PredictSeparate = styled.div`
@@ -308,6 +312,7 @@ const Recommendation = styled.div`
   border-radius: 15px;
   height: 2080px;
   margin-bottom: 60px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 `;
 
 const Subtitles = styled.div`

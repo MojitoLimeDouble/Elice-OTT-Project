@@ -5,11 +5,9 @@ import {
   Line,
   Bar,
   XAxis,
-  YAxis,
   CartesianGrid,
   Tooltip,
   Legend,
-  Area,
 } from "recharts";
 
 export default function MovieCustomerRateChart({ data }) {
@@ -30,35 +28,15 @@ export default function MovieCustomerRateChart({ data }) {
         <CartesianGrid stroke="#f5f5f5" />
         <XAxis
           dataKey="name"
-          label={{ value: "year", position: "insideBottomRight", offset: 0 }}
+          label={{ value: "year", position: "insideBottomRight", offset: 10 }}
           scale="band"
-        />
-        <YAxis
-          label={{ value: "movie", angle: -90, position: "insideLeft" }}
-          yAxisId={0}
-        />
-        <YAxis
-          label={{ value: "money", angle: -90, position: "insideLeft" }}
-          orientation="right"
-          yAxisId={1}
-        />
-        <YAxis
-          label={{ value: "people", angle: -90, position: "insideLeft" }}
-          orientation="right"
-          yAxisId={2}
         />
         <Tooltip position={{ y: 200 }} />
         <CartesianGrid stroke="#f5f5f5" />
-        <Legend />
-        <Area
-          type="monotone"
-          dataKey="money"
-          fill="#8884d8"
-          stroke="#8884d8"
-          yAxisId={0}
-        />
-        <Bar dataKey="people" barSize={40} fill="#413ea0" yAxisId={1} />
-        <Line type="monotone" dataKey="movie" stroke="#ff7300" yAxisId={2} />
+        <Legend style={{margin:"3rem"}} />
+        <Bar dataKey="개봉 영화 [단위: 편]" barSize={40} fill="#413ea0" />
+        <Line type="monotone" dataKey="영화 관람객 [단위: 십만명]" stroke="#ff7300"/>
+        <Line type="monotone" dataKey="확진자 수 [단위: 백명]" stroke="#ff0000"/>
       </ComposedChart>
     </ChartComponent>
   );

@@ -14,6 +14,7 @@ import ContentsCategory from "./components/ContentsCategory";
 import Banner from "react-js-banner";
 import { useHistory } from "react-router-dom";
 import Search from "./components/Search";
+import styled from "styled-components";
 
 const App = () => {
   const [loggedOut, setLoggedOut] = useState(false);
@@ -96,9 +97,11 @@ const App = () => {
               </Route>
               <Route
                 render={() => (
-                  <div>
-                    <h2>이 페이지는 존재하지 않습니다.</h2>
-                  </div>
+                  <NonPage
+                    style={{ minHeight: `${windowSize.height - 350}px` }}
+                  >
+                    <NonPageComment>존재하지 않는 페이지입니다.</NonPageComment>
+                  </NonPage>
                 )}
               />
             </Switch>
@@ -144,3 +147,16 @@ const stickyNavigation = {
   top: 0,
   zIndex: 10,
 };
+
+const NonPage = styled.div`
+  background-color: #ffffff8d;
+  margin-top: 30px;
+  border-radius: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const NonPageComment = styled.h2`
+  font-size: 50px;
+`;

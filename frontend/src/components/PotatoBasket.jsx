@@ -124,6 +124,7 @@ const Container = styled.div`
   flex-direction: row;
   justify-content: space-around;
   margin: 3rem;
+  margin-top: 0px;
 `;
 
 const Basket = styled.div`
