@@ -72,7 +72,7 @@ def like():
 
             if tv and potato:
                 tv.like_count -= 1
-            if not movie:
+            if not tv:
                 abort(400,"해당하는 TV 프로그램이 없습니다.")  
             if not potato:
                 abort(400,"취소할 좋아요가 없습니다.")
