@@ -14,23 +14,48 @@ const PotatoBasket = ({
   onTvPotatoes,
 }) => {
   const params = useParams();
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `/api/potato_basket/${params.nickname}`,
-          { header: tokenHeader() }
-        );
-        onMoviePotatoes(response.data[0].movie);
-        console.log(response.data[0].movie);
-        onTvPotatoes(response.data[1].tv);
-      } catch (error) {
-        console.log(error.response);
-      }
-    };
-    fetchData();
-  }, []);
+  const potatoData = async () => {
+    try {
+      const response = await axios.get(
+        `/api/potato_basket/${params.nickname}`,
+        { header: tokenHeader() }
+      );
+      onMoviePotatoes(response.data[0].movie);
+      onTvPotatoes(response.data[1].tv);
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+  // 영화 찐 감자 분석
+  const movieAnalysis = async () => {
+    try {
+      const response = await axios.get(
+        `/api/potato_basket/${params.nickname}/movie`,
+        { header: tokenHeader() }
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+  // TV 찐 감자 분석
+  const tvAnalysis = async () => {
+    try {
+      const response = await axios.get(
+        `/api/potato_basket/${params.nickname}/tv`,
+        { header: tokenHeader() }
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
 
+  useEffect(() => {
+    potatoData();
+    movieAnalysis();
+    tvAnalysis();
+  }, []);
 
   return (
     <div>
@@ -45,7 +70,11 @@ const PotatoBasket = ({
                 </h1>
               ) : (
                 moviePotatoList?.map((movie) => (
-                  <PosterAndTitle key={movie.id} prediction={movie} category="movie" />
+                  <PosterAndTitle
+                    key={movie.id}
+                    prediction={movie}
+                    category="movie"
+                  />
                 ))
               )}
             </ListDetail>
