@@ -28,15 +28,14 @@ export const PredictionOrder = ({ List, currTab }) => {
   );
 };
 
-export const ContentsCard = ({ contents }) => {
+export const ContentsCard = ({ contents, category }) => {
   return (
-    <SimilarContainer>
-      <Poster bg={contents.poster_path} />
-      <h1>{contents.title}</h1>
-      <h1>{contents.release_data}</h1>
-      <h1>{contents.genres}</h1>
-      <h1>{contents.like_count}</h1>
-    </SimilarContainer>
+    <Link to={`/detail/${category}/${contents.id}`}>
+      <SimilarContainer>
+        <Poster bg={contents.poster_path} />
+        <h1>{contents.title}</h1>
+      </SimilarContainer>
+    </Link>
   );
 };
 

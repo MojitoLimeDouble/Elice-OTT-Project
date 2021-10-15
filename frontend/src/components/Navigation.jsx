@@ -75,7 +75,10 @@ const Navigation = ({ userid, logout }) => {
             </StyledLink>
           </Menu>
           <StyledSearch className="search">
-            <SearchTextField setSearch={setSearch} search={search} />
+            <SearchTextField
+              setSearch={setSearch}
+              search={search}
+            />
           </StyledSearch>
           <StyledLink
             to="/mypage"
@@ -182,19 +185,20 @@ const CustomButton = styled.button`
 `;
 
 export function SearchTextField({ setSearch }) {
-  const debouncedOnChange = debounce(setSearch, 300);
+  const debouncedOnChange = debounce(setSearch, 500);
   return (
     <InputContainer>
-      <Prac>
+      <SearchButton>
         <Icon />
-        <label style={{ cursor: "pointer" }} for="search" style={{fontSize: "20px"}}>
+        <label style={{ cursor: "pointer", fontSize: "20px" }} for="search">
           제목
         </label>
-      </Prac>
+      </SearchButton>
       <InputField
         type="text"
         id="search"
-        placeholder="제목으로 검색하기"
+        placeholder=" 🔍  제목으로 검색하기"
+        autocomplete="off"
         onChange={(e) => {
           debouncedOnChange(e.target.value);
         }}
@@ -231,8 +235,10 @@ const InputField = styled.input`
   transition: width 0.2s ease-in-out;
   cursor: pointer;
   border: none;
+  padding: 0 10px;
+  color: transparent;
   ::placeholder {
-    color: white;
+    color: transparent;
   }
   :active,
   :focus {
@@ -250,10 +256,11 @@ const InputField = styled.input`
   }
 `;
 
-const Prac = styled.div`
+const SearchButton = styled.div`
   display: inline;
   position: relative;
   top: 5px;
-  left: 152px;
+  left: 80px;
   cursor: pointer;
+  z-index: -99999;
 `;
