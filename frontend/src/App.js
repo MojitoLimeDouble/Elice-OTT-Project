@@ -135,7 +135,8 @@ function useWindowSize() {
 }
 
 const totalStyled = {
-  fontFamily: "BMJUA",
+  fontFamily: "NotoSansKR",
+  fontWeight: "bold",
   fontStyle: "normal",
   textDecoration: "none",
   width: "1300px",

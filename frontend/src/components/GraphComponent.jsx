@@ -41,37 +41,13 @@ const MyResponsivePie = ({ data }) => (
     theme={{
       labels: {
         text: {
-          fontFamily: "BMDOHYEON",
+          fontFamily: "NotoSansKR",
+          fontWeight: "bold",
           fontSize: "13",
           // TODO: 일정 길이 이상의 글자가 잘려 보이는 것 수정
         },
       },
     }}
-    // legends={[
-    //   {
-    //     anchor: "bottom",
-    //     direction: "row",
-    //     justify: false,
-    //     translateX: 0,
-    //     translateY: 56,
-    //     itemsSpacing: 0,
-    //     itemWidth: 55,
-    //     itemHeight: 18,
-    //     itemTextColor: "#999",
-    //     itemDirection: 'top-to-bottom',
-    //     itemOpacity: 1,
-    //     symbolSize: 18,
-    //     symbolShape: "circle",
-    //     effects: [
-    //       {
-    //         on: "hover",
-    //         style: {
-    //           itemTextColor: "#000",
-    //         },
-    //       },
-    //     ],
-    //   },
-    // ]}
   />
 );
 

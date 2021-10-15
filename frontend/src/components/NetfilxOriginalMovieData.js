@@ -1,40 +1,29 @@
-const NetflixOriginalMovieData = {
-  name: "NetflixOriginalMovie",
-  color: "hsl(73, 70%, 50%)",
-  children: [
+const NetflixOriginalMovieData = 
+  [
     {
-      name: "Before COVID-19",
-      color: "hsl(11, 70%, 50%)",
-      children: [
-        {
-          name: "2017",
-          color: "hsl(45, 70%, 50%)",
-          loc: 1,
-        },
-        {
-          name: "2019",
-          color: "hsl(142, 70%, 50%)",
-          loc: 1,
-        },
-      ],
+      "id": "2017 작품 수",
+      "label": "코로나 이전(2017)",
+      "value": 1,
+      "color": "hsl(244, 100%, 50%)"
     },
     {
-      name: "After COVID-19",
-      color: "hsl(11, 70%, 50%)",
-      children: [
-        {
-          name: "2020",
-          color: "hsl(45, 70%, 50%)",
-          loc: 3,
-        },
-        {
-          name: "2021",
-          color: "hsl(142, 70%, 50%)",
-          loc: 5,
-        },
-      ],
+      "id": "2019 작품 수",
+      "label": "코로나 이전(2019)",
+      "value": 1,
+      "color": "hsl(244, 100%, 50%)"
     },
-  ],
-};
+    {
+      "id": "2020 작품 수",
+      "label": "코로나 이후(2020)",
+      "value": 3,
+      "color": "hsl(0, 100%, 50%)"
+    },
+    {
+      "id": "2021 작품 수",
+      "label": "코로나 이후(2021)",
+      "value": 5,
+      "color": "hsl(0, 100%, 50%)"
+    }
+  ]
 
 export default NetflixOriginalMovieData;

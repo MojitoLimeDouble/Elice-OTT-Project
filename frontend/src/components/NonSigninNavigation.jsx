@@ -55,7 +55,8 @@ const Container = styled.div`
   position: relative;
   align-items: center;
   height: 40px;
-  font-family: "BMJUA";
+  font-family: "NotoSansKR";
+  font-weight: "bold";
   font-style: normal;
   text-decoration: none;
   z-index: 30;
