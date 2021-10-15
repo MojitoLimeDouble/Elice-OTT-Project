@@ -33,9 +33,8 @@ export const ContentsCard = ({ contents }) => {
     <SimilarContainer>
       <Poster bg={contents.poster_path} />
       <h1>{contents.title}</h1>
-      <h1>{contents.release_data}</h1>
-      <h1>{contents.genres}</h1>
-      <h1>{contents.like_count}</h1>
+      {/* TODO: 찜 수는 따로 표기 또는 빼기 */}
+      {/* <h1>{contents.like_count}</h1> */}
     </SimilarContainer>
   );
 };

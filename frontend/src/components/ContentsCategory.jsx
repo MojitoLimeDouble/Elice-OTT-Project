@@ -107,10 +107,9 @@ const ContentsCategory = () => {
 
   return (
     <CategoryContainer className="CategoryContainer">
-      <BackgroundSquare />
+      <FilterBackgroundSquare />
       <Filter>
         <ThemeProvider>
-          {/* <CSSReset /> */}
           <Filtering
             onClick={onClick}
             filtering={filtering}
@@ -125,6 +124,7 @@ const ContentsCategory = () => {
           />
         </ThemeProvider>
       </Filter>
+      <ListBackgroundSquare />
       <FilteredList>
         {!contentsList ? (
           <div>Loading ...</div>
@@ -142,14 +142,29 @@ const ContentsCategory = () => {
 
 export default ContentsCategory;
 
-const BackgroundSquare = () => {
+const FilterBackgroundSquare = () => {
   const style = {
     position: "absolute",
     zIndex: "1",
     width: "200px",
-    height: "150px",
+    height: "200px",
     backgroundColor: "#ffffff8d",
     borderRadius: "25px",
+    boxShadow: "0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)",
+  };
+  return <div style={style}></div>;
+};
+
+const ListBackgroundSquare = () => {
+  const style = {
+    position: "absolute",
+    zIndex: "1",
+    width: "980px",
+    height: "1500px",
+    backgroundColor: "#ffffff8d",
+    borderRadius: "25px",
+    boxShadow: "0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)",
+    transform: "translateX(240px)"
   };
   return <div style={style}></div>;
 };
@@ -161,6 +176,7 @@ const CategoryContainer = styled.div`
   padding: 40px;
   display: grid;
   grid-template-columns: 1fr 5fr;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 `;
 
 const Filter = styled.div`
@@ -169,6 +185,8 @@ const Filter = styled.div`
 `;
 
 const FilteredList = styled.div`
+  position: relative;
+  z-index: 2;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
 `;
