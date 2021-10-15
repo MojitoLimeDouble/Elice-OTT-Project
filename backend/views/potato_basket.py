@@ -9,7 +9,6 @@ import pandas as pd
 bp = Blueprint('potato_basket', __name__, url_prefix='/api')
 # 완전 끝남 (1차)
 @bp.route('/potato_basket/<string:nickname>',  methods=['GET'])
-@jwt_required()
 def potato_basket(nickname):
     
     user = User.query.filter(User.nickname == nickname).first()
