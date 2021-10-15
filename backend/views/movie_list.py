@@ -12,11 +12,7 @@ engine = create_engine(config.SQLALCHEMY_DATABASE_URI)
 def movie_list():
     movie_list = Movie.query.order_by(Movie.popularity.desc())
     movies = [Movie.to_dict(movie) for movie in movie_list]
-    for movie in movie_list:
-        cast=Movie.to_dict(movie).get('cast')
-        print(Movie.to_dict(movie))
-        
-        print(Movie.to_dict(movie).get('cast'))
+    
     return jsonify(movies)
 
 @bp.route('/movie/list/sorted', methods=['POST'])
@@ -66,7 +62,7 @@ def movie_list_filter():
     for i in range(len(movie_list)):
         if genre in movie_list[i][0]:
             filter_id.append(movie_list[i][1])
-            
+
     for i in filter_id:
         movie = Movie.query.filter(Movie.id == i).first()
         movies.append(Movie.to_dict(movie))
