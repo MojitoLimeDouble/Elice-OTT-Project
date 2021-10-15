@@ -5,8 +5,8 @@ import { BsPencilFill, BsSaveFill } from "react-icons/bs";
 import { FaSearchPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import tokenHeader from "../authorization/tokenHeader";
-import { ContentsCard } from "./Prediction";
-import Modal  from "./Modal";
+import { ContentsCard } from "../components/Prediction";
+import Modal  from "../components/Modal";
 import Banner from "react-js-banner";
 
 // TODO: 컴포넌트 세분화 작업 필요

@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
 import ContentsDetail from "./components/ContentsDetail";
 import NonSignIn from "./components/NonSignIn";
-import Signin from "./components/Signin";
-import Signup from "./components/Signup";
+import Signin from "./containers/Signin";
+import Signup from "./containers/Signup";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 import PotatoesInBasket from "./containers/PotatoBasketContainer";
@@ -67,11 +67,15 @@ const App = () => {
               <PublicRoute exact path="/" component={NonSignIn} />
               <PublicRoute path="/signin" component={Signin} />
               <PublicRoute path="/signin">
-                <Signin windowHeight={windowSize.height} />
+                <Signin
+                  windowHeight={windowSize.height}
+                />
               </PublicRoute>
               <PublicRoute path="/signup" component={Signup} />
               <PublicRoute path="/signup">
-                <Signup windowHeight={windowSize.height} />
+                <Signup
+                  windowHeight={windowSize.height}
+                />
               </PublicRoute>
               <PrivateRoute path="/main" component={MainContainer} />
               <PrivateRoute
@@ -113,7 +117,7 @@ const App = () => {
 
 export default App;
 
-function useWindowSize() {
+export function useWindowSize() {
   const [windowSize, setWindowSize] = useState({
     width: undefined,
     height: undefined,
