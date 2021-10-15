@@ -1,8 +1,9 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useHistory, Link } from "react-router-dom";
-import NonSigninNavigation from "./NonSigninNavigation";
+import NonSigninNavigation from "../components/NonSigninNavigation";
 import styled from "styled-components";
+import * as Style from "../components/styleComponent";
 
 const Signin = ({ windowHeight }) => {
   const [email, setEmail] = useState("");
@@ -52,24 +53,15 @@ const Signin = ({ windowHeight }) => {
   };
 
   return (
-    <div>
-      <NonSigninNavigationContainer
-        style={{
-          position: "absolute",
-          top: "0",
-          zIndex: "15",
-        }}
-      >
+    <div style={{ height: "62vh" }}>
+      <Style.NonSigninNavigationContainer>
         <NonSigninNavigation />
-      </NonSigninNavigationContainer>
-      <div
-        style={{
-          minHeight: `${windowHeight - 320}px`,
-        }}
-      >
+      </Style.NonSigninNavigationContainer>
+      <div>
         <form form onSubmit={handleSubmit}>
           <div>
-            <input
+            <Style.InputField
+              id="email"
               placeholder="Email"
               type="email"
               value={email}
@@ -78,7 +70,8 @@ const Signin = ({ windowHeight }) => {
             />
           </div>
           <div>
-            <input
+            <Style.InputField
+              id="password"
               placeholder="Password"
               type="Password"
               value={password}
@@ -86,11 +79,11 @@ const Signin = ({ windowHeight }) => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <button type="submit"> 로그인 </button> <br />
+          <Style.Button type="submit"> 로그인 </Style.Button> <br />
           <br />
           <label>아직 POTCHA의 회원이 아니신가요? </label>
           <Link to="/signup">
-            <button> 회원가입 </button>
+            <Style.Button large> 회원가입 </Style.Button>
           </Link>
         </form>
       </div>
@@ -100,13 +93,3 @@ const Signin = ({ windowHeight }) => {
 
 export default Signin;
 
-const NonSigninNavigationContainer = styled.div`
-  /* position: sticky;
-  top: 0;
-  z-index: 30;
-   */
-`;
-
-const FullPage = styled.div`
-  font-family: arial, helvetica;
-`;

@@ -110,13 +110,16 @@ class Movie(db.Model):
         
         # 카테고리
         category = "movie"
+
+        # 개봉 일자
+        release_date = self.release_date.strftime('%Y-%m-%d')
       
         return {
             'id': self.id,
             'title': self.title,
             'poster_path': self.poster_path,
             'overview': self.overview,
-            'release_date': self.release_date,
+            'release_date': release_date,
             'runtime' : self.runtime,
             'genres': genre_list,
             'popularity' : self.popularity,
@@ -198,12 +201,15 @@ class Tv(db.Model):
         # 카테고리
         category = "tv"
 
+        # 방영 일자
+        first_air_date = self.first_air_date.strftime('%Y-%m-%d')
+
         return {
             'id': self.id,
             'title': self.name,
             'poster_path': self.poster_path,
             'overview': self.overview,
-            'release_date': self.first_air_date,
+            'release_date': first_air_date,
             'runtime' : self.runtime,
             'genres': genre_list,
             'popularity' : self.popularity,

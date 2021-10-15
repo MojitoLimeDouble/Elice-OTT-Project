@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import MyPage from "../components/MyPage";
+import MyPage from "./MyPage";
 import {
   userProfile,
   requestFriends,
