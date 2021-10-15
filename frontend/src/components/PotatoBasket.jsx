@@ -4,6 +4,8 @@ import axios from "axios";
 import PosterAndTitle from "./PosterAndTitle";
 import WordCloudComponent from "./WordCloudComponent";
 import WordCloudDataExample from "./WordCloudDataExample";
+import { useParams } from "react-router-dom";
+import tokenHeader from "../authorization/tokenHeader";
 
 const PotatoBasket = ({
   moviePotatoList,
@@ -11,35 +13,24 @@ const PotatoBasket = ({
   onMoviePotatoes,
   onTvPotatoes,
 }) => {
-  // 은열님의 외부 api 받아오는 코드 동일하게 적용
-  // 추후 데이터 베이스에서 영화와 tv 프로그램에 대한 각각의 리스트를 받을 예정
+  const params = useParams();
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "https://yts.mx/api/v2/list_movies.json?limit=3"
+          `/api/potato_basket/${params.nickname}`,
+          { header: tokenHeader() }
         );
-        onMoviePotatoes(response.data.data.movies);
-      } catch (e) {
-        console.log(e);
+        onMoviePotatoes(response.data[0].movie);
+        console.log(response.data[0].movie);
+        onTvPotatoes(response.data[1].tv);
+      } catch (error) {
+        console.log(error.response);
       }
     };
     fetchData();
   }, []);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          "https://yts.mx/api/v2/list_movies.json?limit=10"
-        );
-        onTvPotatoes(response.data.data.movies);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    fetchData();
-  }, []);
 
   return (
     <div>
@@ -53,8 +44,8 @@ const PotatoBasket = ({
                   Loading ...
                 </h1>
               ) : (
-                moviePotatoList?.map((prediction) => (
-                  <PosterAndTitle key={prediction.id} prediction={prediction} />
+                moviePotatoList?.map((movie) => (
+                  <PosterAndTitle key={movie.id} prediction={movie} category="movie" />
                 ))
               )}
             </ListDetail>
@@ -78,8 +69,8 @@ const PotatoBasket = ({
                   Loading ...
                 </h1>
               ) : (
-                tvPotatoList?.map((prediction) => (
-                  <PosterAndTitle key={prediction.id} prediction={prediction} />
+                tvPotatoList?.map((tv) => (
+                  <PosterAndTitle key={tv.id} prediction={tv} category="tv" />
                 ))
               )}
             </ListDetail>

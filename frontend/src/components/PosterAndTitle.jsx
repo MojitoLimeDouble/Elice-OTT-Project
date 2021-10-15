@@ -1,14 +1,16 @@
-// 테스트용, 나중에 삭제 예정
 // 감자 바구니 영화/tv 프로그램의 각각 poster와 title을 받아옴
 
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-const PosterAndTitle = ({ prediction }) => {
+const PosterAndTitle = ({ prediction , category}) => {
   return (
     <Container>
-      <Poster bg={prediction.medium_cover_image} />
-      <h1>{prediction.title}</h1>
+      <Link to={`/detail/${category}/${prediction.id}`}>
+        <Poster bg={prediction.poster_path} />
+        <h1>{prediction.title}</h1>
+      </Link>
     </Container>
   );
 };

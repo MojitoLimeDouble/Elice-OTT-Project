@@ -150,9 +150,11 @@ const MyPage = ({ user, friendList, onUserProfile, onRequestFriends }) => {
     };
     if (friendNickname) {
       try {
-        const response = await axios.post(`/api/mypage/find/friend`, body);
+        const response = await axios.post(`/api/mypage/find/friend`, body, {
+          headers: tokenHeader(),
+        });
         console.log("response", response);
-        if (response.status === 200) {
+        if (response.data.result !== "fail") {
           setExistence(false);
           setFriend(response.data);
           console.log(friend);
@@ -180,13 +182,16 @@ const MyPage = ({ user, friendList, onUserProfile, onRequestFriends }) => {
       nickname: friend.nickname,
     };
     try {
-      const response = await axios.post(`/api/mypage/add/friend`, body);
+      const response = await axios.post(`/api/mypage/add/friend`, body, {
+        headers: tokenHeader(),
+      });
       console.log(response.data);
       if (response.data.result === "fail") {
         alert("본인 또는 이미 추가된 친구입니다.");
       }
       const fetchData = await axios.get(`/api/mypage/list/friend`);
       onRequestFriends(fetchData.data);
+      setFriendNickname("");
     } catch (error) {
       console.log(error.response);
     }
@@ -219,12 +224,14 @@ const MyPage = ({ user, friendList, onUserProfile, onRequestFriends }) => {
               onChange={(e) => setFriendNickname(e.target.value)}
               placeholder="친구의 닉네임을 입력해주세요."
             />
-            <button htmlType="submit" shape="circle">
+            <button type="submit" shape="circle">
               <SearchOutlined />
             </button>
           </form>
           {existence && <h1>친구의 닉네임을 확인해주세요.</h1>}
-          {friend && (
+          {!friend ? (
+            <span></span>
+          ) : (
             <ProfileContainer>
               <div>
                 <Img

@@ -36,6 +36,10 @@ const Signin = ({ windowHeight }) => {
             "access_token",
             JSON.stringify(response.data.access_token)
           );
+          localStorage.setItem(
+            "nickname",
+            JSON.stringify(response.data.nickname)
+          );
 
           history.push("/main");
           alert("로그인에 성공하였습니다.");
