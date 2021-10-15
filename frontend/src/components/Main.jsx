@@ -77,7 +77,7 @@ const Main = ({
     centerPadding: "0px", // 0px 하면 슬라이드 끝쪽 이미지가 안잘림
   };
   const distribution = ["장르", "키워드", "국가"];
-  const order = ["1위", "2위", "3위", "4위", "5위"];
+  const order = ["1.", "2.", "3.", "4.", "5."];
   return (
     <div className="main">
       <TopTen className="topTen">
@@ -114,7 +114,7 @@ const Main = ({
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "1.2fr 1.5fr 1fr",
+                gridTemplateColumns: "1.4fr 1.5fr 1fr",
               }}
             >
               {[movieGenres, movieKeyword, movieCountry].map((data, idx) => (
@@ -132,6 +132,7 @@ const Main = ({
                 display: "grid",
                 gridTemplateColumns: "1.2fr 1.5fr 1fr",
               }}
+              className="predictContainer"
             >
               {[tvGenres, tvKeyword, tvCountry].map((data, idx) => (
                 <PredictSeparate key={idx}>
@@ -145,6 +146,19 @@ const Main = ({
           )}
         </PredictChart>
         <Recommendation className="recommendation">
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1.8fr 4fr",
+              padding: "0px 30px",
+              marginBottom: "30px",
+              fontSize: "25px",
+            }}
+            className="subtitles"
+          >
+            <h1>흥행 예측 top 5</h1>
+            <h1>코로나 이전 유사 컨텐츠</h1>
+          </div>
           {!predictableList ? (
             <img
               src="https://blog.kakaocdn.net/dn/cmseNl/btrhhTwEA0r/TNAoELO6JmK3rhVeNfGYy0/img.gif"
@@ -156,8 +170,25 @@ const Main = ({
             />
           ) : (
             predictableList.map((List, idx) => (
-              <div key={idx} style={{ display: "flex", alignItems: "center", padding: "30px" }}>
-                <h1 style={{fontSize:"25px", }}>{order[idx]}</h1>
+              <div
+                key={idx}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  // padding: "30px",
+                  borderBottom: "solid 2px #a6a3f1",
+                  marginBottom: "60px",
+                }}
+              >
+                <h1
+                  style={{
+                    fontSize: "30px",
+                    color: "#8e8be9",
+                    transform: "translateY(150px) translateX(10px)",
+                  }}
+                >
+                  {order[idx]}
+                </h1>
                 <PredictionOrder List={List} currTab={currTab.toLowerCase()} />
               </div>
             ))
@@ -176,7 +207,7 @@ const BackgroundSquare = () => {
     position: "absolute",
     zIndex: "1",
     width: "1300px",
-    height: "2600px",
+    height: "2680px",
     backgroundColor: "#ffffff8d",
     borderRadius: "25px",
     boxShadow: "0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)",
@@ -274,9 +305,9 @@ const CardText = styled.p`
 
 const PredictionContainer = styled.div`
   height: 100%;
-  margin-top: 50px;
-  margin-left: 40px;
-  margin-right: 40px;
+  padding-bottom: 30px;
+  margin: 50px 40px;
+  margin-bottom: 0px;
   z-index: 2;
   position: relative;
 `;
@@ -295,7 +326,7 @@ const PredictChart = styled.div`
 
 const PredictSeparate = styled.div`
   height: 230px;
-  margin: 2rem;
+  margin: 2rem 0;
 `;
 
 const PredictChartTitle = styled.div`
@@ -308,8 +339,11 @@ const Recommendation = styled.div`
   margin-top: 30px;
   background: #ffffff9b;
   border-radius: 15px;
-  height: 2080px;
-  margin-bottom: 60px;
+  /* height: 2080px; */
+  margin-bottom: 40px;
+  padding: 0 30px;
+  padding-top: 35px;
+  padding-bottom: 1px;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 `;
 

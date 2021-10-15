@@ -168,7 +168,7 @@ const StyledLink = styled(Link)`
 const StyledSearch = styled.div`
   width: 200px;
   position: absolute;
-  right: 350px;
+  right: 300px;
 `;
 
 const CustomButton = styled.button`
@@ -190,14 +190,14 @@ export function SearchTextField({ setSearch }) {
     <InputContainer>
       <SearchButton>
         <Icon />
-        <label style={{ cursor: "pointer", fontSize: "20px" }} for="search">
+        <label style={{ cursor: "pointer", fontSize: "15px" }} for="search">
           제목
         </label>
       </SearchButton>
       <InputField
         type="text"
         id="search"
-        placeholder=" 🔍  제목으로 검색하기"
+        placeholder=" 🔍 제목으로 검색하기"
         autocomplete="off"
         onChange={(e) => {
           debouncedOnChange(e.target.value);
@@ -242,7 +242,7 @@ const InputField = styled.input`
   }
   :active,
   :focus {
-    width: 145px;
+    width: 155px;
     background: black;
     color: white;
     z-index: 9999;
