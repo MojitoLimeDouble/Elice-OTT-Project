@@ -49,7 +49,9 @@ const Navigation = ({ userid, logout }) => {
               isActive={pathname === "/list/movie"}
               className="movie"
             >
-              <BiMoviePlay style={{ transform: "translateY(28%)" }} />
+              <BiMoviePlay
+                style={{ transform: "translateY(20%)", marginRight: "5px" }}
+              />
               Movie
             </StyledLink>
             <StyledLink
@@ -57,7 +59,9 @@ const Navigation = ({ userid, logout }) => {
               isActive={pathname === "/list/tv"}
               className="tv"
             >
-              <CgScreen style={{ transform: "translateY(28%)" }} />
+              <CgScreen
+                style={{ transform: "translateY(20%)", marginRight: "5px" }}
+              />
               TV
             </StyledLink>
             <StyledLink
@@ -70,7 +74,9 @@ const Navigation = ({ userid, logout }) => {
               }
               className="potatoBasket"
             >
-              <GiBasket style={{ transform: "translateY(28%)" }} />
+              <GiBasket
+                style={{ transform: "translateY(20%)", marginRight: "5px" }}
+              />
               PotatoBasket
             </StyledLink>
           </Menu>

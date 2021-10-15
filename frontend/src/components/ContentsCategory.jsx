@@ -58,6 +58,7 @@ const ContentsCategory = () => {
     try {
       const response = await axios.get(`/api/${category}/list`);
       setContentsList(response.data);
+      console.log(response.data);
     } catch (error) {
       console.log(error.response);
     }
@@ -156,7 +157,7 @@ const ContentsCategory = () => {
               <div>Loading ...</div>
             ) : (
               contentsList.map((contents) => (
-                <Link to={`/detail/${category}/${contents.id}`}>
+                <Link to={`/detail/${category}/${contents.id}/${contents.title}`}>
                   <ContentsCard contents={contents} key={contents.id} />
                 </Link>
               ))

@@ -57,7 +57,6 @@ const Main = ({ popularList, predictableList, onPopular, onPredictable }) => {
   useEffect(() => {
     if (predictRef.current) {
       setHeight(predictRef.current.clientHeight);
-      console.log(height)
     }
   });
 
@@ -166,7 +165,7 @@ const Main = ({ popularList, predictableList, onPopular, onPredictable }) => {
               alt=""
               style={{
                 width: "20%",
-                marginTop: "130px",
+                marginTop: "80px",
               }}
             />
           ) : (
@@ -208,7 +207,7 @@ const BackgroundSquare = ({ height }) => {
     position: "absolute",
     zIndex: "1",
     width: "1300px",
-    height: `${height+20}px`,
+    height: `${height + 20}px`,
     backgroundColor: "#ffffff8d",
     borderRadius: "25px",
     boxShadow: "0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)",
