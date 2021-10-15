@@ -233,11 +233,15 @@ const MyPage = ({
       </ProfileContainer>
       <div style={{ height: "350px", background: "blue", maxWidth: "800px" }}>
         <h1>추천 영화</h1>
-        {!recommendList ? <span>분석할 감자 바구니가 없습니다.</span> :
+        {!recommendList ? (
+          <span>분석할 감자 바구니가 없습니다.</span>
+        ) : (
           recommendList.map((recommend, idx) => (
-            <ContentsCard contents={recommend} key={idx} />
+            <Link to={`/detail/${recommend.category}/${recommend.id}`}>
+              <ContentsCard contents={recommend} key={idx} />
+            </Link>
           ))
-        }
+        )}
       </div>
       <div
         style={{ width: "250px", background: "pink", margin: "0 auto" }}
