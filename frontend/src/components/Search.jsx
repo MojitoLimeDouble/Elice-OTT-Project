@@ -37,7 +37,7 @@ const Search = ({ windowHeight }) => {
         <div>'{params.query}' 검색 결과</div>
         <div>MOVIE Contents</div>
         {searchList?.movie?.map((movie) => (
-          <Link to={`/detail/movie/${movie.id}`}>
+          <Link to={`/detail/movie/${movie.id}/${movie.title}`}>
             <ContentsCard contents={movie} key={movie.id} category="movie" />
           </Link>
         ))}
@@ -46,7 +46,7 @@ const Search = ({ windowHeight }) => {
       <div>
         <div>TV Contents</div>
         {searchList?.tv?.map((tv) => (
-          <Link to={`/detail/tv/${tv.id}`}>
+          <Link to={`/detail/tv/${tv.id}/${tv.title}`}>
             <ContentsCard contents={tv} key={tv.id} category="tv" />
           </Link>
         ))}

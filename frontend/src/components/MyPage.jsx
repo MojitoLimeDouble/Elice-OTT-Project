@@ -6,7 +6,44 @@ import { FaSearchPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import tokenHeader from "../authorization/tokenHeader";
 import { ContentsCard } from "./Prediction";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+  Button,
+  Lorem,
+} from "@chakra-ui/react";
+function BasicUsage() {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  return (
+    <>
+      <Button onClick={onOpen}>Open Modal</Button>
 
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Modal Title</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Lorem count={2} />
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3} onClick={onClose}>
+              Close
+            </Button>
+            <Button variant="ghost">Secondary Action</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
+  );
+}
 // TODO: 컴포넌트 세분화 작업 필요
 // 나의 프로필(프로필 이미지, 닉네임 정보가 담기는) 컴포넌트
 export const Profile = ({
@@ -246,7 +283,10 @@ const MyPage = ({
       </div>
       <div
         style={{ width: "250px", background: "pink", margin: "0 auto" }}
-      ></div>
+      >
+        <BasicUsage />
+        <button>회원 탈퇴</button>
+      </div>
       <div style={{ background: "red", maxWidth: "800px" }}>
         <div>
           <form onSubmit={onNicknameSubmit}>
