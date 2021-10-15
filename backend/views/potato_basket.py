@@ -12,9 +12,8 @@ bp = Blueprint('potato_basket', __name__, url_prefix='/api')
 @jwt_required()
 def potato_basket(nickname):
     
-    user_id = get_jwt_identity()
-
-    potato = Potato_Basket.query.filter(Potato_Basket.user_id == user_id).all()
+    user = User.query.filter(User.nickname == nickname).first()
+    potato = Potato_Basket.query.filter(Potato_Basket.user_id == user.id).all()
 
     movie_potato_id = {"movie" :[Movie.to_dict(Movie.query.filter(Movie.id == movie.movie_id).first()) for movie in potato if movie.movie_id]}
     tv_potato_id = {"tv" : [Tv.to_dict(Tv.query.filter(Tv.id == tv.tv_id).first()) for tv in potato if tv.tv_id]}
