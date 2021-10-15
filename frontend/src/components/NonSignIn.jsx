@@ -72,16 +72,17 @@ const NonSignIn = () => {
                           transform: "translateY(-70px) translateX(5px)",
                           borderRadius: "25px",
                           display: "grid",
-                          gridTemplateColumns: "1fr 1.1fr",
+                          gridTemplateColumns: "1fr 1.5fr",
                           alignItems: "center",
-                          // justifyContent: "center",
                         }}
                       >
                         <div
-                          className="sectionTwo slideOne Title "
-                          // style={{ marginTop: "130px" }}
+                          className="sectionTwo slideOne Title"
+                          style={{ paddingLeft: "60px" }}
                         >
-                          <Title>코로나 확진자 증가에 따라</Title>
+                          <Title style={{ marginBottom: "20px" }}>
+                            코로나 확진자 증가에 따라
+                          </Title>
                           <Title>전국 영화관 관람객 감소</Title>
                         </div>
                         <div
@@ -92,11 +93,13 @@ const NonSignIn = () => {
                             boxShadow:
                               "0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)",
                             borderRadius: "25px",
-                            marginRight:"100px",
+                            marginRight: "95px",
                           }}
                         >
                           <MovieCustomerRateChart
                             data={MovieCustomerRateData}
+                            height={windowSize.height}
+                            style={{ maxHeight: "800px" }}
                           />
                         </div>
                       </div>
@@ -114,26 +117,26 @@ const NonSignIn = () => {
                           height: `${windowSize.height - 150}px`,
                           transform: "translateY(-70px) translateX(5px)",
                           borderRadius: "25px",
-                          display: "flex",
+                          display: "grid",
+                          gridTemplateColumns: "1fr 1.5fr",
                           alignItems: "center",
-                          // justifyContent: "center",
-                          flexDirection: "column",
                         }}
                       >
-                        <div
-                          className="sectionTwo slideTwo Title "
-                          style={{ marginTop: "130px" }}
-                        >
+                        <div className="sectionTwo slideTwo Title ">
                           <Title style={{ marginBottom: "20px" }}>
-                            점점 늘어나는 OTT 서비스 이용자&#128526;
+                            점점 늘어나는
                           </Title>
+                          <Title>OTT 서비스 이용자&#128526;</Title>
                         </div>
                         <div
                           className="ottServiceRateChart"
                           style={{
-                            height: "600px",
-                            width: "1000px",
-                            marginTop: "160px",
+                            height: `${
+                              windowSize.height < 800
+                                ? windowSize.height - 200
+                                : 600
+                            }px`,
+                            width: "680px",
                             backgroundColor: "#ffffff8d",
                             boxShadow:
                               "0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)",
@@ -157,29 +160,32 @@ const NonSignIn = () => {
                           height: `${windowSize.height - 150}px`,
                           transform: "translateY(-70px) translateX(5px)",
                           borderRadius: "25px",
-                          display: "flex",
+                          display: "grid",
+                          gridTemplateColumns: "1fr 1.5fr",
                           alignItems: "center",
-                          // justifyContent: "center",
-                          flexDirection: "column",
                         }}
                       >
-                        <div
-                          className="sectionTwo slideTwo Title "
-                          style={{ marginTop: "130px" }}
-                        >
+                        <div className="sectionTwo slideTwo Title">
                           <Title style={{ marginBottom: "20px" }}>
-                            코로나 이전과 이후 영화 상영 방식에 있어,
+                            코로나 이전과 이후
                           </Title>
-                          <Title>
-                            넷플릭스로 상영하는 영화의 수 변화&#128200;
+                          <Title style={{ marginBottom: "20px" }}>
+                            영화 상영 방식에 있어,
                           </Title>
+                          <Title style={{ marginBottom: "20px" }}>
+                            넷플릭스로 상영하는
+                          </Title>
+                          <Title>영화의 수 변화&#128200;</Title>
                         </div>
                         <div
                           className="ottServiceRateChart"
                           style={{
-                            height: "600px",
-                            width: "800px",
-                            marginTop: "100px",
+                            height: `${
+                              windowSize.height < 800
+                                ? windowSize.height - 200
+                                : 600
+                            }px`,
+                            width: "680px",
                             backgroundColor: "#ffffff8d",
                             boxShadow:
                               "0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)",
@@ -213,100 +219,17 @@ const NonSignIn = () => {
                           flexDirection: "column",
                         }}
                       >
-                        <div
-                          className="sectionThree slideOne Title "
-                          style={{ marginTop: "130px" }}
-                        >
-                          <Title style={{ transform: "translateY(-55px)" }}>
+                        <div className="sectionThree slideOne Title">
+                          <Title style={{ marginBottom: "40px" , fontSize:"50px"}}>
                             따라서 우리는 이런 서비스를 제공합니다!&#127839;
                           </Title>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="slide two">
-                    <div className="temp">
-                      <div
-                        className="sectionThree slideTwo backGround"
-                        style={{
-                          backgroundColor: "#ffffff8d",
-                          boxShadow:
-                            "0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)",
-                          width: "1290px",
-                          height: `${windowSize.height - 150}px`,
-                          transform: "translateY(-70px) translateX(5px)",
-                          borderRadius: "25px",
-                          display: "flex",
-                          alignItems: "center",
-                          // justifyContent: "center",
-                          flexDirection: "column",
-                        }}
-                      >
-                        <div
-                          className="sectionThree slideTwo Title "
-                          style={{ marginTop: "130px" }}
-                        >
                           <Title style={{ marginBottom: "20px" }}>
                             하나! OTT 서비스의 콘텐츠의 흥행 예측!&#128521;
                           </Title>
-                        </div>
-                        <div
-                          className="ottServiceRateChart"
-                          style={{
-                            height: "600px",
-                            width: "1000px",
-                            marginTop: "160px",
-                            backgroundColor: "#ffffff8d",
-                            boxShadow:
-                              "0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)",
-                            borderRadius: "25px",
-                          }}
-                        >
-                          <div />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="slide three">
-                    <div className="temp">
-                      <div
-                        className="sectionThree slideTwo backGround"
-                        style={{
-                          backgroundColor: "#ffffff8d",
-                          boxShadow:
-                            "0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)",
-                          width: "1290px",
-                          height: `${windowSize.height - 150}px`,
-                          transform: "translateY(-70px) translateX(5px)",
-                          borderRadius: "25px",
-                          display: "flex",
-                          alignItems: "center",
-                          // justifyContent: "center",
-                          flexDirection: "column",
-                        }}
-                      >
-                        <div
-                          className="sectionThree slideTwo Title "
-                          style={{ marginTop: "130px" }}
-                        >
-                          <Title style={{ marginBottom: "20px" }}>
-                            둘! 당신의 취향을 분석해 추천작을 알려주는
+                          <Title>
+                            둘! 당신의 취향을 분석해 추천작을 알려주는 찐감자
+                            콘텐츠&#129364;
                           </Title>
-                          <Title>찐감자 콘텐츠&#129364;</Title>
-                        </div>
-                        <div
-                          className="ottServiceRateChart"
-                          style={{
-                            height: "600px",
-                            width: "800px",
-                            marginTop: "100px",
-                            backgroundColor: "#ffffff8d",
-                            boxShadow:
-                              "0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)",
-                            borderRadius: "25px",
-                          }}
-                        >
-                          <div />
                         </div>
                       </div>
                     </div>
