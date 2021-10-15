@@ -10,12 +10,12 @@ import {
   Legend,
 } from "recharts";
 
-export default function MovieCustomerRateChart({ data }) {
+export default function MovieCustomerRateChart({ data, height }) {
   return (
     <ChartComponent>
       <ComposedChart
-        width={800}
-        height={600}
+        width={575}
+        height={height < 800 ? height - 200 : 600}
         data={data}
         margin={{
           top: 20,
@@ -27,21 +27,23 @@ export default function MovieCustomerRateChart({ data }) {
         <CartesianGrid stroke="#f5f5f5" />
         <XAxis
           dataKey="name"
-          label={{ value: "year", position: "insideBottomRight", offset: 10 }}
+          label={{ value: "year", position: "insideBottomRight", offset: 1 }}
           scale="band"
         />
         <Tooltip position={{ y: 200 }} />
         <CartesianGrid stroke="#f5f5f5" />
-        <Legend/>
-        <Bar
-          dataKey="개봉 영화 [단위: 편]"
-          barSize={40}
-          fill="#413ea0"
+        <Legend
+          wrapperStyle={{
+            position: "relative",
+            fontFamily: "NotoSansKR",
+            fontSize: "13px",
+          }}
         />
+        <Bar dataKey="개봉 영화 [단위: 편]" barSize={40} fill="#aba8f5" />
         <Line
           type="monotone"
           dataKey="영화 관람객 [단위: 십만명]"
-          stroke="#ff7300"
+          stroke="#ff8819"
         />
         <Line
           type="monotone"

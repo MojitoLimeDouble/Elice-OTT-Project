@@ -54,7 +54,7 @@ const App = () => {
               css={{
                 backgroundColor: "#0080ff",
                 fontSize: 20,
-                fontWeight: "lighter",
+                // fontWeight: "lighter",
                 color: "white",
                 margin: "1rem auto",
                 borderRadius: "25px",
