@@ -14,6 +14,7 @@ const PotatoBasket = ({
   onTvPotatoes,
 }) => {
   const params = useParams();
+  console.log("params", params);
   const potatoData = async () => {
     try {
       const response = await axios.get(
@@ -61,7 +62,7 @@ const PotatoBasket = ({
     potatoData();
     movieAnalysis();
     tvAnalysis();
-  }, []);
+  }, [params]);
 
   return (
     <div>
