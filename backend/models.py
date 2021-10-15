@@ -34,7 +34,7 @@ class User(db.Model):
 class Friend(db.Model):
     __tablename__ = 'friend'
     id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     nickname = db.Column(db.String(30), nullable=False, unique=True)
     photolink   = db.Column(db.String(255),nullable=False, default="./static/default.png")
     def to_dict(self):
@@ -107,6 +107,9 @@ class Movie(db.Model):
         # 부정어
         line_nega = self.negative_comment.replace(" ",'')
         negative_list = line_nega.split(',')
+        
+        # 카테고리
+        category = "movie"
       
         return {
             'id': self.id,
@@ -123,7 +126,8 @@ class Movie(db.Model):
             'cast' : cast_list,
             'director' : director_list,
             'keywords' : keyword_list,
-            'origin_country' : country_list
+            'origin_country' : country_list,
+            'category' : category
         }
 
 # TV 정보
@@ -191,6 +195,9 @@ class Tv(db.Model):
         line_nega = self.negative_comment.replace(" ",'')
         negative_list = line_nega.split(',')
 
+        # 카테고리
+        category = "tv"
+
         return {
             'id': self.id,
             'title': self.name,
@@ -206,7 +213,8 @@ class Tv(db.Model):
             'cast' : cast_list,
             'director' : director_list,
             'keywords' : keyword_list,
-            'origin_country' : country_list
+            'origin_country' : country_list,
+            'category' : category
         }
 
 # 감자 바구니(좋아요 리스트)
