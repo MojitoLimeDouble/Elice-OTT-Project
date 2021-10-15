@@ -75,7 +75,7 @@ const App = () => {
               <Route path="/main">
                 <MainContainer />
               </Route>
-              <Route path="/detail/:category/:id?">
+              <Route path="/detail/:category/:id/:title">
                 <ContentsDetail />
               </Route>
               <PrivateRoute path="/list/movie">

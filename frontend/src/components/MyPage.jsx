@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import { BsPencilFill, BsSaveFill } from "react-icons/bs";
 import { FaSearchPlus } from "react-icons/fa";
-import { SearchOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import tokenHeader from "../authorization/tokenHeader";
 import { ContentsCard } from "./Prediction";
@@ -90,7 +89,7 @@ const MyPage = ({
   const fetchData = async () => {
     try {
       const response = await axios.get(`/api/mypage`, {
-        header: tokenHeader(),
+        headers: tokenHeader(),
       });
       onUserProfile({
         ...user,
@@ -108,7 +107,7 @@ const MyPage = ({
   const fetchFriend = async () => {
     try {
       const response = await axios.get(`/api/mypage/list/friend`, {
-        header: tokenHeader(),
+        headers: tokenHeader(),
       });
       onRequestFriends(response.data);
     } catch (error) {
@@ -119,11 +118,9 @@ const MyPage = ({
   const recommend = async () => {
     try {
       const response = await axios.get(`/api/mypage/recommend`, {
-        header: tokenHeader(),
+        headers: tokenHeader(),
       });
-      console.log("response.data", response.data);
       onRecommend(response.data);
-      console.log("recommendList", recommendList);
     } catch (error) {
       console.log(error.response);
     }
@@ -155,7 +152,9 @@ const MyPage = ({
         const response = await axios.patch(
           `/api/mypage/modify/photo`,
           formData,
-          { headers: tokenHeader() }
+          {
+            headers: tokenHeader(),
+          }
         );
         console.log(response.data);
       } catch (error) {
@@ -212,7 +211,9 @@ const MyPage = ({
       if (response.data.result === "fail") {
         alert("본인 또는 이미 추가된 친구입니다.");
       }
-      const fetchData = await axios.get(`/api/mypage/list/friend`);
+      const fetchData = await axios.get(`/api/mypage/list/friend`, {
+        headers: tokenHeader(),
+      });
       onRequestFriends(fetchData.data);
       setFriendNickname("");
     } catch (error) {
@@ -237,7 +238,7 @@ const MyPage = ({
           <span>분석할 감자 바구니가 없습니다.</span>
         ) : (
           recommendList.map((recommend, idx) => (
-            <Link to={`/detail/${recommend.category}/${recommend.id}`}>
+            <Link to={`/detail/${recommend.category}/${recommend.id}/${recommend.title}`}>
               <ContentsCard contents={recommend} key={idx} />
             </Link>
           ))
@@ -257,7 +258,7 @@ const MyPage = ({
               placeholder="친구의 닉네임을 입력해주세요."
             />
             <button type="submit" shape="circle">
-              <SearchOutlined />
+              <FaSearchPlus />
             </button>
           </form>
           {existence && <h1>친구의 닉네임을 확인해주세요.</h1>}
