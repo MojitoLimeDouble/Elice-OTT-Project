@@ -26,12 +26,12 @@ const Recommend = ({ prediction }) => {
 export const PredictionOrder = ({ List, currTab }) => {
   return (
     <PredictContainer className="predictAndRecommend">
-      <Link to={`/detail/${currTab}/${List[0].id}`}>
+      <Link to={`/detail/${currTab}/${List[0].id}/${List[0].title}`}>
         <Prediction prediction={List[0]} />
       </Link>
       {List.slice(1).map((list) => (
         <div style={{display: "grid", gridTemplateColumns:"1fr 1fr 1fr 1fr", alignContent:"flex-end"}}>
-          <Link to={`/detail/${currTab}/${list.id}`}>
+          <Link to={`/detail/${currTab}/${list.id}/${list.title}`}>
             <Recommend prediction={list} key={list.id} />
           </Link>
         </div>

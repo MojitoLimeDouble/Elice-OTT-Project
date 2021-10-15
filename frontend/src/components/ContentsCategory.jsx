@@ -156,7 +156,7 @@ const ContentsCategory = () => {
               <div>Loading ...</div>
             ) : (
               contentsList.map((contents) => (
-                <Link to={`/detail/${category}/${contents.id}`}>
+                <Link to={`/detail/${category}/${contents.id}/${contents.title}`}>
                   <ContentsCard contents={contents} key={contents.id} />
                 </Link>
               ))

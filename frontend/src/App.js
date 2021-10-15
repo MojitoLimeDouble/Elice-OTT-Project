@@ -10,6 +10,7 @@ import PotatoesInBasket from "./containers/PotatoBasketContainer";
 import MainContainer from "./containers/MainContainer";
 import MyPageContainer from "./containers/MyPageContainer";
 import PrivateRoute from "./helpers/PrivateRoute";
+import PublicRoute from "./helpers/PublicRoute";
 import ContentsCategory from "./components/ContentsCategory";
 import Banner from "react-js-banner";
 import { useHistory } from "react-router-dom";
@@ -63,38 +64,35 @@ const App = () => {
           </div>
           <div>
             <Switch>
-              <Route exact path="/">
-                <NonSignIn />
-              </Route>
-              <Route path="/signin">
+              <PublicRoute exact path="/" component={NonSignIn} />
+              <PublicRoute path="/signin" component={Signin} />
+              <PublicRoute path="/signin">
                 <Signin windowHeight={windowSize.height} />
-              </Route>
-              <Route path="/signup">
+              </PublicRoute>
+              <PublicRoute path="/signup" component={Signup} />
+              <PublicRoute path="/signup">
                 <Signup windowHeight={windowSize.height} />
-              </Route>
-              <Route path="/main">
-                <MainContainer />
-              </Route>
-              <Route path="/detail/:category/:id/:title">
-                <ContentsDetail />
-              </Route>
-              <PrivateRoute path="/list/movie">
-                <ContentsCategory />
-              </PrivateRoute>
-              <Route path="/list/tv">
-                <ContentsCategory />
-              </Route>
+              </PublicRoute>
+              <PrivateRoute path="/main" component={MainContainer} />
+              <PrivateRoute
+                path="/detail/:category/:id/:title"
+                component={ContentsDetail}
+              />
+              <PrivateRoute path="/list/movie" component={ContentsCategory} />
+              <PrivateRoute path="/list/tv" component={ContentsCategory} />
               <Route path="/potato-basket/:nickname">
                 <PotatoesInBasket />
               </Route>
-              <Route path="/mypage">
+              <PrivateRoute path="/mypage" component={MyPageContainer} />
+              <PrivateRoute path="/mypage">
                 <div style={{ minHeight: `${windowSize.height - 350}px` }}>
                   <MyPageContainer />
                 </div>
-              </Route>
-              <Route path="/search/:query">
+              </PrivateRoute>
+              <PrivateRoute path="/search/:query" component={Search} />
+              <PrivateRoute path="/search/:query">
                 <Search windowHeight={windowSize.height} />
-              </Route>
+              </PrivateRoute>
               <Route
                 render={() => (
                   <NonPage

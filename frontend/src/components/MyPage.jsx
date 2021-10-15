@@ -6,6 +6,8 @@ import { FaSearchPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import tokenHeader from "../authorization/tokenHeader";
 import { ContentsCard } from "./Prediction";
+import Modal  from "./Modal";
+import Banner from "react-js-banner";
 
 // TODO: 컴포넌트 세분화 작업 필요
 // 나의 프로필(프로필 이미지, 닉네임 정보가 담기는) 컴포넌트
@@ -75,15 +77,15 @@ export const FriendProfile = ({ friend }) => {
 const MyPage = ({
   user,
   friendList,
-  recommendList,
   onUserProfile,
   onRequestFriends,
-  onRecommend,
 }) => {
   const [onToggle, setOnToggle] = useState(true);
   const [friendNickname, setFriendNickname] = useState("");
   const [existence, setExistence] = useState(false);
   const [friend, setFriend] = useState("");
+  const [quit, setQuit] = useState(false);
+  const [recommendList, setRecommendList] = useState("");
 
   // 마이페이지 접속 시 프로필을 받아옴
   const fetchData = async () => {
@@ -120,7 +122,7 @@ const MyPage = ({
       const response = await axios.get(`/api/mypage/recommend`, {
         headers: tokenHeader(),
       });
-      onRecommend(response.data);
+      setRecommendList(response.data);
     } catch (error) {
       console.log(error.response);
     }
@@ -222,75 +224,92 @@ const MyPage = ({
   };
 
   return (
-    <Container>
-      <ProfileContainer>
-        <Profile
-          user={user}
-          onSubmit={onSubmit}
-          onToggle={onToggle}
-          setOnToggle={setOnToggle}
-          onChange={onChange}
-        />
-      </ProfileContainer>
-      <div style={{ height: "350px", background: "blue", maxWidth: "800px" }}>
-        <h1>추천 영화</h1>
-        {!recommendList ? (
-          <span>분석할 감자 바구니가 없습니다.</span>
-        ) : (
-          recommendList.map((recommend, idx) => (
-            <Link to={`/detail/${recommend.category}/${recommend.id}/${recommend.title}`}>
-              <ContentsCard contents={recommend} key={idx} />
-            </Link>
-          ))
-        )}
-      </div>
-      <div
-        style={{ width: "250px", background: "pink", margin: "0 auto" }}
-      ></div>
-      <div style={{ background: "red", maxWidth: "800px" }}>
-        <div>
-          <form onSubmit={onNicknameSubmit}>
-            <span>친구 추가</span>
-            <input
-              type="text"
-              value={friendNickname}
-              onChange={(e) => setFriendNickname(e.target.value)}
-              placeholder="친구의 닉네임을 입력해주세요."
-            />
-            <button type="submit" shape="circle">
-              <FaSearchPlus />
-            </button>
-          </form>
-          {existence && <h1>친구의 닉네임을 확인해주세요.</h1>}
-          {!friend ? (
-            <span></span>
+    <div>
+      <Banner
+        showBanner={quit}
+        css={{
+          backgroundColor: "#0080ff",
+          fontSize: 20,
+          fontWeight: "lighter",
+          color: "white",
+          margin: "1rem auto",
+          borderRadius: "25px",
+        }}
+        title="회원 탈퇴를 성공하셨습니다. 안녕히 가세요."
+      />
+
+      <Container>
+        <ProfileContainer>
+          <Profile
+            user={user}
+            onSubmit={onSubmit}
+            onToggle={onToggle}
+            setOnToggle={setOnToggle}
+            onChange={onChange}
+          />
+        </ProfileContainer>
+        <div style={{ height: "350px", background: "blue", maxWidth: "800px" }}>
+          <h1>추천 영화</h1>
+          {!recommendList ? (
+            <span>분석할 감자 바구니가 없습니다.</span>
           ) : (
-            <ProfileContainer>
-              <div>
-                <Img
-                  src={`${process.env.REACT_APP_BASE_URL}/${friend.photolink}`}
-                  alt=""
-                />
-                <h1>{friend.nickname}</h1>
-                <button onClick={handleOk}>추가하기</button>
-              </div>
-            </ProfileContainer>
-          )}
-        </div>
-        <div>친구 목록</div>
-        <div style={{ background: "green", height: "250px" }}>
-          {!friendList ? (
-            <div></div>
-          ) : (
-            friendList.map((friend) => (
-              <Link to={`/potato-basket/${friend.nickname}`}>
-                <FriendProfile key={friend.nickname} friend={friend} />
+            recommendList.map((recommend, idx) => (
+              <Link
+                to={`/detail/${recommend.category}/${recommend.id}/${recommend.title}`}
+              >
+                <ContentsCard contents={recommend} key={idx} />
               </Link>
             ))
           )}
         </div>
-      </div>
-    </Container>
+        <div style={{ width: "250px", background: "pink", margin: "0 auto" }}>
+          <Modal setQuit={setQuit} />
+        </div>
+        <div style={{ background: "red", maxWidth: "800px" }}>
+          <div>
+            <form onSubmit={onNicknameSubmit}>
+              <span>친구 추가</span>
+              <input
+                type="text"
+                value={friendNickname}
+                onChange={(e) => setFriendNickname(e.target.value)}
+                placeholder="친구의 닉네임을 입력해주세요."
+              />
+              <button type="submit" shape="circle">
+                <FaSearchPlus />
+              </button>
+            </form>
+            {existence && <h1>친구의 닉네임을 확인해주세요.</h1>}
+            {!friend ? (
+              <span></span>
+            ) : (
+              <ProfileContainer>
+                <div>
+                  <Img
+                    src={`${process.env.REACT_APP_BASE_URL}/${friend.photolink}`}
+                    alt=""
+                  />
+                  <h1>{friend.nickname}</h1>
+                  <button onClick={handleOk}>추가하기</button>
+                </div>
+              </ProfileContainer>
+            )}
+          </div>
+          <div>친구 목록</div>
+          <div style={{ background: "green", height: "250px" }}>
+            {!friendList ? (
+              <div></div>
+            ) : (
+              friendList.map((friend) => (
+                <Link to={`/potato-basket/${friend.nickname}`}>
+                  <FriendProfile key={friend.nickname} friend={friend} />
+                </Link>
+              ))
+            )}
+          </div>
+        </div>
+      </Container>
+    </div>
   );
 };
 
