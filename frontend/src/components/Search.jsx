@@ -14,7 +14,6 @@ const Search = ({ windowHeight }) => {
     const body = {
       search_word: params.query,
     };
-    console.log(body);
     try {
       const response = await axios.post(`/api/search`, body);
       console.log(response.data);
@@ -35,6 +34,7 @@ const Search = ({ windowHeight }) => {
       }}
     >
       <div>
+        <div>'{params.query}' 검색 결과</div>
         <div>MOVIE Contents</div>
         {searchList?.movie?.map((movie) => (
           <Link to={`/detail/movie/${movie.id}`}>
