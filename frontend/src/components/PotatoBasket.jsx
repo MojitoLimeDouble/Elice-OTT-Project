@@ -83,7 +83,7 @@ const PotatoBasket = ({
     potatoData();
     movieAnalysis();
     tvAnalysis();
-  }, []);
+  }, [params]);
 
   return (
     <Baskets>
