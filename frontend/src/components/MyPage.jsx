@@ -6,6 +6,7 @@ import { FaSearchPlus } from "react-icons/fa";
 import { SearchOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import tokenHeader from "../authorization/tokenHeader";
+import { ContentsCard } from "./Prediction";
 
 // TODO: 컴포넌트 세분화 작업 필요
 // 나의 프로필(프로필 이미지, 닉네임 정보가 담기는) 컴포넌트
@@ -72,43 +73,65 @@ export const FriendProfile = ({ friend }) => {
   );
 };
 
-const MyPage = ({ user, friendList, onUserProfile, onRequestFriends }) => {
+const MyPage = ({
+  user,
+  friendList,
+  recommendList,
+  onUserProfile,
+  onRequestFriends,
+  onRecommend,
+}) => {
   const [onToggle, setOnToggle] = useState(true);
   const [friendNickname, setFriendNickname] = useState("");
   const [existence, setExistence] = useState(false);
   const [friend, setFriend] = useState("");
 
-  //TODO: API header에 auth정보 추가
+  // 마이페이지 접속 시 프로필을 받아옴
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`/api/mypage`, {
+        header: tokenHeader(),
+      });
+      onUserProfile({
+        ...user,
+        nickname: response.data.nickname,
+        image: {
+          file: `${process.env.REACT_APP_BASE_URL}/${response.data.photolink}`,
+        },
+      });
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+
+  // 마이페이지 접속 시 나의 친구 목록을 불러옴
+  const fetchFriend = async () => {
+    try {
+      const response = await axios.get(`/api/mypage/list/friend`, {
+        header: tokenHeader(),
+      });
+      onRequestFriends(response.data);
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+
+  const recommend = async () => {
+    try {
+      const response = await axios.get(`/api/mypage/recommend`, {
+        header: tokenHeader(),
+      });
+      console.log("response.data", response.data);
+      onRecommend(response.data);
+      console.log("recommendList", recommendList);
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`/api/mypage`, {
-          header: tokenHeader(),
-        });
-        onUserProfile({
-          ...user,
-          nickname: response.data.nickname,
-          image: {
-            file: `${process.env.REACT_APP_BASE_URL}/${response.data.photolink}`,
-          },
-        });
-        console.log("user", user);
-      } catch (error) {
-        console.log(error.response);
-      }
-    };
     fetchData();
-    const fetchFriend = async () => {
-      try {
-        const response = await axios.get(`/api/mypage/list/friend`, {
-          header: tokenHeader(),
-        });
-        onRequestFriends(response.data);
-      } catch (error) {
-        console.log(error.response);
-      }
-    };
     fetchFriend();
+    recommend();
   }, []);
 
   // 변경할 이미지를 선택할 경우 임시 이미지 URL을 생성하여, 일시적으로 프로필 사진을 변경함
@@ -210,6 +233,15 @@ const MyPage = ({ user, friendList, onUserProfile, onRequestFriends }) => {
       </ProfileContainer>
       <div style={{ height: "350px", background: "blue", maxWidth: "800px" }}>
         <h1>추천 영화</h1>
+        {!recommendList ? (
+          <span>분석할 감자 바구니가 없습니다.</span>
+        ) : (
+          recommendList.map((recommend, idx) => (
+            <Link to={`/detail/${recommend.category}/${recommend.id}`}>
+              <ContentsCard contents={recommend} key={idx} />
+            </Link>
+          ))
+        )}
       </div>
       <div
         style={{ width: "250px", background: "pink", margin: "0 auto" }}

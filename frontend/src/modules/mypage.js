@@ -1,9 +1,11 @@
 const USERPROFILE = "mypage/USERPROFILE";
 const REQUESTFRIENDS = "mypage/REQUESTFRIENDS";
+const RECOMMEND = "mypage/RECOMMEND";
 
 //FIXME: just for demonstration(임시 default image url)
 const defaultImage =
   "https://kdt-gitlab.elice.io/002-part3-ottservice/team5/sample-project/-/raw/develop/backend/static/image/default.png";
+
 export const userProfile = (user) => ({
   type: USERPROFILE,
   user,
@@ -12,6 +14,11 @@ export const userProfile = (user) => ({
 export const requestFriends = (friendList) => ({
   type: REQUESTFRIENDS,
   friendList,
+});
+
+export const recommend = (recommendList) => ({
+  type: RECOMMEND,
+  recommendList,
 });
 
 const initialState = {
@@ -23,6 +30,7 @@ const initialState = {
     },
   },
   friendList: "",
+  recommendList: "",
 };
 
 function inform(state = initialState, action) {
@@ -37,6 +45,11 @@ function inform(state = initialState, action) {
         ...state,
         friendList: action.friendList,
       };
+    case RECOMMEND:
+      return {
+        ...state,
+        recommendList: action.recommendList
+      }
     default:
       return state;
   }
