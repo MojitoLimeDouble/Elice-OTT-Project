@@ -1,5 +1,5 @@
 import { Menu, MenuButton, MenuList, MenuItem, Button } from "@chakra-ui/core";
-
+import styled from "styled-components";
 import React from "react";
 
 const Filtering = ({ onClick, filtering }) => {
@@ -12,22 +12,23 @@ const Filtering = ({ onClick, filtering }) => {
   ];
   return (
     <div>
-      <div>정렬</div>
+      <Subtitle>정렬조건</Subtitle>
       <Menu>
         <MenuButton
           as={Button}
           rightIcon="chevron-down"
-          background="white"
-          width="120px"
-          height="20px"
-          borderRadius="3px"
-          margin="10px"
+          style={menuButtonStyle}
         >
           {filtering}
         </MenuButton>
-        <MenuList borderRadius="3px" margin="5px">
+        <MenuList style={menuListStyle}>
           {array.map((element) => (
-            <MenuItem onClick={onClick} value={element} key={element}>
+            <MenuItem
+              onClick={onClick}
+              value={element}
+              key={element}
+              style={menuItemStyle}
+            >
               {element}
             </MenuItem>
           ))}
@@ -38,3 +39,34 @@ const Filtering = ({ onClick, filtering }) => {
 };
 
 export default Filtering;
+
+const Subtitle = styled.h2`
+  font-size: 25px;
+  margin-top: 30px;
+  left: 0px;
+`;
+
+const menuButtonStyle = {
+  background: "white",
+  width: "165px",
+  height: "25px",
+  borderRadius: "5px",
+  margin: "10px",
+  fontFamily: "BMJUA",
+  fontSize: "15px",
+};
+
+const menuListStyle = {
+  borderRadius: "3px",
+  margin: "5px",
+};
+
+const menuItemStyle = {
+  margin: "5px",
+  backgroundColor: "transparent",
+  border: "none",
+  fontFamily: "BMJUA",
+  fontSize: "15px",
+  display: "table",
+  margin: "auto",
+};

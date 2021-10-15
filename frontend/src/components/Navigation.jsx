@@ -96,18 +96,21 @@ export default Navigation;
 const BackgroundSquare = () => {
   const style = {
     position: "absolute",
-    zIndex: "1",
+    zIndex: "100",
     width: "1300px",
     height: "60px",
     backgroundColor: "#f7f0ff",
     borderRadius: "25px",
+    boxShadow: "0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23)",
   };
   return <div style={style}></div>;
 };
 
 const ContainerBox = styled.div`
   margin-top: 1.5rem;
+  margin-bottom: 30px;
   text-align: center;
+  
 `;
 
 const Container = styled.div`
@@ -120,7 +123,7 @@ const Container = styled.div`
   font-family: "BMJUA";
   font-style: normal;
   text-decoration: none;
-  z-index: 2;
+  z-index: 200;
 `;
 
 const Menu = styled.div`

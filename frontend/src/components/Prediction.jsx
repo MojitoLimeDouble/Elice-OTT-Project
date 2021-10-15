@@ -31,11 +31,10 @@ export const PredictionOrder = ({ List, currTab }) => {
 export const ContentsCard = ({ contents }) => {
   return (
     <SimilarContainer>
-      <Poster bg={contents.poster_path} />
-      <h1>{contents.title}</h1>
-      <h1>{contents.release_data}</h1>
-      <h1>{contents.genres}</h1>
-      <h1>{contents.like_count}</h1>
+        <Poster bg={contents.poster_path} />
+        <Title>{contents.title}</Title>
+        {/* TODO: 찜 수는 따로 표기 또는 빼기 */}
+        {/* <h1>{contents.like_count}</h1> */}
     </SimilarContainer>
   );
 };
@@ -53,23 +52,28 @@ const Container = styled.div`
 
 const Poster = styled.div`
   background-image: url(${(props) => props.bg});
-  height: 80%;
-  width: 100%;
   background-size: cover;
-  background-position: center center;
-  border-top-left-radius: 7px;
-  border-top-right-radius: 7px;
+  width: 180px;
+  height: 250px;
+  margin: 0 auto;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  border-radius: 10px;
+`;
+
+const Title = styled.h2`
+  margin: 0 auto;
+  margin-bottom: 10px;
+  padding: 10px;
+  font-family: "BMDOHYEON";
+  font-size: 15px;
+  align-items: center;
+  text-align: center;
+  height: 70px;
+  width: 150px;
+  color: black;
 `;
 
 const SimilarContainer = styled.div`
-  height: 300px;
-  width: 200px;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-  border-radius: 7px;
-  background: white;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 `;
 
 const OrderContainer = styled.div`

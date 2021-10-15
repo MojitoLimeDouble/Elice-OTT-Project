@@ -5,14 +5,12 @@ const Potcha_info = styled.div`
   width: 1300px;
   height: 180px;
   margin: 30px auto;
-  margin-bottom: 10px;
   background: #ffffff8d;
   border-radius: 25px;
   display: flex;
   justify-content: center;
   align-items: center;
-  /* position: absolute; */
-  bottom: 0px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 `;
 
 const Footer = () => {
