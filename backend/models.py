@@ -9,7 +9,7 @@ class User(db.Model):
     email = db.Column(db.String(50),  nullable=False,unique=True)
     nickname = db.Column(db.String(30), nullable=False, unique=True)
     password = db.Column(db.String(64), nullable=False)
-    photolink = db.Column(db.Text,nullable=False, default="./static/default.png")
+    photolink = db.Column(db.Text,nullable=False, default="./static/image/default.png")
     
 
     def __init__(self, email, nickname, password):
@@ -33,11 +33,10 @@ class User(db.Model):
 # 친구 정보
 class Friend(db.Model):
     __tablename__ = 'friend'
-    #id = db.Column(db.Integer, primary_key=True,
-    #               nullable=False, autoincrement=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     nickname = db.Column(db.String(30), nullable=False, unique=True)
-    photolink   = db.Column(db.String(255),nullable=False, default="./static/default.png")
+    photolink   = db.Column(db.String(255),nullable=False)
     def to_dict(self):
         return {
             'nickname': self.nickname,
@@ -50,28 +49,88 @@ class Movie(db.Model):
     id = db.Column(db.Integer, primary_key=True,
                 nullable=False, autoincrement=True)
     title = db.Column(db.String(255), nullable=False)
-    poster_path = db.Column(db.String(255),nullable=False)
-    genres = db.Column(db.String(255),nullable=False)
-    overview = db.Column(db.Text, nullable=False)
-    release_date = db.Column(db.Date,nullable=False)
+    poster_path = db.Column(db.String(255),nullable=True)
+    overview = db.Column(db.Text, nullable=True)
+    release_date = db.Column(db.Date,nullable=True)
+    runtime = db.Column(db.Integer, nullable=True)
     popularity = db.Column(db.Float, nullable=False)
-    like_count = db.Column(db.Integer, nullable=False, default=0)
+    origin_country = db.Column(db.String(100),nullable=True)
+    genres = db.Column(db.Text,nullable=True)
+    keywords = db.Column(db.Text,nullable=True)
+    like_count = db.Column(db.Integer, nullable=False)
     positive_comment = db.Column(db.String(255),nullable=False)
     negative_comment = db.Column(db.String(255),nullable=False)
-    origin_country = db.Column(db.String(100),nullable=False)
+    cast = db.Column(db.Text,nullable=True)
+    director = db.Column(db.Text,nullable=True)
+    rank = db.Column(db.Integer,nullable=True)
 
     def to_dict(self):
+        # 출연진
+        line_cast = self.cast.replace("[", '')
+        line_cast = line_cast.replace('"', '')
+        line_cast = line_cast.replace("'", '')
+        line_cast = line_cast.replace("]", '')
+        cast_list = line_cast.split(', ')
+        
+        # 국가
+        line_coun = self.origin_country.replace("[", '')
+        line_coun = line_coun.replace('"', '')
+        line_coun = line_coun.replace("'", '')
+        line_coun = line_coun.replace("]", '')
+        country_list = line_coun.split(', ')
+
+        # 키워드
+        line_key = self.keywords.replace("[", '')
+        line_key = line_key.replace('"', '')
+        line_key = line_key.replace("'",'')
+        line_key = line_key.replace("]", '')
+        keyword_list = line_key.split(', ')
+
+        # 장르
+        line_gen = self.genres.replace("[", '')
+        line_gen = line_gen.replace('"', '')
+        line_gen = line_gen.replace("'", '')
+        line_gen = line_gen.replace("]", '')
+        genre_list = line_gen.split(', ')
+
+        # 감독
+        line_direc = self.director.replace("[", '')
+        line_direc = line_direc.replace('"', '')
+        line_direc = line_direc.replace("'", '')
+        line_direc = line_direc.replace("]", '')
+        director_list = line_direc.split(', ')
+
+        # 긍정어
+        line_posi = self.positive_comment.replace(" ", '')
+        positive_list = line_posi.split(',')
+    
+        # 부정어
+        line_nega = self.negative_comment.replace(" ",'')
+        negative_list = line_nega.split(',')
+        
+        # 카테고리
+        category = "movie"
+
+        # 개봉 일자
+        release_date = self.release_date.strftime('%Y-%m-%d')
+      
         return {
             'id': self.id,
             'title': self.title,
             'poster_path': self.poster_path,
-            'genres': self.genres,
             'overview': self.overview,
-            'release_date': self.release_date,
-            'popularity': self.popularity,
-            'positive_comment': self.positive_comment,
-            'negative_comment': self.negative_comment,
-            'origin_country': self.origin_country
+            'release_date': release_date,
+            'runtime' : self.runtime,
+            'genres': genre_list,
+            'popularity' : self.popularity,
+            'like_count' : self.like_count,
+            'positive_comment': positive_list,
+            'negative_comment': negative_list,
+            'cast' : cast_list,
+            'director' : director_list,
+            'keywords' : keyword_list,
+            'origin_country' : country_list,
+            'category' : category
         }
 
 # TV 정보
@@ -81,36 +140,94 @@ class Tv(db.Model):
                 nullable=False, autoincrement=True)
     name = db.Column(db.String(255), nullable=False)
     poster_path = db.Column(db.String(255),nullable=False)
-    genres = db.Column(db.String(255),nullable=False)
     overview = db.Column(db.Text, nullable=False)
     first_air_date = db.Column(db.Date,nullable=False)
-    last_air_date = db.Column(db.Date,nullable=False)
+    runtime = db.Column(db.Integer, nullable=True)
     popularity = db.Column(db.Float, nullable=False)
-    like_count = db.Column(db.Integer, nullable=False, default=0)
+    origin_country = db.Column(db.String(100),nullable=True)
+    genres = db.Column(db.Text,nullable=True)
+    keywords = db.Column(db.Text,nullable=True)
+    like_count = db.Column(db.Integer, nullable=False)
     positive_comment = db.Column(db.String(255),nullable=False)
     negative_comment = db.Column(db.String(255),nullable=False)
-    origin_country = db.Column(db.String(100),nullable=False)
+    cast = db.Column(db.Text,nullable=True)
+    director = db.Column(db.Text,nullable=True)
+    rank = db.Column(db.Integer,nullable=True)
 
     def to_dict(self):
+        # 출연진
+        line_cast = self.cast.replace("[", '')
+        line_cast = line_cast.replace('"', '')
+        line_cast = line_cast.replace("'", '')
+        line_cast = line_cast.replace("]", '')
+        cast_list = line_cast.split(', ')
+        
+        # 국가
+        line_coun = self.origin_country.replace("[", '')
+        line_coun = line_coun.replace('"', '')
+        line_coun = line_coun.replace("'", '')
+        line_coun = line_coun.replace("]", '')
+        country_list = line_coun.split(', ')
+
+        # 키워드
+        line_key = self.keywords.replace("[", '')
+        line_key = line_key.replace('"', '')
+        line_key = line_key.replace("'",'')
+        line_key = line_key.replace("]", '')
+        keyword_list = line_key.split(', ')
+
+        # 장르
+        line_gen = self.genres.replace("[", '')
+        line_gen = line_gen.replace('"', '')
+        line_gen = line_gen.replace("'", '')
+        line_gen = line_gen.replace("]", '')
+        genre_list = line_gen.split(', ')
+
+        # 감독
+        line_direc = self.director.replace("[", '')
+        line_direc = line_direc.replace('"', '')
+        line_direc = line_direc.replace("'", '')
+        line_direc = line_direc.replace("]", '')
+        director_list = line_direc.split(', ')
+
+        # 긍정어
+        line_posi = self.positive_comment.replace(" ", '')
+        positive_list = line_posi.split(',')
+    
+        # 부정어
+        line_nega = self.negative_comment.replace(" ",'')
+        negative_list = line_nega.split(',')
+
+        # 카테고리
+        category = "tv"
+
+        # 방영 일자
+        first_air_date = self.first_air_date.strftime('%Y-%m-%d')
+
         return {
             'id': self.id,
-            'name': self.name,
+            'title': self.name,
             'poster_path': self.poster_path,
-            'genres': self.genres,
             'overview': self.overview,
-            'first_air_date': self.first_air_date,
-            'last_air_date': self.last_air_date,
-            'popularity': self.popularity,
-            'positive_comment': self.positive_comment,
-            'negative_comment': self.negative_comment,
-            'origin_country': self.origin_country
+            'release_date': first_air_date,
+            'runtime' : self.runtime,
+            'genres': genre_list,
+            'popularity' : self.popularity,
+            'like_count' : self.like_count,
+            'positive_comment': positive_list,
+            'negative_comment': negative_list,
+            'cast' : cast_list,
+            'director' : director_list,
+            'keywords' : keyword_list,
+            'origin_country' : country_list,
+            'category' : category
         }
 
 # 감자 바구니(좋아요 리스트)
 class  Potato_Basket(db.Model):
     __tablename__ = 'potato_basket'
     id = db.Column(db.Integer, primary_key=True,
-                    nullable=False, autoincrement=True) # 프라이머리 문제땜에 id 생성할 수 밖에 없었다
+                    nullable=False, autoincrement=True) 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     movie_id = db.Column(db.Integer, db.ForeignKey('movie.id'))
     tv_id = db.Column(db.Integer, db.ForeignKey('tv.id'))

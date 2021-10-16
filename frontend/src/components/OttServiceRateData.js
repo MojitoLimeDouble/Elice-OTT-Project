@@ -1,0 +1,43 @@
+const OttServiceRateData = [
+  {
+    country: "2020",
+    Youtube: 62.3,
+    YoutubeColor: "rgb(255, 0, 0)",
+    Netflix: 16.3,
+    NetflixColor: "rgb(228, 30, 27)",
+    Facebook: 8.6,
+    FacebookColor: "rgb(72, 103, 130)",
+    NaverTv: 4.8,
+    NaverTvColor: "rgb(3, 225, 100)",
+    AfricaTv: 2.6,
+    AfricaTvColor: "rgb(14, 68, 152)",
+  },
+  {
+    country: "2019",
+    Youtube: 47.8,
+    YoutubeColor: "rgb(255, 0, 0)",
+    Netflix: 4.9,
+    NetflixColor: "rgb(228, 30, 27)",
+    Facebook: 9.9,
+    FacebookColor: "rgb(72, 103, 130)",
+    NaverTv: 6.1,
+    NaverTvColor: "rgb(3, 225, 100)",
+    AfricaTv: 4.0,
+    AfricaTvColor: "rgb(14, 68, 152)",
+  },
+  {
+    country: "2018",
+    Youtube: 38.4,
+    YoutubeColor: "rgb(255, 0, 0)",
+    Netflix: 1.3,
+    NetflixColor: "rgb(228, 30, 27)",
+    Facebook: 11.5,
+    FacebookColor: "rgb(72, 103, 130)",
+    NaverTv: 7.1,
+    NaverTvColor: "rgb(3, 225, 100)",
+    AfricaTv: 3.8,
+    AfricaTvColor: "rgb(14, 68, 152)",
+  },
+];
+
+export default OttServiceRateData;

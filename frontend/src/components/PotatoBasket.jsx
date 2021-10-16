@@ -1,7 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import PosterAndTitle from "./PosterAndTitle";
+import PotatoPosterAndTitle from "./PotatoPosterAndTitle";
+import WordCloudComponent from "./WordCloudComponent";
+import { useParams } from "react-router-dom";
+import tokenHeader from "../authorization/tokenHeader";
+import { Scrollbars } from "react-custom-scrollbars";
 
 const PotatoBasket = ({
   moviePotatoList,
@@ -9,108 +13,224 @@ const PotatoBasket = ({
   onMoviePotatoes,
   onTvPotatoes,
 }) => {
-  // 은열님의 외부 api 받아오는 코드 동일하게 적용
-  // 추후 데이터 베이스에서 영화와 tv 프로그램에 대한 각각의 리스트를 받을 예정
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          "https://yts.mx/api/v2/list_movies.json?limit=3"
-        );
-        onMoviePotatoes(response.data.data.movies);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    fetchData();
-  }, []);
+  const params = useParams();
+  const [movieWord, setMovieWord] = useState([]);
+  const [tvWord, setTvWord] = useState([]);
+  const potatoData = async () => {
+    try {
+      const response = await axios.get(
+        `/api/potato_basket/${params.nickname}`,
+        {
+          headers: tokenHeader(),
+        }
+      );
+      onMoviePotatoes(response.data[0].movie);
+      onTvPotatoes(response.data[1].tv);
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+  // 영화 찐 감자 분석
+  const movieAnalysis = async () => {
+    try {
+      const response = await axios.get(
+        `/api/potato_basket/${params.nickname}/movie`,
+        {
+          headers: tokenHeader(),
+        }
+      );
+      let movieWordList = [];
+      Object.values(response.data).map((content) =>
+        content.slice(0, 5).map(
+          (content2) =>
+            (movieWordList = movieWordList.concat({
+              text: content2[0],
+              value: content2[1],
+            }))
+        )
+      );
+      setMovieWord(movieWord.concat(movieWordList));
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+  // TV 찐 감자 분석
+  const tvAnalysis = async () => {
+    try {
+      const response = await axios.get(
+        `/api/potato_basket/${params.nickname}/tv`,
+        {
+          headers: tokenHeader(),
+        }
+      );
+      let tvWordList = [];
+      Object.values(response.data).map((content) =>
+        content.slice(0, 5).map(
+          (content2) =>
+            (tvWordList = tvWordList.concat({
+              text: content2[0],
+              value: content2[1],
+            }))
+        )
+      );
+      setTvWord(tvWord.concat(tvWordList));
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          "https://yts.mx/api/v2/list_movies.json?limit=10"
-        );
-        onTvPotatoes(response.data.data.movies);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    fetchData();
-  }, []);
+    potatoData();
+    movieAnalysis();
+    tvAnalysis();
+  }, [params]);
 
   return (
-    <div>
-      <Container>
-        <Basket>
+    <Baskets>
+      <Container className="container">
+        <Basket className="movieBasket">
           <BasketTitle>영화 감자 바구니</BasketTitle>
-          <Potatoes>
-            <ListDetail>
-              {!moviePotatoList ? (
-                <h1 style={{ fontSize: "30px", color: "black" }}>
-                  Loading ...
-                </h1>
-              ) : (
-                moviePotatoList?.map((prediction) => (
-                  <PosterAndTitle key={prediction.id} prediction={prediction} />
-                ))
-              )}
-            </ListDetail>
-          </Potatoes>
+          <Scrollbars
+            style={{
+              position: "relative",
+              height: "450px",
+            }}
+            className="Scrollbar"
+            renderThumbVertical={({ style, ...props }) => (
+              <div
+                {...props}
+                style={{
+                  ...style,
+                  zIndex: "5",
+                  backgroundColor: "#c9b3f3dd",
+                  borderRadius: "inherit",
+                }}
+              />
+            )}
+          >
+            <PotatoList className="MoviePotatoList">
+              <ListDetail>
+                {!moviePotatoList ? (
+                  <h1 style={{ fontSize: "30px", color: "black" }}>
+                    Loading ...
+                  </h1>
+                ) : (
+                  moviePotatoList?.map((movie) => (
+                    <PotatoPosterAndTitle
+                      key={movie.id}
+                      prediction={movie}
+                      category="movie"
+                    />
+                  ))
+                )}
+              </ListDetail>
+            </PotatoList>
+          </Scrollbars>
         </Basket>
-        <PotatoAnalysis>영화 찐 감자 분석</PotatoAnalysis>
+        <PotatoAnalysis>
+          <BasketTitle>찐 영화 감자 분석</BasketTitle>
+          <WordCloudComponent
+            style={{ display: "static" }}
+            words={movieWord}
+          />
+        </PotatoAnalysis>
       </Container>
-      <Container>
-        <Basket>
+      <div style={{ height: "10px" }} />
+      <Container className="container">
+        <Basket className="tvBasket">
           <BasketTitle>TV 감자 바구니</BasketTitle>
-          <Potatoes>
-            <ListDetail>
-              {!tvPotatoList ? (
-                <h1 style={{ fontSize: "30px", color: "black" }}>
-                  Loading ...
-                </h1>
-              ) : (
-                tvPotatoList?.map((prediction) => (
-                  <PosterAndTitle key={prediction.id} prediction={prediction} />
-                ))
-              )}
-            </ListDetail>
-          </Potatoes>
+          <Scrollbars
+            style={{
+              position: "relative",
+              height: "450px",
+            }}
+            className="Scrollbar"
+            renderThumbVertical={({ style, ...props }) => (
+              <div
+                {...props}
+                style={{
+                  ...style,
+                  zIndex: "5",
+                  backgroundColor: "#c9b3f3dd",
+                  borderRadius: "inherit",
+                }}
+              />
+            )}
+          >
+            <PotatoList className="tvPotatoList">
+              <ListDetail>
+                {!tvPotatoList ? (
+                  <h1 style={{ fontSize: "30px", color: "black" }}>
+                    Loading ...
+                  </h1>
+                ) : (
+                  tvPotatoList?.map((tv) => (
+                    <PotatoPosterAndTitle
+                      key={tv.id}
+                      prediction={tv}
+                      category="tv"
+                    />
+                  ))
+                )}
+              </ListDetail>
+            </PotatoList>
+          </Scrollbars>
         </Basket>
-        <PotatoAnalysis>TV 찐 감자 분석</PotatoAnalysis>
+        <PotatoAnalysis>
+          <BasketTitle>찐 TV 감자 분석</BasketTitle>
+          <WordCloudComponent
+            style={{ display: "static" }}
+            words={tvWord}
+          />
+        </PotatoAnalysis>
       </Container>
-    </div>
+    </Baskets>
   );
 };
 
 export default PotatoBasket;
 
+const Baskets = styled.div`
+  background-color: #ffffff8d;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  border-radius: 25px;
+  padding: 30px;
+`;
+
 const Container = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  margin: 3rem;
+  margin: 20px auto;
 `;
 
 const Basket = styled.div`
-  width: 800px;
-  background-color: orange;
+  width: 750px;
+  background-color: #ffffff8d;
+  border-radius: 25px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 `;
 
 const BasketTitle = styled.p`
-  font-size: x-large;
+  font-size: 25px;
   font-weight: bold;
-  margin-bottom: 1rem;
+  text-align: left;
+  margin: 30px;
+  margin-bottom: 10px;
 `;
 
-const Potatoes = styled.div`
-  height: 500px;
-  overflow-y: auto;
+const PotatoList = styled.div`
+  height: 465px;
+  padding: 10px;
+  /* overflow-y: auto; */
 `;
 
 const PotatoAnalysis = styled.div`
-  width: 500px;
-  background-color: gainsboro;
+  height: 550px;
+  width: 400px;
+  background-color: #ffffff8d;
+  border-radius: 25px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 `;
 
 const ListDetail = styled.div`

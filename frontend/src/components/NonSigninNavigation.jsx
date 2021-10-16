@@ -1,35 +1,82 @@
 // react-fullpage에서 header에 적용할 navigation bar
 
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useHistory } from "react-router-dom";
 import styled from "styled-components";
+import "../styles/FontStyle.css";
 
 const NonSigninNavigation = () => {
+  const { pathname } = useLocation();
   return (
-    <Container>
-      <Link to="/">POTCHA</Link>
-      <Menu></Menu>
-      <Link to="/signin">
-        <SiginButton>SIGN IN</SiginButton>
-      </Link>
-    </Container>
+    <div style={{ display: "inline-block" }} className="ContainerPosition">
+      <ContainerBox>
+        <BackgroundSquare />
+        <Container>
+          <GridContainer>
+            <StyledLink to="/" isActive={pathname === "/"} className="potcha">
+              POTCHA
+            </StyledLink>
+            <StyledLink
+              to="/signin"
+              isActive={pathname === "/signin"}
+              className="login"
+            >
+              Login
+            </StyledLink>
+          </GridContainer>
+        </Container>
+      </ContainerBox>
+    </div>
   );
 };
 
 export default NonSigninNavigation;
 
+const BackgroundSquare = () => {
+  const style = {
+    position: "absolute",
+    zIndex: "25",
+    width: "1300px",
+    height: "60px",
+    backgroundColor: "#f7f0ff",
+    borderRadius: "25px",
+  };
+  return <div style={style}></div>;
+};
+
+const ContainerBox = styled.div`
+  margin-top: 1.5rem;
+  text-align: center;
+`;
+
 const Container = styled.div`
+  width: 1300px;
   display: flex;
-  justify-content: space-around;
+  position: relative;
   align-items: center;
   height: 40px;
-  border-bottom: 2px solid black;
+  font-family: "NotoSansKR";
+  font-weight: "bold";
+  font-style: normal;
+  text-decoration: none;
+  z-index: 30;
 `;
 
-const Menu = styled.div`
-  display: flex;
-  justify-content: space-around;
-  width: 25%;
+const GridContainer = styled.div`
+  display: grid;
 `;
 
-const SiginButton = styled.button``;
+const StyledLink = styled(Link)`
+  border-bottom: ${(props) => (props.isActive ? "2px solid black" : "")};
+  font-size: ${(props) => (props.isActive ? "22px" : "20px")};
+
+  &.potcha{
+    position: absolute;
+    left: 60px;
+  }
+
+  &.login{
+    position: absolute;
+    right: 50px;
+  }
+`;
