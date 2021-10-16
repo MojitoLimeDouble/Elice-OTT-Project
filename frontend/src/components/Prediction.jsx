@@ -45,9 +45,19 @@ export const ContentsCard = ({ contents }) => {
   return (
     <Container>
       <Poster bg={contents.poster_path} />
-      <Title>{contents.title}</Title>
+      <Title className="title">{contents.title}</Title>
       {/* TODO: 찜 수는 따로 표기 또는 빼기 */}
       {/* <h1>{contents.like_count}</h1> */}
+    </Container>
+  );
+};
+
+// 카테고리 페이지 포스터 출력용
+export const MyPageContentsCard = ({ contents }) => {
+  return (
+    <Container>
+      <Poster bg={contents.poster_path} />
+      <Title className="title" style={{height:"30px"}}>{contents.title}</Title>
     </Container>
   );
 };

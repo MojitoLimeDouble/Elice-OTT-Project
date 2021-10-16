@@ -199,7 +199,7 @@ const ListBackgroundSquare = () => {
 };
 
 const CategoryContainer = styled.div`
-  height: 100vh;
+  min-height: 100vh;
   background: #ffffff8d;
   border-radius: 25px;
   padding: 30px 40px;
