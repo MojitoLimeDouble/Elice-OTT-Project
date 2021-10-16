@@ -2,8 +2,9 @@ import axios from "axios";
 import React from "react";
 import tokenHeader from "../authorization/tokenHeader";
 import { useHistory } from "react-router";
+import styled from "styled-components";
 
-export default function Modal({setQuit}) {
+export default function Modal({ setQuit }) {
   const history = useHistory();
   const onConfirm = (message = null, onConfirm, onCancel) => {
     if (!onConfirm || typeof onConfirm !== "function") {
@@ -51,8 +52,26 @@ export default function Modal({setQuit}) {
   );
 
   return (
-    <div className="App">
-      <button onClick={confirmDelete}>회원 탈퇴</button>
-    </div>
+    <ButtonContainer className="App">
+      <CustomButton onClick={confirmDelete}>회원 탈퇴</CustomButton>
+    </ButtonContainer>
   );
 }
+
+const ButtonContainer = styled.div`
+  background-color: #ff0000ce;
+  border-radius: 15px;
+  box-shadow: 0 6px 12px -2px rgba(50, 50, 93, 0.25),
+    0 3px 7px -3px rgba(0, 0, 0, 0.3);
+`;
+
+const CustomButton = styled.button`
+  background: None;
+  outline: None;
+  border: None;
+  font-size: 20px;
+  font-family: NotoSansKR;
+  font-weight: 500;
+  margin: 5px;
+  color: #fff;
+`;

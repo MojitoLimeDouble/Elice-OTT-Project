@@ -1,18 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 
-const Potcha_info = styled.div`
-  width: 1300px;
-  height: 180px;
-  margin: 30px auto;
-  background: #ffffff8d;
-  border-radius: 25px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-`;
-
 const Footer = () => {
   return (
     <Potcha_info>
@@ -20,7 +8,7 @@ const Footer = () => {
         className="potcha_img"
         src="https://cdn.discordapp.com/attachments/880725572475559957/898084782439817228/image_processing20200713-5473-4ltg8i.gif"
         alt=""
-        style={{ width: "150px", marginRight: "20px" }}
+        style={{ width: "170px", marginRight: "30px", borderRadius: "25px" }}
       />
       <p className="potcha_text" style={{ textAlign: "left" }}>
         <span>
@@ -56,3 +44,17 @@ const Footer = () => {
 };
 
 export default Footer;
+
+const Potcha_info = styled.div`
+  width: 1300px;
+  height: 180px;
+  margin: 30px auto;
+  background: #ffffff8d;
+  border-radius: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  line-height: 30px;
+  letter-spacing: 3px;
+`;
